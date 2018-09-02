@@ -16,6 +16,9 @@ class RepliesController extends Controller
     
     public function store(Request $request, Thread $thread)
     {
-        $thread->addReply($request->all());
+        $thread->addReply([
+            'body' => $request->body,
+            'user_id' => auth()->id(),
+        ]);
     }
 }
