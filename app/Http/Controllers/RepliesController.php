@@ -17,5 +17,6 @@ class RepliesController extends Controller
     public function store(Request $request, Thread $thread)
     {
         $thread->addReply($request->all());
+        return view($thread->path());
     }
 }
