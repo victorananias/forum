@@ -9,3 +9,8 @@ B. A reply belongs to a thread and belongs to a user
 php artisan make:model Thread -mr
 php artisan make:model Reply -mc
 php artisan make:test ReplyTest --unit
+php artisan make:test ThreadTest --unit
+php artisan make:test ParticipteInForumTest
+
+phpunit
+phpunit --filter ThreadTest

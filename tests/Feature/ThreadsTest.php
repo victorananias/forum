@@ -11,6 +11,8 @@ use App\Reply;
 
 class ThreadsTest extends TestCase
 {
+    use DatabaseMigrations;
+    
     private $thread;
 
     public function setUp()
@@ -24,7 +26,6 @@ class ThreadsTest extends TestCase
     | e após será revertido (rollback)
     |
     */
-    use DatabaseMigrations;
 
     /** @test  */
     public function a_user_can_browse_threads()
@@ -36,15 +37,16 @@ class ThreadsTest extends TestCase
     /** @test  */
     public function a_user_read_a_single_thread()
     {
-        $this->get('/threads/'.$this->thread->id)
+        $this->get($this->thread->path())
              ->assertSee($this->thread->title);
     }
 
     /** @test */
-    public function a_user_can_read_replies_that_are_associated_with_a_thread() {
+    public function a_user_can_read_replies_that_are_associated_with_a_thread()
+    {
         $reply = factory(Reply::class)->create(['thread_id' => $this->thread->id]);
 
-        $this->get('/threads/'.$this->thread->id)
+        $this->get($this->thread->path())
             ->assertSee($reply->body);
     }
 }
