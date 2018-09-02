@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mb-4">
-    <div class="row justify-content-center">
+<div class="container">
+    <div class="row justify-content-center mb-4">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ $thread->title }}</div>
@@ -33,7 +33,7 @@
             </div>
         </div>
     @else 
-        <p>Please <a href="{{ route('login') }}">sign in</a> to participate in the discussion</p>
+        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in the discussion</p>
     @endif
 </div>
 @endsection
