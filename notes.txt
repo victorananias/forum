@@ -11,6 +11,8 @@ php artisan make:model Reply -mc
 php artisan make:test ReplyTest --unit
 php artisan make:test ThreadTest --unit
 php artisan make:test ParticipteInForumTest
+php artisan make:test CreateThreadsTest
+
 
 phpunit
 phpunit --filter ThreadTest
