@@ -6,20 +6,35 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\User;
+use App\Thread;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Auth\AuthenticationException;
 
 class CreateThreadsTest extends TestCase
 {
+    use DatabaseMigrations;
 
+    /** @test */
     public function guests_may_not_create_threads()
     {
-
+        $this->expectException(AuthenticationException::class);
+        $this->post('/threads', []);
     }
 
+    /** @test */
     public function an_authenticated_user_can_create_new_forum_threads()
     {
-        // Give we have a signed user
-        // When we hit the endpoint to create a new thread
-        // Then, when we visit the thread page;
-        // We should see the new thread
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+
+        $thread = factory(Thread::class)->make();
+
+        $this->post('/threads', $thread->toArray());
+
+        $this->get($thread->path())
+             ->assertSee($thread->title)
+             ->assertSee($thread->body);
     }
 }
