@@ -10,6 +10,7 @@ use App\User;
 use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Auth\AuthenticationException;
+use App\Channel;
 
 class CreateThreadsTest extends TestCase
 {
@@ -30,16 +31,52 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_create_new_forum_threads()
     {
-        $user = factory(User::class)->create();
+        $this->actingAs(factory(User::class)->create());
 
-        $this->actingAs($user);
+        $thread = factory(Thread::class)->make();
 
-        $thread = factory(Thread::class)->create();
-
-        $this->post('/threads', $thread->toArray());
-
-        $this->get($thread->path())
+        $response = $this->post('/threads', $thread->toArray());
+        
+        $this->get($response->headers->get('location'))
              ->assertSee($thread->title)
              ->assertSee($thread->body);
     }
+
+    /** @test */
+    public function a_thread_requires_a_title()
+    {
+        $this->publishThread(['title' => null])
+             ->assertSessionHasErrors('title');
+    }
+    
+    /** @test */
+    public function a_thread_requires_a_body()
+    {
+        $this->publishThread(['body' => null])
+             ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function a_thread_requires_a_valid_channel()
+    {
+        factory(Channel::class, 2)->create();
+
+        $this->publishThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->publishThread(['channel_id' => 999])
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    private  function publishThread($overrides = [])
+    {
+        $this->withExceptionHandling();
+
+        $thread = factory(Thread::class)->make($overrides);
+
+        $this->actingAs(factory(User::class)->create());
+
+        return $this->post('/threads', $thread->toArray());
+    }
+
 }
