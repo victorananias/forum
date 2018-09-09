@@ -10,6 +10,7 @@ use App\Thread;
 use App\Reply;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Auth\User;
+use App\Channel;
 
 class ThreadTest extends TestCase
 {
@@ -24,9 +25,13 @@ class ThreadTest extends TestCase
         $this->thread = factory(Thread::class)->create();
     }
 
+    /** @test */
     public function a_thread_can_make_a_string_path()
     {
-
+        $this->assertEquals(
+            "/threads/{$this->thread->channel->slug}/{$this->thread->id}", 
+            $this->thread->path()
+        );
     }
 
     /** @test */
@@ -51,8 +56,9 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /** @test */
     public function a_thread_belongs_to_a_channel()
     {
-        
+        $this->assertInstanceOf(Channel::class, $this->thread->channel);
     }
 }

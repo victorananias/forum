@@ -12,6 +12,7 @@ php artisan make:test ReplyTest --unit
 php artisan make:test ThreadTest --unit
 php artisan make:test ParticipteInForumTest
 php artisan make:test CreateThreadsTest
+php artisan make:model Channel -m
 
 
 phpunit

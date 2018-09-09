@@ -14,7 +14,15 @@ class RepliesController extends Controller
         $this->middleware('auth');   
     }
     
-    public function store(Request $request, Thread $thread)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @param $channelId
+     * @param Thread $thread
+     * @return void
+     */
+    public function store(Request $request, $channelId, Thread $thread)
     {
         $thread->addReply([
             'body' => $request->body,

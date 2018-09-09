@@ -9,20 +9,25 @@ use Illuminate\Foundation\Auth\User;
 class Thread extends Model
 {
     protected $guarded = [];
-    
-    public function path()
+   
+    public function creator()
     {
-        return '/threads/' . $this->id;
+        return $this->belongsTo(User::class, 'user_id');
+    }
+   
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
     }
 
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
-   
-    public function creator()
+    
+    public function path()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
     public function addReply($reply)
