@@ -9,16 +9,16 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Thread;
 use App\Reply;
 
-class ThreadsTest extends TestCase
+class ReadThreadsTest extends TestCase
 {
     use DatabaseMigrations;
-    
+
     private $thread;
 
     public function setUp()
     {
         parent::setUp();
-        $this->thread = factory(Thread::class)->create(); 
+        $this->thread = factory(Thread::class)->create();
     }
     /*
     |
@@ -48,5 +48,10 @@ class ThreadsTest extends TestCase
 
         $this->get($this->thread->path())
             ->assertSee($reply->body);
+    }
+
+    public function a_user_can_filter_threads_according_to_a_channel()
+    {
+
     }
 }
