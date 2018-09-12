@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use App\Thread;
 use App\Reply;
+use App\Channel;
 
 class ReadThreadsTest extends TestCase
 {
@@ -50,8 +51,20 @@ class ReadThreadsTest extends TestCase
             ->assertSee($reply->body);
     }
 
+    /** @test */
     public function a_user_can_filter_threads_according_to_a_channel()
     {
+        $channel = factory(Channel::class)->create();
+
+        $threadInChannel = factory(Thread::class)->create([
+            'channel_id' => $channel->id
+        ]);
+        
+        $threadNotInChannel = factory(Thread::class)->create();
+
+        $this->get("/threads/{$channel->slug}")
+             ->assertSee($threadInChannel->title)
+             ->assertDontSee($threadNotInChannel->title);
 
     }
 }

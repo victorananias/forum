@@ -36,7 +36,7 @@ class ParticipteInForumTest extends TestCase
 
         $reply = factory(Reply::class)->make(['thread_id' => $thread->id]);
 
-        $this->post($thread->path() . '/replies', $reply->toArray());
+        $this->post("{$thread->path()}/replies", $reply->toArray());
 
         $this->get($thread->path())
              ->assertSee($reply->body);
