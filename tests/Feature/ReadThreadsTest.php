@@ -12,6 +12,12 @@ use App\Channel;
 
 class ReadThreadsTest extends TestCase
 {
+    /*
+    |
+    | Para cada teste sera migrado (migrate)
+    | e após será revertido (rollback)
+    |
+    */
     use DatabaseMigrations;
 
     private $thread;
@@ -21,12 +27,6 @@ class ReadThreadsTest extends TestCase
         parent::setUp();
         $this->thread = factory(Thread::class)->create();
     }
-    /*
-    |
-    | Para cada teste sera migrado (migrate)
-    | e após será revertido (rollback)
-    |
-    */
 
     /** @test  */
     public function a_user_can_browse_threads()

@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+use App\Thread;
+use App\Channel;
+
 class ChannelTest extends TestCase
 {
     use DatabaseMigrations;
@@ -14,6 +17,11 @@ class ChannelTest extends TestCase
     /** @test */
     public function a_channel_consists_of_threads()
     {
-        $this->assertEquals('1', '1');
+        $channel = factory(Channel::class)->create();
+        $thread = factory(Thread::class)->create([
+            'channel_id' => $channel->id
+        ]);
+
+        $this->assertTrue($channel->threads->contains($thread));
     }
 }
