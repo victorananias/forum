@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
 use App\Thread;
 use App\Channel;
 
@@ -20,13 +21,20 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel)
+    public function index(Request $request, Channel $channel)
     {
         if($channel->exists) {
-            $threads = $channel->threads;
+            $threads = $channel->threads()->latest();
         } else {
-            $threads = Thread::all();
+            $threads = Thread::latest();
         }
+
+        if($username = $request->by) {
+            $user = User::whereName($username)->firstOrFail();
+            $threads = Thread::where('user_id', $user->id);
+        }
+
+        $threads = $threads->get();
 
         return view('threads.index', compact('threads'));
     }
