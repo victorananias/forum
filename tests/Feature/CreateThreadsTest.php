@@ -3,13 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
 use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Auth\AuthenticationException;
 use App\Channel;
 
 class CreateThreadsTest extends TestCase
@@ -36,7 +32,7 @@ class CreateThreadsTest extends TestCase
         $thread = factory(Thread::class)->make();
 
         $response = $this->post('/threads', $thread->toArray());
-        
+
         $this->get($response->headers->get('location'))
              ->assertSee($thread->title)
              ->assertSee($thread->body);
@@ -48,7 +44,7 @@ class CreateThreadsTest extends TestCase
         $this->publishThread(['title' => null])
              ->assertSessionHasErrors('title');
     }
-    
+
     /** @test */
     public function a_thread_requires_a_body()
     {
@@ -68,7 +64,7 @@ class CreateThreadsTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
-    private  function publishThread($overrides = [])
+    private function publishThread($overrides = [])
     {
         $this->withExceptionHandling();
 
@@ -78,5 +74,4 @@ class CreateThreadsTest extends TestCase
 
         return $this->post('/threads', $thread->toArray());
     }
-
 }

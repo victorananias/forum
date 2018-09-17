@@ -3,9 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-
 use App\Thread;
 use App\Reply;
 use App\Channel;
@@ -59,13 +57,12 @@ class ReadThreadsTest extends TestCase
         $threadInChannel = factory(Thread::class)->create([
             'channel_id' => $channel->id
         ]);
-        
+
         $threadNotInChannel = factory(Thread::class)->create();
 
         $this->get("/threads/{$channel->slug}")
              ->assertSee($threadInChannel->title)
              ->assertDontSee($threadNotInChannel->title);
-
     }
 
     /** @test */
