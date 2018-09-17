@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Reply;
 use App\Thread;
 
 class RepliesController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('auth');   
+        $this->middleware('auth');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *

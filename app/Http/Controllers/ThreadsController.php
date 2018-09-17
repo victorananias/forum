@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\User;
 use App\Thread;
 use App\Channel;
 
 class ThreadsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -23,13 +21,13 @@ class ThreadsController extends Controller
      */
     public function index(Request $request, Channel $channel)
     {
-        if($channel->exists) {
+        if ($channel->exists) {
             $threads = $channel->threads()->latest();
         } else {
             $threads = Thread::latest();
         }
 
-        if($username = $request->by) {
+        if ($username = $request->by) {
             $user = User::whereName($username)->firstOrFail();
             $threads = Thread::where('user_id', $user->id);
         }
