@@ -8,6 +8,7 @@ class Filter
 {
     protected $request;
     protected $builder;
+    protected $filters = [];
 
     /**
      * Filter constructor
@@ -17,16 +18,32 @@ class Filter
         $this->request = $request;
     }
 
+    /**
+     * apply the request filters
+     *
+     * @param $builder
+     * @return void
+     */
     public function apply($builder)
     {
         $this->builder = $builder;
 
-        if (!$username = $this->request->by) {
-            return $builder;
+        foreach ($this->getFilters() as $filter => $value) {
+            if (method_exists($this, $filter)) {
+                $this->$filter($value);
+            }
         }
 
-        if ($this->request->has('by')) {
-            return $this->by($this->request->by);
-        }
+        return $this->builder;
+    }
+
+    /**
+     * return the valid filters on the request
+     *
+     * @return array
+     */
+    protected function getFilters()
+    {
+        return $this->request->only($this->filters);
     }
 }
