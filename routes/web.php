@@ -30,4 +30,3 @@ Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::post('/threads', 'ThreadsController@store');
 
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
-
