@@ -18,4 +18,13 @@ class Reply extends Model
     {
         return $this->morphMany(Favorite::class, 'favorited');
     }
+
+    public function favorite()
+    {
+        $attributes = ['user_id' => auth()->id()];
+
+        if (!$this->favorites()->where($attributes)->exists()) {
+            return $this->favorites()->create($attributes);
+        }
+    }
 }
