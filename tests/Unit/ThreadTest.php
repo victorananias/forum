@@ -5,13 +5,13 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Support\Collection;
 use App\Thread;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Auth\User;
 use App\Channel;
 
 class ThreadTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     protected $thread;
 
