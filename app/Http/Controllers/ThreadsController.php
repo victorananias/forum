@@ -21,13 +21,13 @@ class ThreadsController extends Controller
      */
     public function index(Channel $channel, ThreadFilter $filters)
     {
-        $threads = Thread::latest();
+        $threads = new Thread;
 
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->filter($filters)->get();
+        $threads = $threads->filter($filters)->latest()->get();
 
         return view('threads.index', compact('threads'));
     }
