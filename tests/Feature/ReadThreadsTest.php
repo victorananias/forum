@@ -90,10 +90,10 @@ class ReadThreadsTest extends TestCase
         factory(Reply::class, 2)->create(['thread_id' => $threadWithTwoReplies->id]);
         factory(Reply::class, 3)->create(['thread_id' => $threadWithThreeReplies->id]);
 
-        $response = $this->get('/threads?popular=1');
-
-        $threadsFromResponse = $response->baseResponse->original->getData()['threads'];
-
-        $this->assertEquals([3, 2, 0], $threadsFromResponse->toArray());
+        $this->get('/threads?popular=1')->assertSeeInOrder([
+            $threadWithThreeReplies->title,
+            $threadWithTwoReplies->title,
+            $threadWithZeroReplies->title
+        ]);
     }
 }
