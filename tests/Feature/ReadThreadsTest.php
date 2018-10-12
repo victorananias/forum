@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Thread;
 use App\Reply;
 use App\Channel;
@@ -16,7 +16,7 @@ class ReadThreadsTest extends TestCase
     | e após será revertido (rollback)
     |
     */
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $thread;
 
