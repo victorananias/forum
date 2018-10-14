@@ -21,13 +21,7 @@ class ThreadsController extends Controller
      */
     public function index(Channel $channel, ThreadFilter $filters)
     {
-        $threads = new Thread;
-
-        if ($channel->exists) {
-            $threads = $threads->where('channel_id', $channel->id);
-        }
-
-        $threads = $threads->filter($filters)->latest()->get();
+        $threads = $this->getThreads($channel, $filters);
 
         return view('threads.index', compact('threads'));
     }
@@ -113,5 +107,23 @@ class ThreadsController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    /**
+     * Fetch all relevant threads
+     *
+     * @param Channel $channel
+     * @param ThreadFilters $filters
+     * @return mixed
+     */
+    protected function getThreads($channel, $filters)
+    {
+        $threads = Thread::with('channel')->filter($filters)->latest();
+
+        if ($channel->exists) {
+            $threads = $threads->where('channel_id', $channel->id);
+        }
+
+        return $threads->get();
     }
 }
