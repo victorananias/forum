@@ -45,6 +45,7 @@ class FavoritesController extends Controller
     public function store(Request $request, Reply $reply)
     {
         $reply->favorite();
+        return redirect()->back();
     }
 
     /**
