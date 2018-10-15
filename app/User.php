@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * set the route key
+     *
+     * @return mixed
+     */
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
 }
