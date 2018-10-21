@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use App\Thread;
 
 class ProfilesTest extends TestCase
 {
@@ -17,5 +18,17 @@ class ProfilesTest extends TestCase
 
         $this->get('profiles/' . $user->name)
              ->assertSee($user->name);
+    }
+
+    /** @test */
+    public function profiles_display_all_threads_created_by_the_associated_user()
+    {
+        $user = factory(User::class)->create();
+
+        $thread = factory(Thread::class)->create(['user_id' => $user->id]);
+
+        $this->get('profiles/' . $user->name)
+              ->assertSee($thread->title)
+              ->assertSee($thread->body);
     }
 }
