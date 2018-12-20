@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> posted:
+                    <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
                     {{ $thread->title }}
                 </div>
                 <div class="card-body">
@@ -25,21 +25,21 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <textarea class="form-control" name="body" rows="5" 
-                            placeholder="Have something to say?"></textarea>
+                            placeholder="Tem algo a dizer?"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Post</button>
+                    <button type="submit" class="btn btn-primary float-right">Publicar</button>
                 </form>
             @else 
-                <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in the discussion</p>
+                <p class="text-center">Por favor, <a href="{{ route('login') }}">entre</a> para participar da discução.</p>
             @endif
 
         </div>
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    This thread was published {{ $thread->created_at->diffForHumans() }} by 
+                    Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
                     <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
-                    and currently has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.
+                    a atualmente possui {{ $thread->replies_count }} {{ str_plural('comentário', $thread->replies_count) }}.
                 </div>
             </div>
         </div>

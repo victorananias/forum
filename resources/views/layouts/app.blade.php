@@ -35,7 +35,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -52,22 +52,22 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Browse
+                              Navegar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/threads">All Threads</a>
-                                <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
+                                <a class="dropdown-item" href="/threads">Todas as Threads</a>
+                                <a class="dropdown-item" href="/threads?popular=1">Threads Populares</a>
                                 @if(auth()->check())
-                                    <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">My Threads</a>
+                                    <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">Minhas Threads</a>
                                 @endif
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/threads/create">New Thread</a>
+                            <a class="nav-link" href="/threads/create">Criar Thread</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Channels
+                              Canais
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach ($channels as $channel)

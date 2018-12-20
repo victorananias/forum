@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <div class="level">
                         <span class="flex">
-                            <a href="/profiles/{{  $thread->creator->name }}">{{ $thread->creator->name }}</a> posted:
+                            <a href="/profiles/{{  $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
                             {{ $thread->title }}
                         </span>
                         <span>
