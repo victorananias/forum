@@ -27,7 +27,7 @@
                         <textarea class="form-control" name="body" rows="5" 
                             placeholder="Tem algo a dizer?"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Publicar</button>
+                    <button type="submit" class="btn btn-dark float-right">Comentar</button>
                 </form>
             @else 
                 <p class="text-center">Por favor, <a href="{{ route('login') }}">entre</a> para participar da discução.</p>

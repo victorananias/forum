@@ -28,7 +28,7 @@
                                 <label for="body">Conteúdo:</label>
                                 <textarea class="form-control" id="body" name="body" rows="8" required>{{ old('body') }}</textarea>
                             </div>
-                            <button type="submit" class="btn btn-light">Publicar</button>
+                            <button type="submit" class="btn btn-dark float-right">Publicar</button>
                             @foreach($errors->all() as $error)
                                 <div class="alert alert-danger mt-3">
                                     {{ $error }}
