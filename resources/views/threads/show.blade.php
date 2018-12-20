@@ -5,9 +5,11 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card mb-4">
-                <div class="card-header">
-                    <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
-                    {{ $thread->title }}
+                <div class="card-header bg-dark text-light">
+                    <h5>
+                        <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
+                        {{ $thread->title }}
+                    </h5>
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}

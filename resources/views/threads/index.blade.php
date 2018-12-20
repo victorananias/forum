@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Threads do Forum</div>
+                <div class="card-header bg-dark text-light">Threads</div>
 
                 <div class="card-body">
 
@@ -14,9 +14,9 @@
                     <article>
                         <div class="level">
                             <h4 class="flex">
-                                <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                                <a class="text-dark" href="{{ $thread->path() }}">{{ $thread->title }}</a>
                             </h4>
-                            <a href="{{ $thread->path() }}">
+                            <a class="text-dark" href="{{ $thread->path() }}">
                                 <strong class="float-right">{{ $thread->replies_count }} {{ str_plural('resposta', $thread->replies_count) }}</strong>
                             </a>
                         </div>

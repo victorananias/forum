@@ -1,9 +1,9 @@
 <div class="card mb-2"> 
     <div class="card-header">
     <div class="level">
-        <h5 class="flex">
+        <div class="flex">
             <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }}</a> disse {{ $reply->created_at->diffForHumans() }}...
-        </h5>
+        </div>
         <div>
             <form method="POST" action="/replies/{{ $reply->id }}/favorites">
                 {{ csrf_field() }}
