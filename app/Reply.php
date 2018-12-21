@@ -13,6 +13,11 @@ class Reply extends Model
 
     use Favoritable;
 
+    /**
+     * A reply belongs to an owner.
+     *
+     * @return void
+     */
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');

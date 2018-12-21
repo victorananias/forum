@@ -37,6 +37,11 @@ class User extends Authenticatable
         return 'name';
     }
 
+    /**
+     * A user can have many threads.
+     *
+     * @return void
+     */
     public function threads()
     {
         return $this->hasMany(Thread::class)->latest();
