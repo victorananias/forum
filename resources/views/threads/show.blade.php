@@ -32,7 +32,7 @@
                     <button type="submit" class="btn btn-dark float-right">Comentar</button>
                 </form>
             @else 
-                <p class="text-center">Por favor, <a href="{{ route('login') }}">entre</a> para participar da discução.</p>
+                <p class="text-center"><a href="{{ route('login') }}">Entre</a> para participar da discução.</p>
             @endif
 
         </div>
