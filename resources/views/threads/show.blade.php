@@ -41,7 +41,7 @@
                 <div class="card-body">
                     Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
                     <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
-                    a atualmente possui {{ $thread->replies_count }} {{ str_plural('comentário', $thread->replies_count) }}.
+                    e atualmente possui {{ $thread->replies_count }} {{ str_plural('resposta', $thread->replies_count) }}.
                 </div>
             </div>
         </div>

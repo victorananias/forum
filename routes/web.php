@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function() {
+Route::get('/', function () {
     return redirect('/threads');
 });
 
 Auth::routes();
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return redirect('threads');
 });
 
@@ -35,4 +35,4 @@ Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
 
-Route::get('/profiles/{user}', 'ProfilesController@show');
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');

@@ -26,30 +26,30 @@ $factory->define(App\Thread::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence,
         'body' => $faker->paragraph,
-        'user_id' => function() {
+        'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
-        'channel_id' => function() {
+        'channel_id' => function () {
             return factory(App\Channel::class)->create()->id;
         },
     ];
 });
 
 $factory->define(App\Channel::class, function (Faker $faker) {
-    $name = $faker->name;
+    $title = $faker->title;
     return [
-        'name' => $name,
-        'slug' => $name
+        'name' => $title,
+        'slug' => $title
     ];
 });
 
 $factory->define(App\Reply::class, function (Faker $faker) {
     return [
         'body' => $faker->paragraph,
-        'thread_id' => function() {
+        'thread_id' => function () {
             return factory(App\Thread::class)->create()->id;
         },
-        'user_id' => function() {
+        'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
     ];

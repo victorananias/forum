@@ -10,7 +10,7 @@
                         <form method="POST" action="/threads">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="channel_id">Canal:</label>
+                                <label for="channel_id">Channel:</label>
                                 <select name="channel_id" id="channel_id" class="form-control" required>
                                     <option value="">Escolher...</option>
                                     @foreach ($channels as $channel)
