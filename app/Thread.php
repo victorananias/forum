@@ -10,6 +10,8 @@ class Thread extends Model
     protected $guarded = [];
     protected $with = ['channel', 'creator'];
 
+    use RecordsActivity;
+
     public static function boot()
     {
         parent::boot();
@@ -84,5 +86,15 @@ class Thread extends Model
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
+    }
+
+    /**
+     * Returns the activities which will be recorded
+     *
+     * @return array
+     */
+    protected static function getActivitiesToRecord()
+    {
+        return ['created', 'deleted'];
     }
 }

@@ -11,7 +11,7 @@ class Reply extends Model
     protected $with = ['owner', 'favorites'];
     protected $withCount = ['favorites'];
 
-    use Favoritable;
+    use Favoritable, RecordsActivity;
 
     /**
      * A reply belongs to an owner.
