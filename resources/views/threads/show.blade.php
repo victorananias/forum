@@ -6,10 +6,17 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header bg-dark text-light">
-                    <h5>
-                        <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
-                        {{ $thread->title }}
-                    </h5>
+                    <div class="level">
+                        <span class="flex">
+                            <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
+                            {{ $thread->title }}
+                        </span>
+                        <form action="{{ $thread->path() }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-link">Delete</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}
