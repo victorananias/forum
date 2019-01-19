@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 @empty
-                    <p>Não existem threads neste channel</p>
+                    <p class="text-dark">Não existem threads neste channel</p>
                 @endforelse
             </div>
         </div>

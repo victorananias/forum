@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder
         $this->call(ThreadsTableSeeder::class);
 
         User::create([
+            'name'=> 'administrator',
+            'email'=> 'administrator@teste.com',
+            'password'=> bcrypt('123')
+        ]);
+
+        User::create([
             'name'=> 'teste',
             'email'=> 'teste@teste.com',
             'password'=> bcrypt('123')

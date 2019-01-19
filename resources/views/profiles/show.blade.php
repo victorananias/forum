@@ -16,7 +16,7 @@
                             <div class="level">
                                 <span class="flex">
                                     <a class="font-weight-bold" href="/profiles/{{  $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
-                                    {{ $thread->title }}
+                                    <a class="font-weight-bold" href="{{ $thread->path() }}">{{ $thread->title }}</a>
                                 </span>
                                 <span>
                                     {{ $thread->created_at->diffForHumans() }}
