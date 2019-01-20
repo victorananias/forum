@@ -22,4 +22,13 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    /**
+     * A reply belongs to an thread.
+     *
+     * @return void
+     */
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'user_id');
+    }
 }

@@ -53,6 +53,6 @@ class User extends Authenticatable
      */
     public function activities()
     {
-        return $this->hasMany(Activity::class)->latest();
+        return $this->hasMany(Activity::class);
     }
 }

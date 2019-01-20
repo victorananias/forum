@@ -38,7 +38,7 @@
                         <textarea class="form-control" name="body" rows="5" 
                             placeholder="Tem algo a dizer?"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-dark float-right">Comentar</button>
+                    <button type="submit" class="btn btn-dark float-right">Responder</button>
                 </form>
             @else 
                 <p class="text-center"><a href="{{ route('login') }}">Entre</a> para participar da discução.</p>

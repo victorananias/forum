@@ -52,7 +52,7 @@ class Thread extends Model
      */
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->latest();
     }
 
     /**
@@ -86,15 +86,5 @@ class Thread extends Model
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
-    }
-
-    /**
-     * Returns the activities which will be recorded
-     *
-     * @return array
-     */
-    protected static function getActivitiesToRecord()
-    {
-        return ['created', 'deleted'];
     }
 }
