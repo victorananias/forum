@@ -10,6 +10,7 @@ use App\Thread;
 use App\User;
 use App\Activity;
 use App\Reply;
+use Illuminate\Support\Carbon;
 
 class ActivityTest extends TestCase
 {
@@ -43,5 +44,29 @@ class ActivityTest extends TestCase
         $reply = factory(Reply::class)->create();
 
         $this->assertEquals(2, Activity::count());
+    }
+
+    /** @test */
+    public function it_fetches_a_feed_for_any_user()
+    {
+        $user = factory(User::class)->create();
+        
+        $this->actingAs($user);
+        
+        factory(Thread::class, 2)->create([ 'user_id' => $user->id ]);
+
+        $user->activities()->first()->update([
+            'created_at' => Carbon::now()->subWeek()
+        ]);
+
+        $feed = Activity::feed($user);
+
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->subWeek()->format('Y-m-d')
+        ));
+        
+        $this->assertTrue($feed->keys()->contains(
+            Carbon::now()->format('Y-m-d')
+        ));
     }
 }
