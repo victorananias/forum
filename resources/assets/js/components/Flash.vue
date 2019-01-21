@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-success alert-flash" role="alert" v-show="show">
-        <strong>Success!</strong> {{ body }}
+        <strong>Sucesso !</strong> {{ body }}
     </div>
 </template>
 
@@ -14,9 +14,23 @@
             }
         },
         created() {
-            if(this.message) {
+            if (this.message) {
+                this.flash(this.message);
+            }
+
+            window.events.$on('flash', message => this.flash(message));
+        },
+        methods: {
+            flash(message) {
                 this.body = this.message;
                 this.show = true;
+
+                this.hide();
+            },
+            hide() {
+                setTimeout(() => {
+                    this.show = false;
+                }, 3000);
             }
         }
     }

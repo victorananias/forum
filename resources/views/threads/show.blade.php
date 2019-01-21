@@ -56,5 +56,5 @@
         </div>
     </div>
 </div>
-<flash message="{{ session('flash') }}"></flash>
+<flash message="{{ session('aviso') }}"></flash>
 @endsection
