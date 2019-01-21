@@ -29,6 +29,11 @@ class Reply extends Model
      */
     public function thread()
     {
-        return $this->belongsTo(Thread::class, 'user_id');
+        return $this->belongsTo(Thread::class, 'thread_id');
+    }
+    
+    public function path()
+    {
+        return $this->thread->path(). "#reply-{$this->id}";
     }
 }
