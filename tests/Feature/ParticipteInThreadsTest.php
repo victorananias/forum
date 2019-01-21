@@ -8,7 +8,7 @@ use App\User;
 use App\Thread;
 use App\Reply;
 
-class ParticipteInForumTest extends TestCase
+class ParticipteInThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -52,5 +52,35 @@ class ParticipteInForumTest extends TestCase
 
         $this->post("{$thread->path()}/replies", $reply->toArray())
              ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function unauthorized_users_cannot_delete_replies()
+    {
+        $this->withExceptionHandling();
+
+        $reply = factory(Reply::class)->create();
+
+        $this->delete("/replies/{$reply->id}")->assertRedirect('login');
+
+        $this->actingAs(factory(User::class)->create());
+
+        $this->delete("/replies/{$reply->id}")->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_users_can_delete_replies()
+    {
+        $this->withExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+
+        $reply = factory(Reply::class)->create(['user_id' => $user->id]);
+
+        $this->delete("/replies/{$reply->id}");
+
+        $this->assertDatabaseMissing('replies', [ 'id' => $reply->id ]);
     }
 }

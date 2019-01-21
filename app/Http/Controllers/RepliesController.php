@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Thread;
+use App\Reply;
 
 class RepliesController extends Controller
 {
@@ -34,5 +35,22 @@ class RepliesController extends Controller
         return redirect($thread->path())->with([
             'aviso' => 'Sua resposta foi salva.'
         ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Reply  $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Reply $reply)
+    {
+        if ($reply->user_id != auth()->id()) {
+            return response([], 403);
+        }
+
+        $reply->delete();
+
+        return back();
     }
 }
