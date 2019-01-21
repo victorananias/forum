@@ -57,7 +57,9 @@ class ThreadsController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        return redirect($thread->path());
+        return redirect($thread->path())->with([
+            'aviso' => 'Sua thread foi criada.'
+        ]);
     }
 
     /**
