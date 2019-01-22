@@ -14,7 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        'App\Thread' => 'App\Policies\ThreadPolicy'
+        'App\Thread' => 'App\Policies\ThreadPolicy',
+        'App\Reply' => 'App\Policies\ReplyPolicy'
     ];
 
     /**
@@ -26,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Allows administrator to do whatever he wants
         Gate::before(function ($user) {
             if ($user->name == 'administrator') {
                 return true;

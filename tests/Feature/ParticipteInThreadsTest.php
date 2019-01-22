@@ -66,6 +66,8 @@ class ParticipteInThreadsTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $this->delete("/replies/{$reply->id}")->assertStatus(403);
+        
+        $this->assertDatabaseHas('replies', ['id' => $reply->id]);
     }
 
     /** @test */

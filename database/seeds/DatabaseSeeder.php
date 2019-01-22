@@ -12,8 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ThreadsTableSeeder::class);
-
         User::create([
             'name'=> 'administrator',
             'email'=> 'administrator@teste.com',
@@ -25,5 +23,7 @@ class DatabaseSeeder extends Seeder
             'email'=> 'teste@teste.com',
             'password'=> bcrypt('123')
         ]);
+        
+        $this->call(ThreadsTableSeeder::class);
     }
 }

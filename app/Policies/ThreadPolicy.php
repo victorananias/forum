@@ -11,7 +11,7 @@ class ThreadPolicy
     use HandlesAuthorization;
 
     /**
-     * Verificação executada antes de todas as policies
+     * Run before all policies
      *
      * @param App\User $user
      * @return boolean
