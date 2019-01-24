@@ -38,6 +38,20 @@ class RepliesController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Reply  $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->update(['body' => $request->body]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Reply  $reply
