@@ -6,12 +6,7 @@
                     <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }}</a> disse {{ $reply->created_at->diffForHumans() }}...
                 </div>
                 <div>
-                    <form method="POST" action="/replies/{{ $reply->id }}/favorites">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                            {{ $reply->favorites_count }} {{ str_plural('Favorito', $reply->favorites_count) }}
-                        </button>
-                    </form>
+                    <favorite :reply="{{ $reply }}"></favorite>
                 </div>
             </div>
         </div>
@@ -31,7 +26,6 @@
             <div class="card-footer level">
                 <button class="btn btn-secondary btn-sm mr-2" @click="editing = true">Edit</button>
                 <button class="btn btn-danger btn-sm mr-2" @click="destroy()">Delete</button>
-                
             </div>
         @endcan 
     </div>

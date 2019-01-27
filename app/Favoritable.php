@@ -4,6 +4,7 @@ namespace App;
 
 trait Favoritable
 {
+
     /**
      * A reply can be favorited
      *
@@ -36,5 +37,16 @@ trait Favoritable
     public function isFavorited()
     {
         return !!$this->favorites->where('user_id', auth()->id())->count();
+    }
+
+
+    /**
+     * Returns favorites count
+     *
+     * @return int
+     */
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
     }
 }
