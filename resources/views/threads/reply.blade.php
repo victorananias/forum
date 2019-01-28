@@ -5,9 +5,11 @@
                 <div class="flex">
                     <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }}</a> disse {{ $reply->created_at->diffForHumans() }}...
                 </div>
-                <div>
-                    <favorite :reply="{{ $reply }}"></favorite>
-                </div>
+                @if(Auth::check())
+                    <div>
+                        <favorite :reply="{{ $reply }}"></favorite>
+                    </div>
+                @endif
             </div>
         </div>
 

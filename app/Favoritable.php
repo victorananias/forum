@@ -4,6 +4,16 @@ namespace App;
 
 trait Favoritable
 {
+    protected static function bootFavoritable()
+    {
+        if (auth()->guest()) {
+            return;
+        }
+
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
 
     /**
      * A reply can be favorited
@@ -38,7 +48,7 @@ trait Favoritable
     {
         $attributes = ['user_id' => auth()->id()];
 
-        return $this->favorites()->where($attributes)->delete();
+        return $this->favorites()->where($attributes)->get()->each->delete();
     }
 
     /**

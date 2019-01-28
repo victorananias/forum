@@ -10,7 +10,7 @@
                     <small> cadastrado {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h1>
         
-                @foreach($activities as $date => $activity)
+                @forelse($activities as $date => $activity)
                     <h5 class="pb-2 mt-4 mb-2 border-bottom">
                         {{ $date }}
                     </h5>
@@ -22,8 +22,10 @@
                         @endif
                         
                     @endforeach
-
-                @endforeach
+                    
+                @empty
+                    <p>Este usuário não possui atividades.</p>
+                @endforelse
                 
             </div>
         </div>
