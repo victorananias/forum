@@ -40,6 +40,15 @@
             display: none
         }
     </style>
+
+    <script charset="utf-8">
+        window.App = {!! json_encode([
+            'signedIn' => \Auth::check(),
+            'user' => \Auth::user()
+        ]) !!};
+    </script>
+
+
 </head>
 <body>
     <div id="app">

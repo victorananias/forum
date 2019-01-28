@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-success alert-flash" role="alert" v-show="show">
-        <strong>Sucesso !</strong> {{ body }}
+        <strong>Sucesso!</strong> {{ body }}
     </div>
 </template>
 
@@ -22,7 +22,7 @@
         },
         methods: {
             flash(message) {
-                this.body = this.message;
+                this.body = message;
                 this.show = true;
 
                 this.hide();
