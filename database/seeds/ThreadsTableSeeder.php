@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Activity;
 
 class ThreadsTableSeeder extends Seeder
 {
@@ -13,7 +14,11 @@ class ThreadsTableSeeder extends Seeder
     {
         $threads = factory(\App\Thread::class, 50)->create();
 
-        $threads->each(function($thread) {
+        $threads->each(function ($thread) {
+            $thread->activities()->create([
+                'type' => 'created_thread',
+                'user_id' => $thread->user_id
+            ]);
             factory(\App\Reply::class, 10)->create([
                 'thread_id' => $thread->id
             ]);
