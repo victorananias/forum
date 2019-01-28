@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\User;
 
 class Reply extends Model
 {
+    use Favoritable, RecordsActivity;
+
     protected $guarded = [];
     protected $with = ['owner', 'favorites'];
-    protected $withCount = ['favorites'];
-
-    use Favoritable, RecordsActivity;
+    protected $appends = ['favoritesCount', 'isFavorited'];
 
     /**
      * A reply belongs to an owner.

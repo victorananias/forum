@@ -38,7 +38,7 @@ class FavoritesTest extends TestCase
 
         $reply = factory(Reply::class)->create();
 
-        $this->post("replies/{$reply->id}/favorites");
+        $reply->favorite();
 
         $this->delete("replies/{$reply->id}/favorites");
 
