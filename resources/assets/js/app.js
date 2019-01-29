@@ -14,7 +14,7 @@ window.Vue.prototype.authorize = function(handler) {
 
     if (!user) return false;
 
-    handler(user);
+    return handler(user);
 }
 
 window.events = new Vue;

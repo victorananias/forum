@@ -6,11 +6,9 @@
                     <a :href="'/profiles/' + data.owner.name" v-text="data.owner.name">
                     </a> disse {{ data.created_at }}...
                 </div>
-                <!-- @if(Auth::check()) -->
-                    <div v-if="signedIn">
-                        <favorite :reply="data"></favorite>
-                    </div>
-                <!-- @endif -->
+                <div v-if="signedIn">
+                    <favorite :reply="data"></favorite>
+                </div>
             </div>
         </div>
 
@@ -29,8 +27,6 @@
             <button class="btn btn-secondary btn-sm mr-2" @click="editing = true">Edit</button>
             <button class="btn btn-danger btn-sm mr-2" @click="destroy()">Delete</button>
         </div>
-        <!-- @can('update', $reply)
-        @endcan  -->
     </div>
 </template>
 

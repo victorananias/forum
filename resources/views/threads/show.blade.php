@@ -26,20 +26,10 @@
                     </div>
                 </div>
 
-                <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
-
-                @if(auth()->check())
-                    <form action="{{ $thread->path().'/replies' }}" method="POST">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <textarea class="form-control" name="body" rows="5" 
-                                placeholder="Tem algo a dizer?"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-dark float-right">Responder</button>
-                    </form>
-                @else 
-                    <p class="text-center"><a href="{{ route('login') }}">Entre</a> para participar da discução.</p>
-                @endif
+                <replies :data="{{ $thread->replies }}" 
+                    @removed="repliesCount--" 
+                    @added="repliesCount--">
+                </replies>
 
             </div>
             <div class="col-md-4">
