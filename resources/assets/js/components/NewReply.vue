@@ -13,18 +13,17 @@
 
 <script>
     export default {
-        props: ['endpoint'],
         data() {
             return {
-                body: '', 
+                body: ''
             }
         },
         methods: {
             addReply() {
-                axios.post(this.endpoint + '/replies', { body: this.body })
+                axios.post(`${location.pathname}/replies` , { body: this.body })
                     .then(({data}) => {
+                        this.body = '';
                         flash('Sua resposta foi salva.');
-
                         this.$emit('created', data);
                     });
             }

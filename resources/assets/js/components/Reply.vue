@@ -64,7 +64,7 @@
                 return this.authorize(user =>  this.data.user_id == user.id);
             },
             createdAt() {
-                moment.locale('pt-BR')
+                moment.locale('pt-BR');
                 return moment(this.data.created_at).fromNow();
             }
         }
