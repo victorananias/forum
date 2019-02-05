@@ -18,11 +18,12 @@
                           Navegar
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/threads">Todas as Threads</a>
-                            <a class="dropdown-item" href="/threads?popular=1">Threads Populares</a>
                             @if(auth()->check())
                                 <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">Minhas Threads</a>
                             @endif
+                            <a class="dropdown-item" href="/threads">Todas as Threads</a>
+                            <a class="dropdown-item" href="/threads?popular=1">Threads Populares</a>
+                            <a class="dropdown-item" href="/threads?unanswered=1">Threads Não Respondidas</a>
                         </div>
                     </li>
                     <li class="nav-item">

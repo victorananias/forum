@@ -40,6 +40,7 @@
                 return `${location.pathname}/replies?page=${page}`;
             },
             refresh({data}) {
+                window.scrollTo(0, 0);
                 this.dataSet = data;
                 this.items = data.data
             }
