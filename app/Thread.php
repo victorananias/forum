@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 
 class Thread extends Model
 {
@@ -51,6 +50,11 @@ class Thread extends Model
         return $this->hasMany(Reply::class)->latest();
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(ThreadSubscription::class);
+    }
+
     /**
      * Return the uri of the current thread.
      *
@@ -82,5 +86,31 @@ class Thread extends Model
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
+    }
+
+    /**
+     * A thread can be subscribed to.
+     *
+     * @param int $userId
+     * @return void
+     */
+    public function subcribe($userId = null)
+    {
+        $this->subscriptions()->create([
+            'user_id' => $userId ?: auth()->id()
+        ]);
+    }
+
+    /**
+     * A thread can be unsubscribed from.
+     *
+     * @param int $userId
+     * @return void
+     */
+    public function unsubcribe($userId = null)
+    {
+        $this->subscriptions()->where([
+            'user_id' => $userId ?: auth()->id()
+        ])->delete();
     }
 }

@@ -6,8 +6,8 @@ use Tests\TestCase;
 use Illuminate\Support\Collection;
 use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Auth\User;
 use App\Channel;
+use App\User;
 
 class ThreadTest extends TestCase
 {
@@ -56,5 +56,34 @@ class ThreadTest extends TestCase
     public function a_thread_belongs_to_a_channel()
     {
         $this->assertInstanceOf(Channel::class, $this->thread->channel);
+    }
+
+    /** @test */
+    public function a_thread_can_be_subcribed_to()
+    {
+        $thread = factory(Thread::class)->create();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+        
+        $thread->subcribe();
+
+        $this->assertEquals(1, $thread->subscriptions()->where('user_id', $user->id)->count());
+    }
+    /** @test */
+    public function a_thread_can_be_unsubcribed_from()
+    {
+        $thread = factory(Thread::class)->create();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+        
+        $thread->subcribe();
+
+        $thread->unsubcribe($user->id);
+
+        $this->assertEquals(0, $thread->subscriptions()->where('user_id', $user->id)->count());
     }
 }
