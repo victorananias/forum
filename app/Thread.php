@@ -94,7 +94,7 @@ class Thread extends Model
      * @param int $userId
      * @return void
      */
-    public function subcribe($userId = null)
+    public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
@@ -107,7 +107,7 @@ class Thread extends Model
      * @param int $userId
      * @return void
      */
-    public function unsubcribe($userId = null)
+    public function unsubscribe($userId = null)
     {
         $this->subscriptions()->where([
             'user_id' => $userId ?: auth()->id()

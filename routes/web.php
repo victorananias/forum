@@ -37,6 +37,8 @@ Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');
+
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
 
 Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');

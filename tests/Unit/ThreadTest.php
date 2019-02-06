@@ -59,7 +59,7 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_can_be_subcribed_to()
+    public function a_thread_can_be_subscribed_to()
     {
         $thread = factory(Thread::class)->create();
 
@@ -67,12 +67,12 @@ class ThreadTest extends TestCase
 
         $this->actingAs($user);
         
-        $thread->subcribe();
+        $thread->subscribe();
 
         $this->assertEquals(1, $thread->subscriptions()->where('user_id', $user->id)->count());
     }
     /** @test */
-    public function a_thread_can_be_unsubcribed_from()
+    public function a_thread_can_be_unsubscribed_from()
     {
         $thread = factory(Thread::class)->create();
 
@@ -80,9 +80,9 @@ class ThreadTest extends TestCase
 
         $this->actingAs($user);
         
-        $thread->subcribe();
+        $thread->subscribe();
 
-        $thread->unsubcribe($user->id);
+        $thread->unsubscribe($user->id);
 
         $this->assertEquals(0, $thread->subscriptions()->where('user_id', $user->id)->count());
     }
