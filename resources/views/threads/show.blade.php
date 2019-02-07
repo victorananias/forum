@@ -32,9 +32,14 @@
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
-                        Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
-                        <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
-                        e atualmente possui <span v-text="repliesCount"></span> {{ str_plural('resposta', $thread->replies_count) }}.
+                        <p>
+                            Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
+                            <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
+                            e atualmente possui <span v-text="repliesCount"></span> {{ str_plural('resposta', $thread->replies_count) }}.
+                        </p>
+                        <p>
+                            <subscribe-button :initial-active="{{ $thread->isSubscribedTo ? 'false' : 'true' }}"></subscribe-button>
+                        </p>
                     </div>
                 </div>
             </div>
