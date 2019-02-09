@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\ThreadWasUpdated;
 
 class Thread extends Model
 {
@@ -76,8 +77,13 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        $this->subscriptions->each(function () use ($reply) {
-        });
+        $this->subscriptions
+            ->filter(function ($sub) use ($reply) {
+                return $sub->user_id != $reply->user_id;
+            })
+            ->each(function ($subscription) use ($reply) {
+                $subscription->notify($reply);
+            });
 
         return $reply;
     }
@@ -98,13 +104,15 @@ class Thread extends Model
      * A thread can be subscribed to.
      *
      * @param int $userId
-     * @return void
+     * @return App\thread $this
      */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
+
+        return $this;
     }
 
     /**

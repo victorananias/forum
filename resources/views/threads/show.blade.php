@@ -37,9 +37,11 @@
                             <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
                             e atualmente possui <span v-text="repliesCount"></span> {{ str_plural('resposta', $thread->replies_count) }}.
                         </p>
+                        @if(auth()->check())
                         <p>
                             <subscribe-button :initial-active="{{ $thread->isSubscribedTo ? 'false' : 'true' }}"></subscribe-button>
                         </p>
+                        @endif
                     </div>
                 </div>
             </div>

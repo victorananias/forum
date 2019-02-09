@@ -13,10 +13,13 @@ class RepliesController extends Controller
         $this->middleware('auth', ['except' => 'index']);
     }
 
+    
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param $channel
+     * @param App\Thread $thread
+     * @return mixed
      */
     public function index($channel, Thread $thread)
     {
