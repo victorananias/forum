@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\ThreadWasUpdated;
+use App\Events\ThreadHasNewReply;
 
 class Thread extends Model
 {
@@ -52,7 +52,6 @@ class Thread extends Model
         return $this->hasMany(Reply::class)->latest();
     }
 
-
     /**
      * A thread can have subscriptions
      *
@@ -61,6 +60,19 @@ class Thread extends Model
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);
+    }
+
+    /**
+     * A thread can notify its subscribers about a new reply
+     *
+     * @return void
+     */
+    public function notifySubscribers($reply)
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
     }
 
     /**
@@ -83,11 +95,9 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        // $this->subscriptions
-        //     ->where('user_id', '!=', $reply->user_id)
-        //     ->each(function ($subscription) use ($reply) {
-        //         $subscription->notify($reply);
-        //     });
+        // $this->notifySubscribers($reply);
+
+        event(new ThreadHasNewReply($this, $reply));
 
         return $reply;
     }
