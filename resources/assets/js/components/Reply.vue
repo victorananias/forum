@@ -24,8 +24,12 @@
         </div>
 
         <div class="card-footer level" v-if="canUpdate">
-            <button class="btn btn-secondary btn-sm mr-2" @click="editing = true">Edit</button>
-            <button class="btn btn-danger btn-sm mr-2" @click="destroy()">Delete</button>
+            <button class="btn text-secondary mr-2" @click="editing = true">
+                <i class="far fa-edit fa-lg"></i>
+            </button>
+            <button class="btn text-danger btn-sm mr-2" @click="destroy()">
+                <i class="fas fa-trash-alt fa-lg"></i>
+            </button>
         </div>
     </div>
 </template>

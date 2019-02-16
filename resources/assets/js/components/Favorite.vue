@@ -1,8 +1,8 @@
 <template>
-    <button type="submit" :class="classes" @click="toggle()">
+    <a :class="classes" @click="toggle()">
         <i class="fas fa-heart"></i>
         <span v-text="count"></span>
-    </button>
+    </a>
 </template>
 
 <script>
@@ -33,7 +33,7 @@
         },
         computed: {
             classes() {
-                return ['btn', this.active ? 'btn-primary' : 'btn-default'];
+                return ['btn', this.active ? 'text-primary' : 'btn-default'];
             },
             endpoint() {
                 return `/replies/${this.reply.id}/favorites`;

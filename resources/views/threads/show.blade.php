@@ -9,14 +9,17 @@
                     <div class="card-header bg-dark text-light">
                         <div class="level">
                             <span class="flex">
-                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> publicou:
-                                {{ $thread->title }}
+                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">
+                                    {{ $thread->creator->name }}
+                                </a> publicou: {{ $thread->title }}
                             </span>
                             @can('update', $thread)
                                 <form action="{{ $thread->path() }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-link">Delete</button>
+                                    <button type="submit" class="btn text-danger">
+                                        <i class="fas fa-trash-alt fa-lg"></i>
+                                    </button>
                                 </form>
                             @endcan
                         </div>
