@@ -30903,6 +30903,8 @@ window.flash = function (message) {
 
 Vue.component('flash', __webpack_require__(168));
 
+Vue.component('user-notifications', __webpack_require__(202));
+
 Vue.component('thread-view', __webpack_require__(176));
 
 var app = new Vue({
@@ -65238,6 +65240,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -66014,6 +66018,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -66050,52 +66061,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.signedIn
-      ? _c("form", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.body,
-                  expression: "body"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                name: "body",
-                rows: "5",
-                placeholder: "Tem algo a dizer?",
-                required: ""
-              },
-              domProps: { value: _vm.body },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-12 mb-5" }, [
+      _vm.signedIn
+        ? _c("form", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.body,
+                    expression: "body"
                   }
-                  _vm.body = $event.target.value
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  name: "body",
+                  rows: "5",
+                  placeholder: "Tem algo a dizer?",
+                  required: ""
+                },
+                domProps: { value: _vm.body },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.body = $event.target.value
+                  }
                 }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-dark float-right",
-              attrs: { type: "button" },
-              on: { click: _vm.addReply }
-            },
-            [_vm._v("Responder")]
-          )
-        ])
-      : _c("p", { staticClass: "text-center" }, [
-          _c("a", { attrs: { href: "/login" } }, [_vm._v("Entre")]),
-          _vm._v(" para participar da discução.")
-        ])
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-dark float-right",
+                  attrs: { type: "button" },
+                  on: { click: _vm.addReply }
+                },
+                [_vm._v("Responder")]
+              )
+            ])
+          ])
+        : _c("p", { staticClass: "text-center" }, [
+            _c("a", { attrs: { href: "/login" } }, [_vm._v("Entre")]),
+            _vm._v(" para participar da discução.")
+          ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -66298,6 +66313,14 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("new-reply", {
+        on: {
+          created: function($event) {
+            _vm.add($event)
+          }
+        }
+      }),
+      _vm._v(" "),
       _vm._l(_vm.items, function(reply, index) {
         return _c(
           "div",
@@ -66319,14 +66342,6 @@ var render = function() {
       _c("paginator", {
         attrs: { dataSet: _vm.dataSet },
         on: { changed: _vm.fetch }
-      }),
-      _vm._v(" "),
-      _c("new-reply", {
-        on: {
-          created: function($event) {
-            _vm.add($event)
-          }
-        }
       })
     ],
     2
@@ -66455,6 +66470,170 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(203)
+/* template */
+var __vue_template__ = __webpack_require__(204)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/UserNotifications.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c0045994", Component.options)
+  } else {
+    hotAPI.reload("data-v-c0045994", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 203 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            notifications: false
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get("/profiles/" + window.App.user.name + "/notifications").then(function (response) {
+            _this.notifications = response.data;
+        });
+    },
+
+    methods: {
+        markAsRead: function markAsRead(notification) {
+            var _this2 = this;
+
+            axios.delete("/profiles/" + window.App.user.name + "/notifications/" + notification.id).then(function () {
+                _this2.notifications = _this2.notifications.filter(function (n) {
+                    return n.id != notification.id;
+                });
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "dropdown" }, [
+    _c(
+      "button",
+      {
+        staticClass: "btn nav-link text-light fa-lg",
+        attrs: {
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+          disabled: !_vm.notifications.length
+        }
+      },
+      [_c("i", { staticClass: "fas fa-bell" })]
+    ),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        staticClass: "dropdown-menu dropdown-menu-right",
+        attrs: { "aria-labelledby": "dropdownMenuButton" }
+      },
+      _vm._l(_vm.notifications, function(notification) {
+        return _c("li", { key: notification.id }, [
+          _c("a", {
+            staticClass: "dropdown-item",
+            attrs: { href: notification.data.link },
+            domProps: { textContent: _vm._s(notification.data.message) },
+            on: {
+              click: function($event) {
+                _vm.markAsRead(notification)
+              }
+            }
+          })
+        ])
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c0045994", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

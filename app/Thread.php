@@ -52,6 +52,12 @@ class Thread extends Model
         return $this->hasMany(Reply::class)->latest();
     }
 
+
+    /**
+     * A thread can have subscriptions
+     *
+     * @return void
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);

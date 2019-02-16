@@ -1,12 +1,14 @@
 <template>
     <div>
+
+        <new-reply @created="add($event)"></new-reply>
+
         <div v-for="(reply, index) in items" :key="reply.id">
             <reply :data="reply" @deleted="remove(index)"></reply>
         </div>
 
         <paginator :dataSet="dataSet" @changed="fetch"></paginator>
-
-        <new-reply @created="add($event)"></new-reply>
+        
     </div>
 </template>
 
