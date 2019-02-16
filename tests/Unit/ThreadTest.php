@@ -8,6 +8,7 @@ use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Channel;
 use App\User;
+use App\Notifications\ThreadWasUpdated;
 
 class ThreadTest extends TestCase
 {
@@ -49,7 +50,25 @@ class ThreadTest extends TestCase
             'body' => 'Foobar',
             'user_id' => 1
         ]);
+
         $this->assertCount(1, $this->thread->replies);
+    }
+
+    /** @test */
+    public function a_thread_notifies_all_registere_subscribers_when_a_reply_is_added()
+    {
+        \Notification::fake();
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+
+        $this->thread->subscribe()->addReply([
+            'body' => 'Foobar',
+            'user_id' => factory(User::class)->create()->id
+        ]);
+
+        \Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
     }
 
     /** @test */
@@ -66,11 +85,12 @@ class ThreadTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->actingAs($user);
-        
+
         $thread->subscribe();
 
         $this->assertEquals(1, $thread->subscriptions()->where('user_id', $user->id)->count());
     }
+
     /** @test */
     public function a_thread_can_be_unsubscribed_from()
     {
@@ -79,7 +99,7 @@ class ThreadTest extends TestCase
         $user = factory(User::class)->create();
 
         $this->actingAs($user);
-        
+
         $thread->subscribe();
 
         $thread->unsubscribe($user->id);
