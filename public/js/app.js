@@ -65532,6 +65532,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -65666,7 +65670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         classes: function classes() {
-            return ['btn', this.active ? 'btn-primary' : 'btn-default'];
+            return ['btn', this.active ? 'text-primary' : 'btn-default'];
         },
         endpoint: function endpoint() {
             return '/replies/' + this.reply.id + '/favorites';
@@ -65683,10 +65687,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "button",
+    "a",
     {
       class: _vm.classes,
-      attrs: { type: "submit" },
       on: {
         click: function($event) {
           _vm.toggle()
@@ -66076,27 +66079,27 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-secondary btn-sm mr-2",
+                staticClass: "btn text-secondary mr-2",
                 on: {
                   click: function($event) {
                     _vm.editing = true
                   }
                 }
               },
-              [_vm._v("Edit")]
+              [_c("i", { staticClass: "far fa-edit fa-lg" })]
             ),
             _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "btn btn-danger btn-sm mr-2",
+                staticClass: "btn text-danger btn-sm mr-2",
                 on: {
                   click: function($event) {
                     _vm.destroy()
                   }
                 }
               },
-              [_vm._v("Delete")]
+              [_c("i", { staticClass: "fas fa-trash-alt fa-lg" })]
             )
           ])
         : _vm._e()
@@ -66474,14 +66477,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("new-reply", {
-        on: {
-          created: function($event) {
-            _vm.add($event)
-          }
-        }
-      }),
-      _vm._v(" "),
       _vm._l(_vm.items, function(reply, index) {
         return _c(
           "div",
@@ -66503,6 +66498,14 @@ var render = function() {
       _c("paginator", {
         attrs: { dataSet: _vm.dataSet },
         on: { changed: _vm.fetch }
+      }),
+      _vm._v(" "),
+      _c("new-reply", {
+        on: {
+          created: function($event) {
+            _vm.add($event)
+          }
+        }
       })
     ],
     2
