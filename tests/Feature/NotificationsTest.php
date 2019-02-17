@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
 use App\Thread;
@@ -26,7 +25,7 @@ class NotificationsTest extends TestCase
     public function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
         $thread = factory(Thread::class)->create()->subscribe();
-        
+
         $this->assertCount(0, auth()->user()->notifications);
 
         $thread->addReply([
@@ -61,8 +60,8 @@ class NotificationsTest extends TestCase
 
         $this->assertCount(1, $unreadNotification = $this->user->unreadNotifications);
 
-        $notificationId  = $unreadNotification->first()->id;
-        
+        $notificationId = $unreadNotification->first()->id;
+
         $this->delete("/profiles/{$this->user->name}/notifications/{$notificationId}");
 
         $this->assertCount(0, $this->user->fresh()->unreadNotifications);

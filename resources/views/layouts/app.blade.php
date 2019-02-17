@@ -8,7 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>
+        @auth
+            ({{ auth()->user()->unreadNotifications()->count() }})
+        @endauth
+        {{ config('app.name', 'Dummy Førum') }}
+    </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,7 +30,7 @@
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="favicon.png">
+    <link rel="shortcut icon" href="/favicon.png?v=5">
 
     <style>
         body {

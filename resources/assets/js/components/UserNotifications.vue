@@ -7,6 +7,9 @@
             aria-expanded="false" 
             :disabled="!notifications.length">
             <i class="fas fa-bell"></i>
+            <span v-if="notifications.length" class="button-badge">
+                {{ notifications.length }}
+            </span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <li v-for="notification in notifications" :key="notification.id">
@@ -43,4 +46,19 @@
         }
     }
 </script>
+
+<style>
+    .button-badge {
+        background-color: #fa3e3e;
+        border-radius: 2px;
+        color: white;
+
+        padding: .5px 2.5px;
+        font-size: 9px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+    }
+</style>
+
 
