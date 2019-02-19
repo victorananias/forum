@@ -1,7 +1,6 @@
 <template>
     <div class="dropdown">
         <button class="btn nav-link text-light fa-lg" 
-            id="dropdownMenuButton" 
             data-toggle="dropdown"
             aria-haspopup="true" 
             aria-expanded="false" 
@@ -14,10 +13,14 @@
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <li v-for="notification in notifications" :key="notification.id">
                 <a class="dropdown-item" 
-                    :href="notification.data.link" 
-                    v-text="notification.data.message"
+                    :href="notification.data.link"
                     @click="markAsRead(notification)"
-                ></a>
+                    :title="notification.data.reply_owner + ' ' + notification.data.action + ' ' + notification.data.thread_name"
+                >
+                    {{ notification.data.reply_owner }}
+                    <strong>{{ notification.data.action }}</strong>
+                    {{ notification.data.thread_name.substring(0, 30) }}...
+                </a>
             </li>
         </ul>
     </div>
@@ -27,7 +30,7 @@
     export default {
         data() {
             return {
-                notifications: false
+                notifications: []
             }
         },
         created() {

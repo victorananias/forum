@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class ThreadWasUpdated extends Notification
@@ -13,7 +12,7 @@ class ThreadWasUpdated extends Notification
 
     protected $thread;
     protected $reply;
-    
+
     /**
      * Create a new notification instance.
      *
@@ -59,7 +58,9 @@ class ThreadWasUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => "{$this->reply->owner->name} respondeu a thread {$this->thread->title}",
+            'reply_owner' => $this->reply->owner->name,
+            'action' => 'respondeu a',
+            'thread_name' => $this->thread->title,
             'link' => $this->reply->path()
         ];
     }

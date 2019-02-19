@@ -17,7 +17,7 @@
                                 <form action="{{ $thread->path() }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn text-danger">
+                                    <button type="submit" class="btn text-light">
                                         <i class="fas fa-trash-alt fa-lg"></i>
                                     </button>
                                 </form>
