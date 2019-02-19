@@ -31,16 +31,16 @@ class DatabaseSeeder extends Seeder
         $thread->subscribe($admin->id);
 
         
-        foreach (range(1, 10) as $i) {
-            $reply = factory(Reply::class)->make();
+        // foreach (range(1, 10) as $i) {
+        //     $reply = factory(Reply::class)->make();
 
-            $thread->addReply([
-                'body' => $reply->body,
-                'user_id' => $reply->user_id
-            ]);
-        }
+        //     $thread->addReply([
+        //         'body' => $reply->body,
+        //         'user_id' => $reply->user_id
+        //     ]);
+        // }
 
         
-        $this->call(ThreadsTableSeeder::class);
+        // $this->call(ThreadsTableSeeder::class);
     }
 }
