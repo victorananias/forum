@@ -31242,6 +31242,7 @@ try {
     window.$ = window.jQuery = __webpack_require__(7);
 
     __webpack_require__(147);
+    window.$ = window.jQuery = requir;
 } catch (e) {}
 
 /**

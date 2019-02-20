@@ -5,10 +5,9 @@ namespace App\Events;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Broadcasting\Channel;
 
-class ThreadHasNewReply implements ShouldBroadcast
+class ThreadHasNewReply
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

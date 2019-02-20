@@ -33,7 +33,7 @@ class ThreadWasUpdated extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -66,17 +66,14 @@ class ThreadWasUpdated extends Notification
         ];
     }
 
-    /**
-     * Get the broadcastable representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return BroadcastMessage
-     */
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'invoice_id' => $this->invoice->id,
-            'amount' => $this->invoice->amount,
-        ]);
-    }
+    // /**
+    //  * Get the broadcastable representation of the notification.
+    //  *
+    //  * @param  mixed  $notifiable
+    //  * @return BroadcastMessage
+    //  */
+    // public function toBroadcast($notifiable)
+    // {
+    //     return new BroadcastMessage($this->toArray());
+    // }
 }
