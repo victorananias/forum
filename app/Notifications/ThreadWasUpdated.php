@@ -5,6 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class ThreadWasUpdated extends Notification
 {
@@ -63,5 +64,19 @@ class ThreadWasUpdated extends Notification
             'thread_name' => $this->thread->title,
             'link' => $this->reply->path()
         ];
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'invoice_id' => $this->invoice->id,
+            'amount' => $this->invoice->amount,
+        ]);
     }
 }

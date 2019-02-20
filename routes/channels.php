@@ -11,6 +11,6 @@
 |
 */
 
-Broadcast::channel('notifications.{threadId}', function ($user, $threadId) {
+Broadcast::private('App.user.{userId}', function ($user, $userId) {
     return true;
 });

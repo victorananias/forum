@@ -95,7 +95,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        event(new ThreadHasNewReply($this, $reply));
+        ThreadHasNewReply::dispatch($this, $reply);
 
         return $reply;
     }

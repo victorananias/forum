@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Thread;
-use App\Reply;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,35 +11,31 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker\Generator $faker)
     {
         $admin = User::create([
-            'name'=> 'administrator',
-            'email'=> 'administrator@teste.com',
-            'password'=> bcrypt('123')
+            'name' => 'administrator',
+            'email' => 'administrator@teste.com',
+            'password' => bcrypt('123')
         ]);
 
         User::create([
-            'name'=> 'teste',
-            'email'=> 'teste@teste.com',
-            'password'=> bcrypt('123')
+            'name' => 'teste',
+            'email' => 'teste@teste.com',
+            'password' => bcrypt('123')
         ]);
 
         $thread = factory(Thread::class)->create();
 
         $thread->subscribe($admin->id);
 
-        
-        // foreach (range(1, 10) as $i) {
-        //     $reply = factory(Reply::class)->make();
+        foreach (range(1, 10) as $i) {
+            $thread->addReply([
+                'body' => $faker->paragraph,
+                'user_id' => factory(User::class)->create()->id
+            ]);
+        }
 
-        //     $thread->addReply([
-        //         'body' => $reply->body,
-        //         'user_id' => $reply->user_id
-        //     ]);
-        // }
-
-        
         // $this->call(ThreadsTableSeeder::class);
     }
 }

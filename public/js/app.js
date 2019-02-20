@@ -31274,29 +31274,35 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
-
 
 
 window.Pusher = __webpack_require__(168);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
     broadcaster: 'pusher',
-    key: '18327c2ad02e33a6303f'
+    key: "18327c2ad02e33a6303f",
+    cluster: "mt1",
+    encrypted: true
 });
 
+// import Echo from "laravel-echo";
+
+// window.Pusher = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: '18327c2ad02e33a6303f'
+// });
+
 // Echo.private(`notifications.${window.App.user.id}`)
-window.Echo.private('notifications.1').listen('ThreadHasNewReply', function (e) {
-    console.log(e.update);
+// window.Echo.channel("notifications")
+// .listen('ThreadHasNewReply', (e) => {
+//     console.log("opa");
+//     console.log(e.update);
+// });
+
+window.Echo.private('App.User.' + window.App.user.id).notification(function (notification) {
+    console.log(notification);
 });
 
 /***/ }),

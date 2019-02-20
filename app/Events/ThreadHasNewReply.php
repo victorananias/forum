@@ -2,13 +2,11 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\Channel;
 
 class ThreadHasNewReply implements ShouldBroadcast
 {
@@ -36,6 +34,6 @@ class ThreadHasNewReply implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("notification.{$this->thread->id}");
+        return new Channel('notifications');
     }
 }
