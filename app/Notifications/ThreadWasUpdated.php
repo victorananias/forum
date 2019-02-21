@@ -66,14 +66,14 @@ class ThreadWasUpdated extends Notification
         ];
     }
 
-    // /**
-    //  * Get the broadcastable representation of the notification.
-    //  *
-    //  * @param  mixed  $notifiable
-    //  * @return BroadcastMessage
-    //  */
-    // public function toBroadcast($notifiable)
-    // {
-    //     return new BroadcastMessage($this->toArray());
-    // }
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage(['data' => $this->toArray($notifiable)]);
+    }
 }

@@ -29,12 +29,10 @@ class DatabaseSeeder extends Seeder
 
         $thread->subscribe($admin->id);
 
-        foreach (range(1, 10) as $i) {
-            $thread->addReply([
-                'body' => $faker->paragraph,
-                'user_id' => factory(User::class)->create()->id
-            ]);
-        }
+        $thread->addReply([
+            'body' => $faker->paragraph,
+            'user_id' => factory(User::class)->create()->id
+        ]);
 
         // $this->call(ThreadsTableSeeder::class);
     }

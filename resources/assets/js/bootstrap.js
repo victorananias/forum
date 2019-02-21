@@ -55,24 +55,3 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     encrypted: true
 });
-
-// import Echo from "laravel-echo";
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: '18327c2ad02e33a6303f'
-// });
-
-// Echo.private(`notifications.${window.App.user.id}`)
-// window.Echo.channel("notifications")
-// .listen('ThreadHasNewReply', (e) => {
-//     console.log("opa");
-//     console.log(e.update);
-// });
-
-window.Echo.private(`App.User.${window.App.user.id}`)
-    .notification((notification) => {
-    console.log(notification);
-});

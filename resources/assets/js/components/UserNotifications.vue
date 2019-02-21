@@ -30,13 +30,23 @@
     export default {
         data() {
             return {
-                notifications: []
+                notifications: [],
+                title: ''
             }
         },
         created() {
+            this.title = document.title;
+
             axios.get(`/profiles/${window.App.user.name}/notifications`)
                 .then(response => {
                     this.notifications = response.data;
+                    this.updateTitle();
+                });
+
+            window.Echo.private(`App.User.${window.App.user.id}`)
+                .notification((notification) => {
+                    this.notifications.unshift(notification);
+                    this.updateTitle();
                 });
         },
         methods: {
@@ -45,6 +55,11 @@
                     .then(() => {
                         this.notifications = this.notifications.filter(n => n.id != notification.id);
                     });
+            },
+            updateTitle() {
+                if (window.App.user) {
+                    document.title = `(${this.notifications.length}) ${this.title}`
+                }
             }
         }
     }

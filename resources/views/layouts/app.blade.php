@@ -9,9 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        @if(auth()->check() && $notificationsCount = auth()->user()->unreadNotifications()->count())
-            ({{ $notificationsCount }})
-        @endif
         {{ config('app.name', 'Dummy Førum') }}
     </title>
 

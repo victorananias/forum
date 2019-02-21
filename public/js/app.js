@@ -31239,10 +31239,10 @@ window.Popper = __webpack_require__(6).default;
  */
 
 try {
-    window.$ = window.jQuery = __webpack_require__(7);
+  window.$ = window.jQuery = __webpack_require__(7);
 
-    __webpack_require__(147);
-    window.$ = window.jQuery = requir;
+  __webpack_require__(147);
+  window.$ = window.jQuery = requir;
 } catch (e) {}
 
 /**
@@ -31264,9 +31264,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -31280,30 +31280,10 @@ if (token) {
 window.Pusher = __webpack_require__(168);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
-    broadcaster: 'pusher',
-    key: "18327c2ad02e33a6303f",
-    cluster: "mt1",
-    encrypted: true
-});
-
-// import Echo from "laravel-echo";
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: '18327c2ad02e33a6303f'
-// });
-
-// Echo.private(`notifications.${window.App.user.id}`)
-// window.Echo.channel("notifications")
-// .listen('ThreadHasNewReply', (e) => {
-//     console.log("opa");
-//     console.log(e.update);
-// });
-
-window.Echo.private('App.User.' + window.App.user.id).notification(function (notification) {
-    console.log(notification);
+  broadcaster: 'pusher',
+  key: "18327c2ad02e33a6303f",
+  cluster: "mt1",
+  encrypted: true
 });
 
 /***/ }),
@@ -75393,14 +75373,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            notifications: []
+            notifications: [],
+            title: ''
         };
     },
     created: function created() {
         var _this = this;
 
-        axios.get("/profiles/" + window.App.user.name + "/notifications").then(function (response) {
+        this.title = document.title;
+
+        axios.get('/profiles/' + window.App.user.name + '/notifications').then(function (response) {
             _this.notifications = response.data;
+            _this.updateTitle();
+        });
+
+        window.Echo.private('App.User.' + window.App.user.id).notification(function (notification) {
+            _this.notifications.unshift(notification);
+            _this.updateTitle();
         });
     },
 
@@ -75408,11 +75397,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         markAsRead: function markAsRead(notification) {
             var _this2 = this;
 
-            axios.delete("/profiles/" + window.App.user.name + "/notifications/" + notification.id).then(function () {
+            axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id).then(function () {
                 _this2.notifications = _this2.notifications.filter(function (n) {
                     return n.id != notification.id;
                 });
             });
+        },
+        updateTitle: function updateTitle() {
+            if (window.App.user) {
+                document.title = '(' + this.notifications.length + ') ' + this.title;
+            }
         }
     }
 });
