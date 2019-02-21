@@ -75821,7 +75821,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         createdAt: function createdAt() {
             __WEBPACK_IMPORTED_MODULE_1_moment___default.a.locale('pt-BR');
-            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow();
+            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).toNow();
         }
     }
 });
@@ -76701,7 +76701,7 @@ if (false) {
 
     methods: {
         add: function add(item) {
-            this.items.unshift(item);
+            this.items.push(item);
             this.$emit('added');
         },
         remove: function remove(index) {

@@ -6,7 +6,7 @@ export default {
     },
     methods: {
         add(item) {
-            this.items.unshift(item);
+            this.items.push(item);
             this.$emit('added');
         },
         remove(index) {

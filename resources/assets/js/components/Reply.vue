@@ -69,7 +69,7 @@
             },
             createdAt() {
                 moment.locale('pt-BR');
-                return moment(this.data.created_at).fromNow();
+                return moment(this.data.created_at).toNow();
             }
         }
     }
