@@ -75,6 +75,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        if ($user = auth()->user()) {
+            $user->read($thread);
+        }
+
         return view('threads.show', [
             'thread' => $thread,
             'replies' => $thread->replies()->paginate(5)
@@ -115,7 +119,7 @@ class ThreadsController extends Controller
         $this->authorize('update', $thread);
 
         $thread->delete();
-        
+
         if (request()->wantsJson()) {
             return response([], 204);
         }

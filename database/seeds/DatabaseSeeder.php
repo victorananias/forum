@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123')
         ]);
 
-        $thread = factory(Thread::class)->create();
+        // $thread = factory(Thread::class)->create();
 
-        $thread->subscribe($admin->id);
+        // $thread->subscribe($admin->id);
 
-        $thread->addReply([
-            'body' => $faker->paragraph,
-            'user_id' => factory(User::class)->create()->id
-        ]);
+        // $thread->addReply([
+        //     'body' => $faker->paragraph,
+        //     'user_id' => factory(User::class)->create()->id
+        // ]);
 
-        // $this->call(ThreadsTableSeeder::class);
+        $this->call(ThreadsTableSeeder::class);
     }
 }

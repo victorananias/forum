@@ -10,7 +10,13 @@
                         <div class="card-header bg-dark text-light">
                             <div class="level">
                                 <h4 class="flex">
-                                    <a class="text-light" href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                                    <a class="text-light" href="{{ $thread->path() }}">
+                                        @if ($thread->hasUpdatesFor(auth()->user()))
+                                            <strong>{{ $thread->title }}</strong>
+                                        @else
+                                            {{ $thread->title }}
+                                        @endif
+                                    </a>
                                 </h4>
                                 <a class="text-light" href="{{ $thread->path() }}">
                                     <strong class="float-right">{{ $thread->replies_count }} {{ str_plural('resposta', $thread->replies_count) }}</strong>
