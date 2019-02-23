@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Faker\Generator $faker)
+    public function run()
     {
         $admin = User::create([
             'name' => 'administrator',
