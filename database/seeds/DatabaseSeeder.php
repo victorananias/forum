@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         //     'user_id' => factory(User::class)->create()->id
         // ]);
 
-        $this->call(ThreadsTableSeeder::class);
+        $this->call(ChannelsTableSeeder::class);
     }
 }
