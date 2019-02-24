@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
-use App\Spam;
+use App\Inspections\Spam;
 
 class RepliesController extends Controller
 {
@@ -30,8 +30,9 @@ class RepliesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @param $channelId
-     * @param Thread $thread
+     * @param \App\Inspections\Spam $spam
+     * @param integer $channelId
+     * @param \App\Thread $thread
      * @return void
      */
     public function store(Request $request, Spam $spam, $channelId, Thread $thread)
