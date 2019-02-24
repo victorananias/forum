@@ -67,7 +67,7 @@ class ParticipteInThreadsTest extends TestCase
         $this->actingAs(factory(User::class)->create());
 
         $this->delete("/replies/{$reply->id}")->assertStatus(403);
-        
+
         $this->assertDatabaseHas('replies', ['id' => $reply->id]);
     }
 
@@ -84,8 +84,8 @@ class ParticipteInThreadsTest extends TestCase
 
         $this->delete("/replies/{$reply->id}");
 
-        $this->assertDatabaseMissing('replies', [ 'id' => $reply->id ]);
-        
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
         $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     }
 
@@ -99,7 +99,7 @@ class ParticipteInThreadsTest extends TestCase
         $this->patch("/replies/{$reply->id}", [
             'body' => 'updated body'
         ])->assertRedirect('login');
-        
+
         $user = factory(User::class)->create();
         $this->actingAs($user);
 
@@ -119,6 +119,24 @@ class ParticipteInThreadsTest extends TestCase
 
         $this->patch("/replies/{$reply->id}", ['body' => $updatedReply]);
 
-        $this->assertDatabaseHas('replies', ['id'=> $reply->id, 'body' => $updatedReply]);
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updatedReply]);
+    }
+
+    /** @test */
+    public function replies_that_contain_spam_may_not_be_created()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user);
+
+        $thread = factory(Thread::class)->create();
+
+        $reply = factory(Reply::class)->make([
+            'body' => 'Yahoo Costumer Support'
+        ]);
+
+        $this->expectException(\Exception::class);
+
+        $this->post("{$thread->path()}/replies", $reply->toArray());
     }
 }
