@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
+use App\Spam;
 
 class RepliesController extends Controller
 {
@@ -13,7 +14,6 @@ class RepliesController extends Controller
         $this->middleware('auth', ['except' => 'index']);
     }
 
-    
     /**
      * Display a listing of the resource.
      *
@@ -34,8 +34,10 @@ class RepliesController extends Controller
      * @param Thread $thread
      * @return void
      */
-    public function store(Request $request, $channelId, Thread $thread)
+    public function store(Request $request, Spam $spam, $channelId, Thread $thread)
     {
+        $spam->detect($request->body);
+
         $request->validate([
             'body' => 'required'
         ]);
@@ -77,7 +79,7 @@ class RepliesController extends Controller
     public function destroy(Reply $reply)
     {
         $this->authorize('update', $reply);
-        
+
         $reply->delete();
 
         if (request()->expectsJson()) {
