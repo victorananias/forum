@@ -28,6 +28,12 @@
         methods: {
             addReply() {
                 axios.post(`${location.pathname}/replies` , { body: this.body })
+                    .catch(error => {
+                        console.log('Error');
+                        console.log(error.response);
+
+                        flash(error.response.data, 'danger');
+                    })
                     .then(({data}) => {
                         this.body = '';
                         flash('Sua resposta foi salva.');

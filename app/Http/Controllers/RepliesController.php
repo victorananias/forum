@@ -35,22 +35,20 @@ class RepliesController extends Controller
      * @param \App\Thread $thread
      * @return void
      */
-    public function store(Request $request, Spam $spam, $channelId, Thread $thread)
+    public function store(Request $request, $channelId, Thread $thread)
     {
-        $this->validateReply();
+        try {
+            $this->validateReply();
 
-        $reply = $thread->addReply([
-            'body' => $request->body,
-            'user_id' => auth()->id(),
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
+            $reply = $thread->addReply([
+                'body' => $request->body,
+                'user_id' => auth()->id(),
+            ]);
+        } catch (\Exception $e) {
+            return response('Desculpe, sua resposta não pode ser salva.', 422);
         }
 
-        return redirect($thread->path())->with([
-            'aviso' => 'Sua resposta foi salva.'
-        ]);
+        return $reply->load('owner');
     }
 
     /**
@@ -60,13 +58,17 @@ class RepliesController extends Controller
      * @param  \App\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Spam $spam, Reply $reply)
+    public function update(Request $request, Reply $reply)
     {
-        $this->authorize('update', $reply);
+        try {
+            $this->validateReply();
 
-        $this->validateReply();
+            $this->authorize('update', $reply);
 
-        $reply->update(['body' => $request->body]);
+            $reply->update(['body' => $request->body]);
+        } catch (\Exception $e) {
+            return response('Desculpe, sua resposta não pode ser salva.', 422);
+        }
     }
 
     /**
@@ -90,9 +92,7 @@ class RepliesController extends Controller
 
     public function validateReply()
     {
-        request()->validate([
-            'body' => 'required'
-        ]);
+        request()->validate(['body' => 'required']);
 
         resolve(Spam::class)->detect(request('body'));
     }
