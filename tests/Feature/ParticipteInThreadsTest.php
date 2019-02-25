@@ -51,7 +51,6 @@ class ParticipteInThreadsTest extends TestCase
             'body' => null
         ]);
 
-        dd($this->post("{$thread->path()}/replies", $reply->toArray()));
         $this->post("{$thread->path()}/replies", $reply->toArray())
              ->assertSessionHasErrors('body');
     }
