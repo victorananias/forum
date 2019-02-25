@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Thread;
 use App\Channel;
 use App\Filters\ThreadFilter;
-use App\Inspections\Spam;
+use App\Rules\SpamFree;
 
 class ThreadsController extends Controller
 {
@@ -47,16 +47,13 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Spam $spam)
+    public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'body' => 'required',
+            'title' => ['required', new SpamFree],
+            'body' => ['required', new SpamFree],
             'channel_id' => 'required|exists:channels,id'
         ]);
-
-        $spam->detect($request->title);
-        $spam->detect($request->body);
 
         $thread = Thread::create([
             'title' => $request->title,
