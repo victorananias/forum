@@ -52,7 +52,7 @@ class ParticipteInThreadsTest extends TestCase
         ]);
 
         $this->post("{$thread->path()}/replies", $reply->toArray())
-             ->assertSessionHasErrors('body');
+             ->assertStatus(422);
     }
 
     /** @test */
@@ -135,8 +135,7 @@ class ParticipteInThreadsTest extends TestCase
             'body' => 'Yahoo Costumer Support'
         ]);
 
-        $this->expectException(\Exception::class);
-
-        $this->post("{$thread->path()}/replies", $reply->toArray());
+        $this->post("{$thread->path()}/replies", $reply->toArray())
+            ->assertStatus(422);
     }
 }
