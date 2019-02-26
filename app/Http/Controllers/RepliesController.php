@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
-use App\Spam;
+use App\Rules\SpamFree;
 
 class RepliesController extends Controller
 {
@@ -30,30 +30,24 @@ class RepliesController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @param $channelId
-     * @param Thread $thread
+     * @param integer $channelId
+     * @param \App\Thread $thread
      * @return void
      */
-    public function store(Request $request, Spam $spam, $channelId, Thread $thread)
+    public function store(Request $request, $channelId, Thread $thread)
     {
-        $spam->detect($request->body);
+        try {
+            request()->validate(['body' => ['required', new SpamFree]]);
 
-        $request->validate([
-            'body' => 'required'
-        ]);
-
-        $reply = $thread->addReply([
-            'body' => $request->body,
-            'user_id' => auth()->id(),
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
+            $reply = $thread->addReply([
+                'body' => $request->body,
+                'user_id' => auth()->id(),
+            ]);
+        } catch (\Exception $e) {
+            return response('Desculpe, sua resposta não pode ser salva.', 422);
         }
 
-        return redirect($thread->path())->with([
-            'aviso' => 'Sua resposta foi salva.'
-        ]);
+        return $reply->load('owner');
     }
 
     /**
@@ -65,9 +59,15 @@ class RepliesController extends Controller
      */
     public function update(Request $request, Reply $reply)
     {
-        $this->authorize('update', $reply);
+        try {
+            request()->validate(['body' => ['required', new SpamFree]]);
 
-        $reply->update(['body' => $request->body]);
+            $this->authorize('update', $reply);
+
+            $reply->update(['body' => $request->body]);
+        } catch (\Exception $e) {
+            return response('Desculpe, sua resposta não pode ser salva.', 422);
+        }
     }
 
     /**
