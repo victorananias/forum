@@ -75833,7 +75833,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         createdAt: function createdAt() {
             __WEBPACK_IMPORTED_MODULE_1_moment___default.a.locale('pt-BR');
-            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).toNow();
+            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow();
         }
     }
 });
