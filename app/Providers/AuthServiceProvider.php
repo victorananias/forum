@@ -28,10 +28,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Allows administrator to do whatever he wants
-        Gate::before(function ($user) {
-            if ($user->name == 'administrator') {
-                return true;
-            }
-        });
+        // Gate::before(function ($user) {
+        //     if ($user->name == 'administrator') {
+        //         return true;
+        //     }
+        // });
     }
 }

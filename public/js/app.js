@@ -75409,7 +75409,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         updateTitle: function updateTitle() {
-            if (window.App.user) {
+            if (window.App.user && this.notifications.length > 0) {
                 document.title = '(' + this.notifications.length + ') ' + this.title;
             }
         }

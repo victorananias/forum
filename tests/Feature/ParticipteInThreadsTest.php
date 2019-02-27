@@ -139,8 +139,8 @@ class ParticipteInThreadsTest extends TestCase
             ->assertStatus(422);
     }
 
-    /** @reply */
-    public function users_my_only_reply_once_per_minute()
+    /** @test */
+    public function users_my_only_reply_a_maximum_of_once_per_minute()
     {
         $user = factory(User::class)->create();
 
@@ -148,23 +148,10 @@ class ParticipteInThreadsTest extends TestCase
 
         $thread = factory(Thread::class)->create();
 
-        $reply = factory(Reply::class)->make([
-            'body' => 'Yahoo Costumer Support'
-        ]);
+        $this->post("{$thread->path()}/replies", ['body' => 'Simple reply'])
+            ->assertStatus(201);
 
-        $this->post("{$thread->path()}/replies", $reply->toArray())
-            ->assertStatus(422);
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user);
-
-        $thread = factory(Thread::class)->create();
-
-        $reply = factory(Reply::class)->make([
-            'body' => 'Yahoo Costumer Support'
-        ]);
-
-        $this->post("{$thread->path()}/replies", $reply->toArray())
-                ->assertStatus(422);
+        $this->post("{$thread->path()}/replies", ['body' => 'Simple reply'])
+                ->assertStatus(429);
     }
 }
