@@ -49,6 +49,16 @@ class User extends Authenticatable
     }
 
     /**
+     * A user can have a last reply.
+     *
+     * @return void
+     */
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
+
+    /**
      * A user can have many activities.
      *
      * @return void

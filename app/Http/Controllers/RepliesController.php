@@ -36,6 +36,13 @@ class RepliesController extends Controller
      */
     public function store(Request $request, $channelId, Thread $thread)
     {
+        if (\Gate::denies('create', new Reply)) {
+            return response(
+                'Você está respondendo muito rápido, vá mais devagar, por favor :)',
+                429
+            );
+        }
+
         try {
             request()->validate(['body' => ['required', new SpamFree]]);
 
@@ -59,10 +66,10 @@ class RepliesController extends Controller
      */
     public function update(Request $request, Reply $reply)
     {
+        $this->authorize('update', $reply);
+
         try {
             request()->validate(['body' => ['required', new SpamFree]]);
-
-            $this->authorize('update', $reply);
 
             $reply->update(['body' => $request->body]);
         } catch (\Exception $e) {

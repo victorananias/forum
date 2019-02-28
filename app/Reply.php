@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
+use Carbon\Carbon;
 
 class Reply extends Model
 {
@@ -20,7 +21,7 @@ class Reply extends Model
         static::created(function ($reply) {
             $reply->thread->increment('replies_count');
         });
-        
+
         static::deleting(function ($reply) {
             $reply->thread->decrement('replies_count');
         });
@@ -35,6 +36,7 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     /**
      * A reply belongs to an thread.
      *
@@ -44,9 +46,14 @@ class Reply extends Model
     {
         return $this->belongsTo(Thread::class, 'thread_id');
     }
-    
+
     public function path()
     {
-        return $this->thread->path(). "#reply-{$this->id}";
+        return $this->thread->path() . "#reply-{$this->id}";
+    }
+
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 }

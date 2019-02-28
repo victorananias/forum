@@ -31,7 +31,7 @@ class SpamFree implements Rule
         $this->attribute = $attribute;
 
         try {
-            !resolve(Spam::class)->detect($value);
+            return !resolve(Spam::class)->detect($value);
         } catch (\Exception $e) {
             return false;
         }

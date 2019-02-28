@@ -57,7 +57,7 @@
                     });
             },
             updateTitle() {
-                if (window.App.user && this.notifications.length) {
+                if (window.App.user && this.notifications.length > 0) {
                     document.title = `(${this.notifications.length}) ${this.title}`
                 }
             }
