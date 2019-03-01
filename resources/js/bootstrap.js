@@ -12,7 +12,6 @@ try {
     window.$ = window.jQuery = require('jquery');
  
     require('bootstrap');
-    window.$ = window.jQuery = requir
 } catch (e) {}
 
 /**
