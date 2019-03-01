@@ -3,7 +3,6 @@
 use Monolog\Handler\StreamHandler;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -39,8 +38,7 @@ return [
         ],
 
         'single' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'driver' => 'errorlog',
             'level' => 'debug',
         ],
 
@@ -77,5 +75,4 @@ return [
             'level' => 'debug',
         ],
     ],
-
 ];

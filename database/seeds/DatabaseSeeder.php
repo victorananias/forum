@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run(Faker\Generator $faker)
+    public function run()
     {
         $admin = User::create([
             'name' => 'administrator',
@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         //     'user_id' => factory(User::class)->create()->id
         // ]);
 
-        $this->call(ThreadsTableSeeder::class);
+        $this->call(ChannelsTableSeeder::class);
     }
 }
