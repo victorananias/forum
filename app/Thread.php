@@ -78,7 +78,7 @@ class Thread extends Model
     /**
      * Return the uri of the current thread.
      *
-     * @return void
+     * @return string
      */
     public function path()
     {
@@ -89,7 +89,7 @@ class Thread extends Model
      * Creates a reply to the current thread.
      *
      * @param array $reply
-     * @return void
+     * @return mixed
      */
     public function addReply($reply)
     {
