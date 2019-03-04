@@ -1,9 +1,6 @@
 <template>
     <ul class="pagination" v-if="shouldPaginate">
         <li class="page-item"><a class="page-link" v-if="prevUrl" @click="page--">Anterior</a></li>
-        <!-- <li class="page-item" v-for="p in dataSet.pages" v-><a class="page-link">1</a></li> -->
-        <!-- <li class="page-item"><a class="page-link">2</a></li>
-        <li class="page-item"><a class="page-link">3</a></li> -->
         <li class="page-item"><a class="page-link" v-if="nextUrl" @click="page++">Próximo</a></li>
     </ul>
 </template>

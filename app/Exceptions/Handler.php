@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ValidationException ) {
+        if ($exception instanceof ValidationException) {
             if (request()->wantsJson()) {
                 return response('Desculpe, existem dados inválidos.', 422);
             }

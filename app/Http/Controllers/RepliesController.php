@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
-use App\Notifications\YouWereMentioned;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
-use App\User;
-use App\Rules\SpamFree;
 
 class RepliesController extends Controller
 {
@@ -50,20 +47,13 @@ class RepliesController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \App\Reply $reply
-     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        try {
-            request()->validate(['body' => ['required', new SpamFree]]);
-
-            $reply->update(['body' => $request->body]);
-        } catch (\Exception $e) {
-            return response('Desculpe, sua resposta não pode ser salva.', 422);
-        }
+        $reply->update(['body' => $request->body]);
     }
 
     /**

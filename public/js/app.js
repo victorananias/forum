@@ -1903,16 +1903,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("".concat(location.pathname, "/replies"), {
         body: this.body
-      }).catch(function (error) {
-        console.log('Error');
-        console.log(error.response);
-        flash(error.response.data, 'danger');
-      }).then(function (_ref) {
-        var data = _ref.data;
+      }).then(function (response) {
         _this.body = '';
         flash('Sua resposta foi salva.');
 
-        _this.$emit('created', data);
+        _this.$emit('created', response.data);
+      }).catch(function (error) {
+        flash(error.response.data, 'danger');
       });
     }
   },
@@ -1934,9 +1931,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -2061,6 +2055,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Favorite_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Favorite.vue */ "./resources/js/components/Favorite.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
 //
 //
 //
@@ -66076,54 +66072,49 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
           ? _c("div", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.body,
-                      expression: "body"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  domProps: { value: _vm.body },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("form", { on: { submit: _vm.update } }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.body,
+                        expression: "body"
                       }
-                      _vm.body = $event.target.value
+                    ],
+                    staticClass: "form-control",
+                    attrs: { required: "" },
+                    domProps: { value: _vm.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.body = $event.target.value
+                      }
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-primary",
-                  on: {
-                    click: function($event) {
-                      return _vm.update()
+                  })
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+                  _vm._v("Update")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-link",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.editing = false
+                      }
                     }
-                  }
-                },
-                [_vm._v("Update")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-link",
-                  on: {
-                    click: function($event) {
-                      _vm.editing = false
-                    }
-                  }
-                },
-                [_vm._v("Cancel")]
-              )
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
             ])
           : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
       ]),
@@ -78431,9 +78422,9 @@ window.flash = function (message) {
  */
 
 
-Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue"));
-Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue"));
-Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue"));
+Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue").default);
+Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue").default);
+Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue").default);
 var app = new Vue({
   el: '#app'
 });
@@ -79188,8 +79179,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\wamp\www\laravel-forum\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\wamp\www\laravel-forum\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/victor/projects/localhost/laravel-forum/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/victor/projects/localhost/laravel-forum/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
