@@ -15,13 +15,13 @@ window.Vue.prototype.authorize = function(handler) {
     if (!user) return false;
 
     return handler(user);
-}
+};
 
 window.events = new Vue;
 
 window.flash = function(message, type = 'success') {
     window.events.$emit('flash', { message, type });
-}
+};
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,11 +29,9 @@ window.flash = function(message, type = 'success') {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('flash', require('./components/Flash.vue'));
-
-Vue.component('user-notifications', require('./components/UserNotifications.vue'));
-
-Vue.component('thread-view', require('./pages/Thread.vue'));
+Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
+Vue.component('thread-view', require('./pages/Thread.vue').default);
 
 const app = new Vue({
     el: '#app'

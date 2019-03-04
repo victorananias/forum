@@ -30,7 +30,7 @@ class Reply extends Model
     /**
      * A reply belongs to an owner.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function owner()
     {
@@ -40,20 +40,42 @@ class Reply extends Model
     /**
      * A reply belongs to an thread.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function thread()
     {
         return $this->belongsTo(Thread::class, 'thread_id');
     }
 
+    /**
+     * Determinate the path to the reply.
+     *
+     * @return string
+     */
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
     }
 
+    /**
+     * Determinate if the reply was just published a moment ago.
+     *
+     * @return mixed
+     */
     public function wasJustPublished()
     {
         return $this->created_at->gt(Carbon::now()->subMinute());
+    }
+
+    /**
+     *
+     *
+     * @return mixed
+     */
+    public function mentionedUsers()
+    {
+        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+
+        return $matches[1];
     }
 }

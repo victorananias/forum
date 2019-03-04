@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
-use App\Rules\SpamFree;
 
 class RepliesController extends Controller
 {
@@ -18,7 +18,7 @@ class RepliesController extends Controller
      * Display a listing of the resource.
      *
      * @param $channel
-     * @param App\Thread $thread
+     * @param \App\Thread
      * @return mixed
      */
     public function index($channel, Thread $thread)
@@ -32,56 +32,36 @@ class RepliesController extends Controller
      * @param Request $request
      * @param integer $channelId
      * @param \App\Thread $thread
-     * @return void
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $channelId, Thread $thread)
+    public function store(Request $request, $channelId, Thread $thread, CreatePostRequest $createPostRequest)
     {
-        if (\Gate::denies('create', new Reply)) {
-            return response(
-                'Você está respondendo muito rápido, vá mais devagar, por favor :)',
-                429
-            );
-        }
-
-        try {
-            request()->validate(['body' => ['required', new SpamFree]]);
-
-            $reply = $thread->addReply([
-                'body' => $request->body,
-                'user_id' => auth()->id(),
-            ]);
-        } catch (\Exception $e) {
-            return response('Desculpe, sua resposta não pode ser salva.', 422);
-        }
-
-        return $reply->load('owner');
+        return $thread->addReply([
+            'body' => $request->body,
+            'user_id' => auth()->id(),
+        ])->load('owner');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Reply $reply
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        try {
-            request()->validate(['body' => ['required', new SpamFree]]);
-
-            $reply->update(['body' => $request->body]);
-        } catch (\Exception $e) {
-            return response('Desculpe, sua resposta não pode ser salva.', 422);
-        }
+        $reply->update(['body' => $request->body]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Reply  $reply
+     * @param  \App\Reply $reply
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Reply $reply)
     {
