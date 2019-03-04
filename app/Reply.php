@@ -47,6 +47,10 @@ class Reply extends Model
         return $this->belongsTo(Thread::class, 'thread_id');
     }
 
+    public function setBodyAttribute($body) {
+        $this->attributes['body'] = preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    }
+
     /**
      * Determinate the path to the reply.
      *
@@ -68,13 +72,13 @@ class Reply extends Model
     }
 
     /**
-     *
+     * Returns the name of the mentioned users.
      *
      * @return mixed
      */
     public function mentionedUsers()
     {
-        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+        preg_match_all('/@([\w\-\_]+)/', $this->body, $matches);
 
         return $matches[1];
     }
