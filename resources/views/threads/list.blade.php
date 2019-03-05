@@ -19,7 +19,7 @@
                 </div>
 
                 <a class="text-light" href="{{ $thread->path() }}">
-                    <strong class="float-right">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</strong>
+                    {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}
                 </a>
             </div>
         </div>
