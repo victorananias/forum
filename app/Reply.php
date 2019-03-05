@@ -11,7 +11,7 @@ class Reply extends Model
     use Favoritable, RecordsActivity;
 
     protected $with = ['owner', 'favorites'];
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'htmlBody'];
     protected $fillable = ['thread_id', 'user_id', 'body'];
 
     public static function boot()
@@ -47,8 +47,11 @@ class Reply extends Model
         return $this->belongsTo(Thread::class, 'thread_id');
     }
 
-    public function setBodyAttribute($body) {
-        $this->attributes['body'] = preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $body);
+    /**
+     * @return string|string[]|null
+     */
+    public function getHtmlBodyAttribute() {
+        return preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $this->body);
     }
 
     /**

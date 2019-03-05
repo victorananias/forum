@@ -14,15 +14,17 @@
 
         <div class="card-body">
             <div v-if="editing">
-                <form @submit="update">
+                <form @submit.prevent="update">
                     <div class="form-group">
-                        <textarea class="form-control" v-html="body" required></textarea>
+                        <vue-tribute :options="tributeOptions">
+                            <textarea class="form-control" name="body" rows="5" :id="'body'+id" v-text="body" required></textarea>
+                        </vue-tribute>
                     </div>
                     <button class="btn btn-sm btn-primary">Update</button>
                     <button type="button" class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
                 </form>
             </div>
-            <div v-else v-html='body'></div>
+            <div v-else v-html='htmlBody'></div>
         </div>
 
         <div class="card-footer level" v-if="canUpdate">
@@ -39,20 +41,23 @@
 <script>
     import Favorite from './Favorite.vue';
     import moment from 'moment';
+    import VueTribute from 'vue-tribute';
 
     export default {
         props: ['data'],
-        components: { Favorite },
+        components: { Favorite, VueTribute },
         data() {
             return {
                 editing: false,
-                body: this.data.body
+                id: this.data.id,
+                body: this.data.body,
+                htmlBody: this.data.htmlBody
             }
         },
         methods: {
             update() {
                 axios.patch(`/replies/${this.data.id}`, {
-                    body: this.body
+                    body: $(`#body${this.id}`).val()
                 })
                 .catch(error => {
                     console.log('Error');
@@ -61,6 +66,8 @@
                     flash(error.response.data, 'danger');
                 })
                 .then(response => {
+                    this.body = response.data.body;
+                    this.htmlBody = response.data.htmlBody;
                     this.editing = false;
                 });
             },
@@ -79,6 +86,18 @@
             createdAt() {
                 moment.locale('pt-BR');
                 return moment(this.data.created_at).fromNow();
+            },
+            tributeOptions() {
+                return {
+                    values: function (text, cb) {
+                        axios.get('/api/users', { name: text })
+                            .then(({data}) => {
+                                cb(data);
+                            });
+                    },
+                    fillAttr: 'name',
+                    lookup: 'name'
+                }
             }
         }
     }

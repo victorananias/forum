@@ -2071,6 +2071,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Favorite_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Favorite.vue */ "./resources/js/components/Favorite.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_tribute__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-tribute */ "./node_modules/vue-tribute/dist/vue-tribute.es.js");
 //
 //
 //
@@ -2109,17 +2110,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   components: {
-    Favorite: _Favorite_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Favorite: _Favorite_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    VueTribute: vue_tribute__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       editing: false,
-      body: this.data.body
+      id: this.data.id,
+      body: this.data.body,
+      htmlBody: this.data.htmlBody
     };
   },
   methods: {
@@ -2127,12 +2134,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.patch("/replies/".concat(this.data.id), {
-        body: this.body
+        body: $("#body".concat(this.id)).val()
       }).catch(function (error) {
         console.log('Error');
         console.log(error.response);
         flash(error.response.data, 'danger');
       }).then(function (response) {
+        _this.body = response.data.body;
+        _this.htmlBody = response.data.htmlBody;
         _this.editing = false;
       });
     },
@@ -2155,6 +2164,20 @@ __webpack_require__.r(__webpack_exports__);
     createdAt: function createdAt() {
       moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale('pt-BR');
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow();
+    },
+    tributeOptions: function tributeOptions() {
+      return {
+        values: function values(text, cb) {
+          axios.get('/api/users', {
+            name: text
+          }).then(function (_ref) {
+            var data = _ref.data;
+            cb(data);
+          });
+        },
+        fillAttr: 'name',
+        lookup: 'name'
+      };
     }
   }
 });
@@ -67977,35 +68000,62 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
           ? _c("div", [
-              _c("form", { on: { submit: _vm.update } }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("textarea", {
-                    staticClass: "form-control",
-                    attrs: { required: "" },
-                    domProps: { innerHTML: _vm._s(_vm.body) }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                  _vm._v("Update")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-link",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.editing = false
-                      }
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.update($event)
                     }
-                  },
-                  [_vm._v("Cancel")]
-                )
-              ])
+                  }
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c(
+                        "vue-tribute",
+                        { attrs: { options: _vm.tributeOptions } },
+                        [
+                          _c("textarea", {
+                            staticClass: "form-control",
+                            attrs: {
+                              name: "body",
+                              rows: "5",
+                              id: "body" + _vm.id,
+                              required: ""
+                            },
+                            domProps: { textContent: _vm._s(_vm.body) }
+                          })
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+                    _vm._v("Update")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-link",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.editing = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  )
+                ]
+              )
             ])
-          : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
+          : _c("div", { domProps: { innerHTML: _vm._s(_vm.htmlBody) } })
       ]),
       _vm._v(" "),
       _vm.canUpdate
