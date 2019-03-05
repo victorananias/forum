@@ -5,15 +5,15 @@
                 <div class="form-group">
                     <vue-tribute :options="tributeOptions">
                         <textarea class="form-control" name="body" rows="5" id="body"
-                                  placeholder="Tem algo a dizer?" required></textarea>
+                                  placeholder="Have something to say?" required></textarea>
                     </vue-tribute>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-dark float-right" @click="addReply">Responder</button>
+                    <button type="button" class="btn btn-dark float-right" @click="addReply">Reply</button>
                 </div>
             </form>
 
-            <p v-else class="text-center"><a href="/login">Entre</a> para participar da discução.</p>
+            <p v-else class="text-center"><a href="/login">Login</a> to participate on the discussion.</p>
 
         </div>
 

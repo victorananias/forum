@@ -41,7 +41,7 @@ class User extends Authenticatable
     /**
      * A user can have many threads.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function threads()
     {
@@ -68,11 +68,23 @@ class User extends Authenticatable
         return $this->hasMany(Activity::class);
     }
 
+    /**
+     * Returns the thread cache key
+     *
+     * @param $thread
+     * @return string
+     */
     public function visitedThreadCacheKey($thread)
     {
         return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
 
+    /**
+     * Mark the specified thread as read
+     *
+     * @param $thread
+     * @throws \Exception
+     */
     public function read($thread)
     {
         cache()->forever($this->visitedThreadCacheKey($thread), Carbon::now());

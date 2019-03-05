@@ -93,7 +93,7 @@ class FavoritesController extends Controller
         $reply->unfavorite();
 
         if (request()->expectsJson()) {
-            return response(['mensagem' => 'Deletado.']);
+            return response(['msg' => 'Deletado.']);
         }
 
         return redirect()->back();

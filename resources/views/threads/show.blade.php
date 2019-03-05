@@ -11,7 +11,7 @@
                             <span class="flex">
                                 <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">
                                     {{ $thread->creator->name }}
-                                </a> publicou: {{ $thread->title }}
+                                </a> published: {{ $thread->title }}
                             </span>
                             @can('update', $thread)
                                 <form action="{{ $thread->path() }}" method="POST">
@@ -36,9 +36,9 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <p>
-                            Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
+                            This thread was published {{ $thread->created_at->diffForHumans() }} by
                             <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
-                            e atualmente possui <span v-text="repliesCount"></span> {{ str_plural('resposta', $thread->replies_count) }}.
+                            and currently has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count) }}.
                         </p>
                         @if(auth()->check())
                         <p>

@@ -41,7 +41,7 @@
             flex: 1;
         }
 
-        [v-cloak] { 
+        [v-cloak] {
             display: none
         }
     </style>

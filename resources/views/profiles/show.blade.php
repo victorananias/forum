@@ -7,7 +7,7 @@
             <div class="col-md-8 offset-md-2">
                 <h1 class="pb-2 mt-4 mb-2 border-bottom">
                     {{ $profileUser->name }}
-                    <small> cadastrado {{ $profileUser->created_at->diffForHumans() }}</small>
+                    <small> joined {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h1>
         
                 @forelse($activities as $date => $activity)
@@ -24,7 +24,7 @@
                     @endforeach
                     
                 @empty
-                    <p>Este usuário não possui atividades.</p>
+                    <p>This user has no activities.</p>
                 @endforelse
                 
             </div>

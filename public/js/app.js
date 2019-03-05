@@ -2162,7 +2162,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createdAt: function createdAt() {
-      moment__WEBPACK_IMPORTED_MODULE_1___default.a.locale('pt-BR');
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow();
     },
     tributeOptions: function tributeOptions() {
@@ -67806,7 +67805,7 @@ var render = function() {
                       name: "body",
                       rows: "5",
                       id: "body",
-                      placeholder: "Tem algo a dizer?",
+                      placeholder: "Have something to say?",
                       required: ""
                     }
                   })
@@ -67823,13 +67822,13 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.addReply }
                 },
-                [_vm._v("Responder")]
+                [_vm._v("Reply")]
               )
             ])
           ])
         : _c("p", { staticClass: "text-center" }, [
-            _c("a", { attrs: { href: "/login" } }, [_vm._v("Entre")]),
-            _vm._v(" para participar da discução.")
+            _c("a", { attrs: { href: "/login" } }, [_vm._v("Login")]),
+            _vm._v(" to participate on the discussion.")
           ])
     ])
   ])
@@ -67986,7 +67985,7 @@ var render = function() {
               attrs: { href: "/profiles/" + _vm.data.owner.name },
               domProps: { textContent: _vm._s(_vm.data.owner.name) }
             }),
-            _vm._v(" disse "),
+            _vm._v(" said "),
             _c("span", { domProps: { textContent: _vm._s(_vm.createdAt) } }),
             _vm._v("...\n            ")
           ]),
@@ -68113,7 +68112,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("button", { class: _vm.classes, on: { click: _vm.subscribe } }, [
-    _vm._v("\n    " + _vm._s(_vm.active ? "Inscrever-se" : "Inscrito") + "\n")
+    _vm._v("\n    " + _vm._s(_vm.active ? "Subscribe" : "Subscribed") + "\n")
   ])
 }
 var staticRenderFns = []

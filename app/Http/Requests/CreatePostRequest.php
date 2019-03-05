@@ -21,7 +21,7 @@ class CreatePostRequest extends FormRequest
 
     public function failedAuthorization()
     {
-        throw new ThrottleException('Você está respondendo muito rápido, vá mais devagar, por favor');
+        throw new ThrottleException('You\'re replying too fast, please take a break.' );
     }
 
     /**
