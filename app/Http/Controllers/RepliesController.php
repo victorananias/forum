@@ -48,12 +48,15 @@ class RepliesController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @param  \App\Reply $reply
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \App\Reply
      */
     public function update(Request $request, Reply $reply)
     {
         $this->authorize('update', $reply);
 
         $reply->update(['body' => $request->body]);
+
+        return $reply->fresh();
     }
 
     /**

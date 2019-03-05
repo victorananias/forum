@@ -3,8 +3,10 @@
         <div class="col-md-12 mb-5">
             <form v-if="signedIn">
                 <div class="form-group">
-                    <textarea class="form-control" name="body" rows="5" v-model="body"
-                        placeholder="Tem algo a dizer?" required></textarea>
+                    <vue-tribute :options="tributeOptions">
+                        <textarea class="form-control" name="body" rows="5" id="body"
+                                  placeholder="Tem algo a dizer?" required></textarea>
+                    </vue-tribute>
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-dark float-right" @click="addReply">Responder</button>
@@ -19,17 +21,16 @@
 </template>
 
 <script>
+
+    import VueTribute from 'vue-tribute';
+
     export default {
-        data() {
-            return {
-                body: ''
-            }
-        },
+        components: { VueTribute },
         methods: {
             addReply() {
-                axios.post(`${location.pathname}/replies` , { body: this.body })
+                axios.post(`${location.pathname}/replies` , { body: $('#body').val() })
                     .then(response => {
-                        this.body = '';
+                        $('#body').val('');
                         flash('Sua resposta foi salva.');
                         this.$emit('created', response.data);
                     })
@@ -41,8 +42,23 @@
         computed: {
             signedIn() {
                 return window.App.signedIn;
+            },
+            tributeOptions() {
+                return {
+                    values: function (text, cb) {
+                        axios.get('/api/users', { name: text })
+                            .then(({data}) => {
+                            cb(data);
+                        });
+                    },
+                    fillAttr: 'name',
+                    lookup: 'name',
+                }
             }
         }
     }
 </script>
+<style scoped>
+    @import '~tributejs/dist/tribute.css';
+</style>
 

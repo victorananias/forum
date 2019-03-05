@@ -11,7 +11,7 @@ class Reply extends Model
     use Favoritable, RecordsActivity;
 
     protected $with = ['owner', 'favorites'];
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'htmlBody'];
     protected $fillable = ['thread_id', 'user_id', 'body'];
 
     public static function boot()
@@ -48,6 +48,13 @@ class Reply extends Model
     }
 
     /**
+     * @return string|string[]|null
+     */
+    public function getHtmlBodyAttribute() {
+        return preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $this->body);
+    }
+
+    /**
      * Determinate the path to the reply.
      *
      * @return string
@@ -68,13 +75,13 @@ class Reply extends Model
     }
 
     /**
-     *
+     * Returns the name of the mentioned users.
      *
      * @return mixed
      */
     public function mentionedUsers()
     {
-        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+        preg_match_all('/@([\w\-\_]+)/', $this->body, $matches);
 
         return $matches[1];
     }

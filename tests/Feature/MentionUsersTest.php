@@ -30,4 +30,23 @@ class MentionUsersTest extends TestCase
 
         $this->assertCount(1, $joao->notifications);
     }
+
+    /** @test */
+    public function it_can_fetch_all_metioned_users_starting_with_the_given_characters()
+    {
+        factory(User::class)->create([
+            'name' => 'john1'
+        ]);
+
+        factory(User::class)->create([
+            'name' => 'john2'
+        ]);
+
+        factory(User::class)->create([
+            'name' => 'jane'
+        ]);
+
+        $this->getJson('/api/users?name=john')
+            ->assertJsonCount(2);
+    }
 }
