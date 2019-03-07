@@ -15,19 +15,21 @@ class DatabaseSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'administrator',
+            'username' => 'administrator',
             'email' => 'administrator@teste.com',
             'password' => bcrypt('123')
         ]);
 
         User::create([
             'name' => 'teste',
+            'username' => 'teste',
             'email' => 'teste@teste.com',
             'password' => bcrypt('123')
         ]);
 
-         $thread = factory(Thread::class)->create();
+        $thread = factory(Thread::class)->create();
 
-         $thread->subscribe($admin->id);
+        $thread->subscribe($admin->id);
 
         // $thread->addReply([
         //     'body' => $faker->paragraph,
