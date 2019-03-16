@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h1 class="pb-2 mt-4 mb-2 border-bottom">
-                    {{ $profileUser->name }}
+                    {{ $profileUser->username }}
                     <small> joined {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h1>
         

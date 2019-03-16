@@ -3,12 +3,9 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Inspections\Spam;
 
-class SpamFree implements Rule
+class ValidUsername implements Rule
 {
-    protected $attribute;
-
     /**
      * Create a new rule instance.
      *
@@ -30,11 +27,7 @@ class SpamFree implements Rule
     {
         $this->attribute = $attribute;
 
-        try {
-            return !resolve(Spam::class)->detect($value);
-        } catch (\Exception $e) {
-            return false;
-        }
+        return preg_match('/[^A-z0-9_-]/', $value);
     }
 
     /**
@@ -44,6 +37,6 @@ class SpamFree implements Rule
      */
     public function message()
     {
-        return "The field {$this->attribute} contains spam.";
+        return "The field {$this->attribute} is not a valid username.";
     }
 }

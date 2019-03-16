@@ -16,8 +16,8 @@ class ProfilesTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->get('profiles/' . $user->name)
-             ->assertSee($user->name);
+        $this->get('profiles/' . $user->username)
+             ->assertSee($user->username);
     }
 
     /** @test */
@@ -29,7 +29,7 @@ class ProfilesTest extends TestCase
 
         $thread = factory(Thread::class)->create(['user_id' => $user->id]);
 
-        $this->get('profiles/' . $user->name)
+        $this->get('profiles/' . $user->username)
               ->assertSee($thread->title)
               ->assertSee($thread->body);
     }

@@ -14,7 +14,7 @@
                         </a>
                     </h5>
 
-                    <h6>posted by <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a></h6>
+                    <h6>posted by <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->username }}</a></h6>
 
                 </div>
 

@@ -20,4 +20,27 @@ class UserTest extends TestCase
 
         $this->assertEquals($reply->id, $user->lastReply->id);
     }
+
+    /** @test */
+    public function a_user_may_have_a_valid_username()
+    {
+
+        User::create([
+            'username' => 'johndoe',
+            'name' => 'John Doe',
+            'email' => 'JohnDoe@teste.com',
+            'password' => 'pass',
+        ]);
+
+        $this->assertDatabaseHas('users', [ 'username' => 'johndoe']);
+
+        $this->expectException('Exception');
+
+        User::create([
+            'username' => 'john doe',
+            'name' => 'John Doe',
+            'email' => 'JohnDoe2@teste.com',
+            'password' => 'pass',
+        ]);
+    }
 }

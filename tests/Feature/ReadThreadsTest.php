@@ -67,7 +67,7 @@ class ReadThreadsTest extends TestCase
         $threadByUser = factory(Thread::class)->create(['user_id' => $user->id]);
         $threadNotByUser = factory(Thread::class)->create();
 
-        $this->get("/threads?by={$user->name}")
+        $this->get("/threads?by={$user->username}")
              ->assertSee($threadByUser->title)
              ->assertDontSee($threadNotByUser->title);
     }

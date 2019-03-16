@@ -19,7 +19,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @if(auth()->check())
-                            <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">My Threads</a>
+                            <a class="dropdown-item" href="/threads?by={{ auth()->user()->username }}">My Threads</a>
                         @endif
                         <a class="dropdown-item" href="/threads">All Threads</a>
                         <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
@@ -59,8 +59,8 @@
 
                     <li class="nav-item dropdown">
                         
-                        <a id="navbarDropdown" class="btn nav-link text-light fa-lg" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user-astronaut"></i>
+                        <a id="navbarDropdown" class="btn nav-link text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fas fa-user-astronaut fa-lg"></i> {{ auth()->user()->username }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

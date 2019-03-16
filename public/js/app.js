@@ -1923,14 +1923,14 @@ __webpack_require__.r(__webpack_exports__);
       return {
         values: function values(text, cb) {
           axios.get('/api/users', {
-            name: text
+            username: text
           }).then(function (_ref) {
             var data = _ref.data;
             cb(data);
           });
         },
-        fillAttr: 'name',
-        lookup: 'name'
+        fillAttr: 'username',
+        lookup: 'username'
       };
     }
   }
@@ -2168,14 +2168,14 @@ __webpack_require__.r(__webpack_exports__);
       return {
         values: function values(text, cb) {
           axios.get('/api/users', {
-            name: text
+            username: text
           }).then(function (_ref) {
             var data = _ref.data;
             cb(data);
           });
         },
-        fillAttr: 'name',
-        lookup: 'name'
+        fillAttr: 'username',
+        lookup: 'username'
       };
     }
   }
@@ -2272,7 +2272,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.title = document.title;
-    axios.get("/profiles/".concat(window.App.user.name, "/notifications")).then(function (response) {
+    axios.get("/profiles/".concat(window.App.user.username, "/notifications")).then(function (response) {
       _this.notifications = response.data;
 
       _this.updateTitle();
@@ -2287,7 +2287,7 @@ __webpack_require__.r(__webpack_exports__);
     markAsRead: function markAsRead(notification) {
       var _this2 = this;
 
-      axios.delete("/profiles/".concat(window.App.user.name, "/notifications/").concat(notification.id)).then(function () {
+      axios.delete("/profiles/".concat(window.App.user.username, "/notifications/").concat(notification.id)).then(function () {
         _this2.notifications = _this2.notifications.filter(function (n) {
           return n.id != notification.id;
         });
@@ -67982,8 +67982,8 @@ var render = function() {
         _c("div", { staticClass: "level" }, [
           _c("div", { staticClass: "flex" }, [
             _c("a", {
-              attrs: { href: "/profiles/" + _vm.data.owner.name },
-              domProps: { textContent: _vm._s(_vm.data.owner.name) }
+              attrs: { href: "/profiles/" + _vm.data.owner.username },
+              domProps: { textContent: _vm._s(_vm.data.owner.username) }
             }),
             _vm._v(" said "),
             _c("span", { domProps: { textContent: _vm._s(_vm.createdAt) } }),

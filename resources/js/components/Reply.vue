@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="level">
                 <div class="flex">
-                    <a :href="'/profiles/' + data.owner.name" v-text="data.owner.name">
+                    <a :href="'/profiles/' + data.owner.username" v-text="data.owner.username">
                     </a> said <span v-text="createdAt"></span>...
                 </div>
                 <div v-if="signedIn">
@@ -89,13 +89,13 @@
             tributeOptions() {
                 return {
                     values: function (text, cb) {
-                        axios.get('/api/users', { name: text })
+                        axios.get('/api/users', { username: text })
                             .then(({data}) => {
                                 cb(data);
                             });
                     },
-                    fillAttr: 'name',
-                    lookup: 'name'
+                    fillAttr: 'username',
+                    lookup: 'username'
                 }
             }
         }

@@ -46,13 +46,13 @@
             tributeOptions() {
                 return {
                     values: function (text, cb) {
-                        axios.get('/api/users', { name: text })
+                        axios.get('/api/users', { username: text })
                             .then(({data}) => {
                             cb(data);
                         });
                     },
-                    fillAttr: 'name',
-                    lookup: 'name',
+                    fillAttr: 'username',
+                    lookup: 'username',
                 }
             }
         }

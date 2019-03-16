@@ -9,8 +9,8 @@
                     <div class="card-header bg-dark text-light">
                         <div class="level">
                             <span class="flex">
-                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">
-                                    {{ $thread->creator->name }}
+                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->username }}">
+                                    {{ $thread->creator->username }}
                                 </a> published: {{ $thread->title }}
                             </span>
                             @can('update', $thread)
@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <p>
                             This thread was published {{ $thread->created_at->diffForHumans() }} by
-                            <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
+                            <a href="/profiles/{{ $thread->creator->username }}">{{ $thread->creator->username }}</a>
                             and currently has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count) }}.
                         </p>
                         @if(auth()->check())
