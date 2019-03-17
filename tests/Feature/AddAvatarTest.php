@@ -45,7 +45,7 @@ class AddAvatarTest extends TestCase
 
         Storage::fake('public');
 
-        $this->json('POST', "/api/users/{$user->id}/avatar",[
+        $this->json('POST', "/api/users/{$user->username}/avatar",[
             'avatar' => $file = UploadedFile::fake()->image('avatar.jpg')
         ]);
 
