@@ -1907,7 +1907,7 @@ __webpack_require__.r(__webpack_exports__);
         body: $('#body').val()
       }).then(function (response) {
         $('#body').val('');
-        flash('Sua resposta foi salva.');
+        flash('Your reply has been saved.');
 
         _this.$emit('created', response.data);
       }).catch(function (error) {
@@ -80483,8 +80483,8 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "18327c2ad02e33a6303f",
-  cluster: "mt1",
+  key: "",
+  cluster: "",
   encrypted: true
 });
 
@@ -81193,8 +81193,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/victor/projects/localhost/laravel-forum/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/victor/projects/localhost/laravel-forum/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/victor/projects/laravel-forum/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/victor/projects/laravel-forum/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

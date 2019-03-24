@@ -31,7 +31,7 @@
                 axios.post(`${location.pathname}/replies` , { body: $('#body').val() })
                     .then(response => {
                         $('#body').val('');
-                        flash('Sua resposta foi salva.');
+                        flash('Your reply has been saved.');
                         this.$emit('created', response.data);
                     })
                     .catch(error => {

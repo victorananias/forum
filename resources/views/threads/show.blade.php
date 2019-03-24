@@ -8,6 +8,7 @@
                 <div class="card mb-4">
                     <div class="card-header bg-dark text-light">
                         <div class="level">
+                            <img class="mr-1" width="25" src="{{ $thread->creator->avatar() }}" alt="{{ $thread->creator->name }}">
                             <span class="flex">
                                 <a class="font-weight-bold" href="/profiles/{{ $thread->creator->username }}">
                                     {{ $thread->creator->username }}
@@ -29,7 +30,7 @@
                     </div>
                 </div>
 
-                <replies @removed="repliesCount--" @added="repliesCount--"></replies>
+                <replies @removed="repliesCount--" @added="repliesCount++"></replies>
 
             </div>
             <div class="col-md-4">

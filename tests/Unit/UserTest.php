@@ -43,4 +43,17 @@ class UserTest extends TestCase
             'password' => 'pass',
         ]);
     }
+
+    /** @test */
+    public function a_user_can_determine_their_avatar_path()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEquals(asset('storage/avatars/default.jpg'), $user->avatar());
+
+        $user->avatar_path = 'avatars/me.jpg';
+
+        $this->assertEquals(asset('storage/avatars/me.jpg'), $user->avatar());
+
+    }
 }

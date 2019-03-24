@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
 
         $thread->subscribe($admin->id);
 
-        // $thread->addReply([
-        //     'body' => $faker->paragraph,
-        //     'user_id' => factory(User::class)->create()->id
-        // ]);
+//         $thread->addReply([
+//             'body' => $faker->paragraph,
+//             'user_id' => factory(User::class)->create()->id
+//         ]);
 
         $this->call(ChannelsTableSeeder::class);
-        $this->call(ThreadsTableSeeder::class);
+//        $this->call(ThreadsTableSeeder::class);
     }
 }

@@ -18,8 +18,8 @@
                     </form>
                 @endcan
 
-                <img src="{{ asset($profileUser->avatar_path) }}">
-        
+                <img src="{{ $profileUser->avatar() }}">
+
                 @forelse($activities as $date => $activity)
                     <h5 class="pb-2 mt-4 mb-2 border-bottom">
                         {{ $date }}
