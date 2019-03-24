@@ -26,6 +26,8 @@ Route::get('/threads/create', 'ThreadsController@create');
 
 Route::get('/threads', 'ThreadsController@index')->name('threads');
 
+Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
+
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 
 Route::get('/threads/{channel}', 'ThreadsController@index');

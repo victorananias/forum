@@ -15,19 +15,19 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Navegar
+                        Browse
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @if(auth()->check())
-                            <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">Minhas Threads</a>
+                            <a class="dropdown-item" href="/threads?by={{ auth()->user()->username }}">My Threads</a>
                         @endif
-                        <a class="dropdown-item" href="/threads">Todas as Threads</a>
-                        <a class="dropdown-item" href="/threads?popular=1">Threads Populares</a>
-                        <a class="dropdown-item" href="/threads?unanswered=1">Threads Não Respondidas</a>
+                        <a class="dropdown-item" href="/threads">All Threads</a>
+                        <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
+                        <a class="dropdown-item" href="/threads?unanswered=1">Unanswered Threads</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/threads/create">Criar Thread</a>
+                    <a class="nav-link" href="/threads/create">New Thread</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,8 +59,8 @@
 
                     <li class="nav-item dropdown">
                         
-                        <a id="navbarDropdown" class="btn nav-link text-light fa-lg" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user-astronaut"></i>
+                        <a id="navbarDropdown" class="btn nav-link text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fas fa-user-astronaut fa-lg"></i> {{ auth()->user()->username }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -70,11 +70,11 @@
                                 {{ __('Logout') }}
                             </a>
                             
+                            <a class="dropdown-item" href="{{ route('profile', Auth::user()) }}">My Profile</a>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
-                            
-                            <a class="dropdown-item" href="{{ route('profile', Auth::user()) }}">Meu Perfil</a>
                             
                         </div>
                     </li>

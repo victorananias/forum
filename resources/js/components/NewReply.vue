@@ -5,15 +5,15 @@
                 <div class="form-group">
                     <vue-tribute :options="tributeOptions">
                         <textarea class="form-control" name="body" rows="5" id="body"
-                                  placeholder="Tem algo a dizer?" required></textarea>
+                                  placeholder="Have something to say?" required></textarea>
                     </vue-tribute>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-dark float-right" @click="addReply">Responder</button>
+                    <button type="button" class="btn btn-dark float-right" @click="addReply">Reply</button>
                 </div>
             </form>
 
-            <p v-else class="text-center"><a href="/login">Entre</a> para participar da discução.</p>
+            <p v-else class="text-center"><a href="/login">Login</a> to participate on the discussion.</p>
 
         </div>
 
@@ -31,7 +31,7 @@
                 axios.post(`${location.pathname}/replies` , { body: $('#body').val() })
                     .then(response => {
                         $('#body').val('');
-                        flash('Sua resposta foi salva.');
+                        flash('Your reply has been saved.');
                         this.$emit('created', response.data);
                     })
                     .catch(error => {
@@ -46,13 +46,13 @@
             tributeOptions() {
                 return {
                     values: function (text, cb) {
-                        axios.get('/api/users', { name: text })
+                        axios.get('/api/users', { username: text })
                             .then(({data}) => {
                             cb(data);
                         });
                     },
-                    fillAttr: 'name',
-                    lookup: 'name',
+                    fillAttr: 'username',
+                    lookup: 'username',
                 }
             }
         }

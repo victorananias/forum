@@ -8,10 +8,11 @@
                 <div class="card mb-4">
                     <div class="card-header bg-dark text-light">
                         <div class="level">
+                            <img class="mr-1" width="25" src="{{ $thread->creator->avatar() }}" alt="{{ $thread->creator->name }}">
                             <span class="flex">
-                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->name }}">
-                                    {{ $thread->creator->name }}
-                                </a> publicou: {{ $thread->title }}
+                                <a class="font-weight-bold" href="/profiles/{{ $thread->creator->username }}">
+                                    {{ $thread->creator->username }}
+                                </a> published: {{ $thread->title }}
                             </span>
                             @can('update', $thread)
                                 <form action="{{ $thread->path() }}" method="POST">
@@ -29,16 +30,16 @@
                     </div>
                 </div>
 
-                <replies @removed="repliesCount--" @added="repliesCount--"></replies>
+                <replies @removed="repliesCount--" @added="repliesCount++"></replies>
 
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
                         <p>
-                            Essa thread foi publicada {{ $thread->created_at->diffForHumans() }} por 
-                            <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> 
-                            e atualmente possui <span v-text="repliesCount"></span> {{ str_plural('resposta', $thread->replies_count) }}.
+                            This thread was published {{ $thread->created_at->diffForHumans() }} by
+                            <a href="/profiles/{{ $thread->creator->username }}">{{ $thread->creator->username }}</a>
+                            and currently has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count) }}.
                         </p>
                         @if(auth()->check())
                         <p>

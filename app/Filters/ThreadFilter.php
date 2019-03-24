@@ -16,7 +16,7 @@ class ThreadFilter extends Filter
      */
     public function by($username)
     {
-        $user = User::whereName($username)->firstOrFail();
+        $user = User::whereUsername($username)->firstOrFail();
         return $this->builder->where('user_id', $user->id);
     }
 

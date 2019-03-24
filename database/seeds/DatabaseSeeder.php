@@ -15,12 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         $admin = User::create([
             'name' => 'administrator',
+            'username' => 'administrator',
             'email' => 'administrator@teste.com',
             'password' => bcrypt('123')
         ]);
 
         User::create([
             'name' => 'teste',
+            'username' => 'teste',
             'email' => 'teste@teste.com',
             'password' => bcrypt('123')
         ]);
@@ -29,11 +31,12 @@ class DatabaseSeeder extends Seeder
 
         $thread->subscribe($admin->id);
 
-        // $thread->addReply([
-        //     'body' => $faker->paragraph,
-        //     'user_id' => factory(User::class)->create()->id
-        // ]);
+//         $thread->addReply([
+//             'body' => $faker->paragraph,
+//             'user_id' => factory(User::class)->create()->id
+//         ]);
 
-        // $this->call(ChannelsTableSeeder::class);
+        $this->call(ChannelsTableSeeder::class);
+//        $this->call(ThreadsTableSeeder::class);
     }
 }

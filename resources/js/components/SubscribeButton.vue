@@ -1,6 +1,6 @@
 <template>
     <button @click="subscribe" :class="classes">
-        {{ active ? 'Inscrever-se' : 'Inscrito' }}
+        {{ active ? 'Subscribe' : 'Subscribed' }}
     </button>
 </template>
 

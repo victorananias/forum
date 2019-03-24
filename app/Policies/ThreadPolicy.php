@@ -18,7 +18,7 @@ class ThreadPolicy
      */
     public function before($user)
     {
-        if ($user->name == 'administrator') {
+        if ($user->username == 'administrator') {
             return true;
         }
     }

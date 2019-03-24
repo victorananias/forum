@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar_path', 'username'
     ];
 
     /**
@@ -28,6 +28,17 @@ class User extends Authenticatable
         'password', 'remember_token', 'email'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+             if (preg_match('/[^A-z0-9_-]/', $model->username)) {
+                throw new \Exception('The username can not contain special characteres.');
+             }
+        });
+    }
+
     /**
      * set the route key
      *
@@ -35,13 +46,13 @@ class User extends Authenticatable
      */
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'username';
     }
 
     /**
      * A user can have many threads.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function threads()
     {
@@ -68,13 +79,30 @@ class User extends Authenticatable
         return $this->hasMany(Activity::class);
     }
 
+    /**
+     * Returns the thread cache key
+     *
+     * @param $thread
+     * @return string
+     */
     public function visitedThreadCacheKey($thread)
     {
         return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
 
+    /**
+     * Mark the specified thread as read
+     *
+     * @param $thread
+     * @throws \Exception
+     */
     public function read($thread)
     {
         cache()->forever($this->visitedThreadCacheKey($thread), Carbon::now());
+    }
+
+    public function avatar()
+    {
+        return asset('storage/'.($this->avatar_path ?? 'avatars/default.jpg'));
     }
 }

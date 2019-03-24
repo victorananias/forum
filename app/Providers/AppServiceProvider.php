@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Schema::defaultStringLength(191);
 
         // Traduzindo o Carbon
-        \Carbon\Carbon::setLocale('pt_BR');
+//        \Carbon\Carbon::setLocale('pt_BR');
 
         \View::composer('*', function ($view) {
             $channels = \Cache::rememberForever('channels', function () {

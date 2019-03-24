@@ -73,7 +73,7 @@ class RepliesController extends Controller
         $reply->delete();
 
         if (request()->expectsJson()) {
-            return response(['mensagem' => 'Deletado.']);
+            return response(['msg' => 'Deletado.']);
         }
 
         return back();
