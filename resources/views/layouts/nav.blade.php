@@ -57,13 +57,13 @@
 
                     <user-notifications></user-notifications>
 
-                    <li class="nav-item dropdown">
-                        
-                        <a id="navbarDropdown" class="btn nav-link text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <li class="nav-item dropdown" >
+
+                        <a id="navbarDropdown" class="text-left btn nav-link text-light" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             <i class="fas fa-user-astronaut fa-lg"></i> {{ auth()->user()->username }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu " aria-labelledby="navbarDropdown">
                             
                             <a class="dropdown-item" href="{{ route('profile', Auth::user()) }}">My Profile</a>
 

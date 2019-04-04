@@ -34,6 +34,7 @@ window.flash = function(message, type = 'success') {
 
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
+Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
 Vue.component('thread-view', require('./pages/Thread.vue').default);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
