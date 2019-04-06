@@ -13,7 +13,6 @@ class Thread extends Model
     protected $appends = ['isSubscribedTo'];
 
     use RecordsActivity;
-    use RecordsVisits;
 
     public static function boot()
     {
@@ -156,11 +155,8 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
-    /**
-     * @return string
-     */
-    protected function visitsCacheKey(): string
+    public function visits()
     {
-        return "threads.{$this->id}.visits";
+        return new Visits($this);
     }
 }
