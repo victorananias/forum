@@ -19,10 +19,17 @@ class CreateThreadsTest extends TestCase
         $this->withExceptionHandling();
 
         $this->get('/threads/create')
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
 
         $this->post('/threads', [])
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
+    {
+        $this->publishThread()
+            ->assertRedirect();
     }
 
     /** @test */
