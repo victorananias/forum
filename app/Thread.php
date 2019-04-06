@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Events\ThreadHasNewReply;
+use Illuminate\Support\Facades\Redis;
 
 class Thread extends Model
 {
@@ -12,6 +13,7 @@ class Thread extends Model
     protected $appends = ['isSubscribedTo'];
 
     use RecordsActivity;
+    use RecordsVisits;
 
     public static function boot()
     {
@@ -152,5 +154,13 @@ class Thread extends Model
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
+    }
+
+    /**
+     * @return string
+     */
+    protected function visitsCacheKey(): string
+    {
+        return "threads.{$this->id}.visits";
     }
 }

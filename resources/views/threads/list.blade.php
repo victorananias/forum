@@ -27,6 +27,10 @@
         <div class="card-body">
             <div class="body">{{ $thread->body }}</div>
         </div>
+
+        <div class="card-footer">
+            {{ $thread->visits() }} {{ str_plural('view', $thread->visits()) }}
+        </div>
     </div>
 @empty
     <p class="text-dark">There is no threads on this here</p>

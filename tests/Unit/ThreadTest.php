@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 use Illuminate\Support\Collection;
 use App\Thread;
@@ -137,5 +138,20 @@ class ThreadTest extends TestCase
         $user->read($thread);
 
         $this->assertFalse($thread->hasUpdatesFor());
+    }
+
+    /** @test */
+    public function a_thread_records_each_visit ()
+    {
+        $thread = factory(Thread::class)->create(['id' => 11]);
+
+        $thread->resetVisits();
+
+        $this->assertSame(0, $thread->visits());
+
+        $thread->recordVisit();
+
+        $this->assertEquals(1, $thread->visits());
+
     }
 }
