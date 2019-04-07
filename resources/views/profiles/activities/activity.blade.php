@@ -1,5 +1,5 @@
 <div class="card mb-4">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header ">
             <div class="level">
                 <span class="flex">
                     {{ $heading }}

@@ -68335,7 +68335,7 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "btn nav-link text-light fa-lg",
+        staticClass: "btn nav-link  fa-lg",
         attrs: {
           "data-toggle": "dropdown",
           "aria-haspopup": "true",
@@ -80678,8 +80678,8 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "",
+  key: "18327c2ad02e33a6303f",
+  cluster: "mt1",
   encrypted: true
 });
 

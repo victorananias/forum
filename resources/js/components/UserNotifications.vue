@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown">
-        <button class="btn nav-link text-light fa-lg" 
+        <button class="btn nav-link  fa-lg"
             data-toggle="dropdown"
             aria-haspopup="true" 
             aria-expanded="false" 
