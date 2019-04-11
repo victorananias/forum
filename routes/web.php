@@ -15,18 +15,16 @@ Route::get('/', function () {
     return redirect('/threads');
 });
 
-Auth::routes();
-// Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
 Route::get('/home', function () {
     return redirect('threads');
 });
 
-Route::get('/threads/create', 'ThreadsController@create');
+Route::get('/threads/create', 'ThreadsController@create')
+    ->middleware('verified');
 
 Route::get('/threads', 'ThreadsController@index')->name('threads');
-
-Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
 
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 
@@ -40,9 +38,11 @@ Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 
-Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')
+    ->middleware('auth');
 
-Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')->middleware('auth');
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')
+    ->middleware('auth');
 
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
 
@@ -57,3 +57,7 @@ Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
 
 Route::get('/profiles/{user}/notifications/', 'UserNotificationsController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

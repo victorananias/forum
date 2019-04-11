@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 use Illuminate\Support\Collection;
 use App\Thread;
@@ -23,10 +24,10 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_can_make_a_string_path()
+    public function a_thread_has_a_string_path()
     {
         $this->assertEquals(
-            "/threads/{$this->thread->channel->slug}/{$this->thread->id}",
+            "/threads/{$this->thread->channel->slug}/{$this->thread->slug}",
             $this->thread->path()
         );
     }
@@ -124,18 +125,15 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_can_check_if_an_authenticated_user_has_read_all_replies()
+    public function we_record_a_new_visit_each_time_the_thread_is_read()
     {
-        $user = factory(User::class)->create();
-
-        $this->actingAS($user);
-
         $thread = factory(Thread::class)->create();
 
-        $this->assertTrue($thread->hasUpdatesFor());
+        $this->assertEquals(0, $thread->visits);
 
-        $user->read($thread);
+        $this->call('GET', $thread->path());
 
-        $this->assertFalse($thread->hasUpdatesFor());
+        $this->assertEquals(1, $thread->fresh()->visits);
+
     }
 }

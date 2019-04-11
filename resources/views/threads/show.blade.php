@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card mb-4">
-                    <div class="card-header bg-dark text-light">
+                    <div class="card-header ">
                         <div class="level">
                             <img class="mr-1" width="25" src="{{ $thread->creator->avatar_path }}" alt="{{ $thread->creator->name }}">
                             <span class="flex">
@@ -18,7 +18,7 @@
                                 <form action="{{ $thread->path() }}" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn text-light">
+                                    <button type="submit" class="btn ">
                                         <i class="fas fa-trash-alt fa-lg"></i>
                                     </button>
                                 </form>

@@ -19,14 +19,21 @@ class CreateThreadsTest extends TestCase
         $this->withExceptionHandling();
 
         $this->get('/threads/create')
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
 
         $this->post('/threads', [])
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
     }
 
     /** @test */
-    public function an_authenticated_user_can_create_new_forum_threads()
+    public function authenticated_users_must_first_confirm_their_email_address_before_creating_threads()
+    {
+        $this->publishThread()
+            ->assertRedirect();
+    }
+
+    /** @test */
+    public function a_user_can_create_new_forum_threads()
     {
         $this->actingAs(factory(User::class)->create());
 
@@ -40,6 +47,26 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_requires_a_unique_slug()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $thread = factory(Thread::class)->create([
+            'title' => 'Foo Title',
+            'slug' => 'foo-title'
+        ]);
+
+        $this->assertEquals($thread->fresh()->slug, 'foo-title');
+
+        $this->post(route('threads'), $thread->toArray());
+//
+        $this->assertTrue(Thread::whereSlug('foo-title-2')->exists());
+
+        $this->post(route('threads'), $thread->toArray());
+//
+        $this->assertTrue(Thread::whereSlug('foo-title-3')->exists());
+    }
+
     public function a_thread_requires_a_title()
     {
         $this->publishThread(['title' => null])
