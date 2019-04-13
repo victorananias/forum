@@ -18,10 +18,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('users', 'Api\UsersController@index');
-
-Route::middleware('auth')
-    ->post('/users/{user}/avatar', 'Api\UserAvatarController@store')
-    ->name('avatar');
-
-Route::middleware('auth')
-    ->post('/replies/{reply}/best', 'Api\BestRepliesController@store')->name('best-replies.store');

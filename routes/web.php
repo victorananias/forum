@@ -58,6 +58,9 @@ Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotification
 
 Route::get('/profiles/{user}/notifications/', 'UserNotificationsController@index');
 
-Auth::routes();
+Route::middleware('auth')
+    ->post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')
+    ->name('avatar');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')
+    ->post('/api/replies/{reply}/best', 'Api\BestRepliesController@store')->name('best-replies.store');
