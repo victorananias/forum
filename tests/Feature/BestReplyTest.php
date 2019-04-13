@@ -44,4 +44,19 @@ class BestReplyTest extends TestCase
         $this->postJson(route('best-replies.store', [$replies[1]->id]))
             ->assertStatus(403);
     }
+
+    /** @test */
+    public function if_the_best_reply_is_deleted_than_the_thread_is_properly_updated_to_reflected_that()
+    {
+        $this->actingAs(factory(User::class)->create());
+
+        $reply = factory(Reply::class)->create(['user_id' => auth()->id()]);
+
+        $reply->thread->markBestReply($reply);
+
+        $this->deleteJson(route('replies.destroy', $reply));
+
+        $this->assertNull($reply->thread->fresh()->best_reply_id);
+
+    }
 }

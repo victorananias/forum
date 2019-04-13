@@ -9,7 +9,7 @@
                 </div>
 
                 <button class="btn text-secondary btn-sm ml-auto"
-                        v-if="!isBest"
+                        v-if="!isBest && authorize('owns', reply.thread)"
                         @click="markBestReply">
                     <i class="fas fa-star fa-lg"></i>
                 </button>
@@ -34,8 +34,8 @@
             <div v-else v-html='reply.htmlBody'></div>
         </div>
 
-        <div class="card-footer level">
-            <div v-if="authorize('updateReply', reply)">
+        <div class="card-footer level" v-if="signedIn">
+            <div v-if="authorize('owns', reply)">
                 <button class="btn text-secondary mr-2 text-success" @click="editing = true">
                     <i class="far fa-edit"></i>
                 </button>
@@ -45,7 +45,7 @@
                 </button>
             </div>
 
-            <div v-if="signedIn" class="ml-auto">
+            <div class="ml-auto">
                 <favorite :reply="reply"></favorite>
             </div>
 

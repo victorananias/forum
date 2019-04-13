@@ -68195,7 +68195,7 @@ var render = function() {
             _vm._v("...\n            ")
           ]),
           _vm._v(" "),
-          !_vm.isBest
+          !_vm.isBest && _vm.authorize("owns", _vm.reply.thread)
             ? _c(
                 "button",
                 {
@@ -68280,46 +68280,46 @@ var render = function() {
           : _c("div", { domProps: { innerHTML: _vm._s(_vm.reply.htmlBody) } })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-footer level" }, [
-        _vm.authorize("updateReply", _vm.reply)
-          ? _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn text-secondary mr-2 text-success",
-                  on: {
-                    click: function($event) {
-                      _vm.editing = true
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "far fa-edit" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn text-secondary btn-sm mr-2 text-danger",
-                  on: {
-                    click: function($event) {
-                      return _vm.destroy()
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-trash-alt" })]
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.signedIn
-          ? _c(
+      _vm.signedIn
+        ? _c("div", { staticClass: "card-footer level" }, [
+            _vm.authorize("owns", _vm.reply)
+              ? _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn text-secondary mr-2 text-success",
+                      on: {
+                        click: function($event) {
+                          _vm.editing = true
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "far fa-edit" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn text-secondary btn-sm mr-2 text-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.destroy()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-trash-alt" })]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
               "div",
               { staticClass: "ml-auto" },
               [_c("favorite", { attrs: { reply: _vm.reply } })],
               1
             )
-          : _vm._e()
-      ])
+          ])
+        : _vm._e()
     ]
   )
 }
@@ -80680,10 +80680,11 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var user = window.App.User;
+var user = window.App.user;
 module.exports = {
-  updateReply: function updateReply(reply) {
-    return reply.user_id == reply.user_id;
+  owns: function owns(model) {
+    var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
+    return model[prop] == user.id;
   }
 };
 

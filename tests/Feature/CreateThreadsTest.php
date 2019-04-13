@@ -66,6 +66,7 @@ class CreateThreadsTest extends TestCase
         $this->assertTrue(Thread::whereSlug('foo-title-3')->exists());
     }
 
+    /** @test */
     public function a_thread_requires_a_title()
     {
         $this->publishThread(['title' => null])
@@ -148,7 +149,7 @@ class CreateThreadsTest extends TestCase
         $this->delete($thread->path())->assertStatus(403);
     }
 
-    
+
     private function publishThread($overrides = [])
     {
         $this->withExceptionHandling();
