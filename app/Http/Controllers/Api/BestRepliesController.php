@@ -12,7 +12,7 @@ class BestRepliesController extends Controller
     /**
      *
      * Store a newly created resource in storage.
-     * 
+     *
      * @param Reply $reply
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

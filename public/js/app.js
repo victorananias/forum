@@ -2028,9 +2028,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    },
     tributeOptions: function tributeOptions() {
       return {
         values: function values(text, cb) {
@@ -2224,11 +2221,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data'],
+  props: ['reply'],
   components: {
     Favorite: _Favorite_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     VueTribute: vue_tribute__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -2236,45 +2248,44 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editing: false,
-      id: this.data.id,
-      body: this.data.body,
-      htmlBody: this.data.htmlBody
+      isBest: this.reply.isBest
     };
+  },
+  created: function created() {
+    var _this = this;
+
+    window.events.$on('best-reply-selected', function (id) {
+      _this.isBest = id == _this.reply.id;
+    });
   },
   methods: {
     update: function update() {
-      var _this = this;
+      var _this2 = this;
 
-      axios.patch("/replies/".concat(this.data.id), {
-        body: $("#body".concat(this.id)).val()
+      axios.patch("/replies/".concat(this.reply.id), {
+        body: $("#body".concat(this.reply.id)).val()
       }).catch(function (error) {
         console.log('Error');
         console.log(error.response);
         flash(error.response.data, 'danger');
       }).then(function (response) {
-        _this.body = response.data.body;
-        _this.htmlBody = response.data.htmlBody;
-        _this.editing = false;
+        _this2.reply.body = response.data.body;
+        _this2.reply.htmlBody = response.data.reply.htmlBody;
+        _this2.editing = false;
       });
     },
     destroy: function destroy() {
-      axios.delete("/replies/".concat(this.data.id));
-      this.$emit('deleted', this.data.id);
+      axios.delete("/replies/".concat(this.reply.id));
+      this.$emit('deleted', this.reply.id);
+    },
+    markBestReply: function markBestReply() {
+      axios.post("/api/replies/".concat(this.reply.id, "/best"), {});
+      window.events.$emit('best-reply-selected', this.reply.id);
     }
   },
   computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    },
-    canUpdate: function canUpdate() {
-      var _this2 = this;
-
-      return this.authorize(function (user) {
-        return _this2.data.user_id == user.id;
-      });
-    },
     createdAt: function createdAt() {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow();
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.reply.created_at).fromNow();
     },
     tributeOptions: function tributeOptions() {
       return {
@@ -68118,7 +68129,7 @@ var render = function() {
           { key: reply.id },
           [
             _c("reply", {
-              attrs: { data: reply },
+              attrs: { reply: reply },
               on: {
                 deleted: function($event) {
                   return _vm.remove(index)
@@ -68170,22 +68181,40 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card mb-4", attrs: { id: "reply-" + _vm.data.id } },
+    { staticClass: "card mb-4", attrs: { id: "reply-" + _vm.reply.id } },
     [
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "level" }, [
           _c("div", { staticClass: "flex" }, [
             _c("a", {
-              attrs: { href: "/profiles/" + _vm.data.owner.username },
-              domProps: { textContent: _vm._s(_vm.data.owner.username) }
+              attrs: { href: "/profiles/" + _vm.reply.owner.username },
+              domProps: { textContent: _vm._s(_vm.reply.owner.username) }
             }),
             _vm._v(" said "),
             _c("span", { domProps: { textContent: _vm._s(_vm.createdAt) } }),
             _vm._v("...\n            ")
           ]),
           _vm._v(" "),
-          _vm.signedIn
-            ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+          !_vm.isBest
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn text-secondary btn-sm ml-auto",
+                  on: { click: _vm.markBestReply }
+                },
+                [_c("i", { staticClass: "fas fa-star fa-lg" })]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isBest
+            ? _c("i", {
+                staticClass: "fas fa-star ml-auto fa-lg m-2 text-warning",
+                on: {
+                  click: function($event) {
+                    _vm.isBest = false
+                  }
+                }
+              })
             : _vm._e()
         ])
       ]),
@@ -68217,10 +68246,10 @@ var render = function() {
                             attrs: {
                               name: "body",
                               rows: "5",
-                              id: "body" + _vm.id,
+                              id: "reply.body" + _vm.reply.id,
                               required: ""
                             },
-                            domProps: { textContent: _vm._s(_vm.body) }
+                            domProps: { textContent: _vm._s(_vm.reply.body) }
                           })
                         ]
                       )
@@ -68248,38 +68277,49 @@ var render = function() {
                 ]
               )
             ])
-          : _c("div", { domProps: { innerHTML: _vm._s(_vm.htmlBody) } })
+          : _c("div", { domProps: { innerHTML: _vm._s(_vm.reply.htmlBody) } })
       ]),
       _vm._v(" "),
-      _vm.canUpdate
-        ? _c("div", { staticClass: "card-footer level" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn text-secondary mr-2",
-                on: {
-                  click: function($event) {
-                    _vm.editing = true
+      _c("div", { staticClass: "card-footer level" }, [
+        _vm.authorize("updateReply", _vm.reply)
+          ? _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn text-secondary mr-2 text-success",
+                  on: {
+                    click: function($event) {
+                      _vm.editing = true
+                    }
                   }
-                }
-              },
-              [_c("i", { staticClass: "far fa-edit fa-lg" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn text-secondary btn-sm mr-2",
-                on: {
-                  click: function($event) {
-                    return _vm.destroy()
+                },
+                [_c("i", { staticClass: "far fa-edit" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn text-secondary btn-sm mr-2 text-danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.destroy()
+                    }
                   }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-trash-alt fa-lg" })]
+                },
+                [_c("i", { staticClass: "fas fa-trash-alt" })]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.signedIn
+          ? _c(
+              "div",
+              { staticClass: "ml-auto" },
+              [_c("favorite", { attrs: { reply: _vm.reply } })],
+              1
             )
-          ])
-        : _vm._e()
+          : _vm._e()
+      ])
     ]
   )
 }
@@ -80586,12 +80626,23 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // requir
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-window.Vue.prototype.authorize = function (handler) {
-  var user = window.App.user;
-  if (!user) return false;
-  return handler(user);
+var authorizations = __webpack_require__(/*! ./authorization */ "./resources/js/authorization.js");
+
+window.Vue.prototype.authorize = function () {
+  if (!window.App.user) return false;
+
+  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+    params[_key] = arguments[_key];
+  }
+
+  if (typeof params[0] == 'string') {
+    return authorizations[params[0]](params[1]);
+  }
+
+  return params[0](window.App.user);
 };
 
+Vue.prototype.signedIn = window.App.signedIn;
 window.events = new Vue();
 
 window.flash = function (message) {
@@ -80619,6 +80670,22 @@ Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./re
 var app = new Vue({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./resources/js/authorization.js":
+/*!***************************************!*\
+  !*** ./resources/js/authorization.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = window.App.User;
+module.exports = {
+  updateReply: function updateReply(reply) {
+    return reply.user_id == reply.user_id;
+  }
+};
 
 /***/ }),
 

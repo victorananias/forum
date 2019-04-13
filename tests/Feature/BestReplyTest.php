@@ -22,11 +22,11 @@ class BestReplyTest extends TestCase
 
         $replies = factory(Reply::class, 2)->create(['thread_id' => $thread->id]);
 
-        $this->assertFalse($replies[1]->isBest());
+        $this->assertFalse($replies[1]->isBest);
 
         $this->postJson(route('best-replies.store', [$replies[1]->id]));
-//
-        $this->assertTrue($replies[1]->fresh()->isBest());
+
+        $this->assertTrue($replies[1]->fresh()->isBest);
     }
 
     /** @test */

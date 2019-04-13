@@ -40,9 +40,6 @@
             }
         },
         computed: {
-            signedIn() {
-                return window.App.signedIn;
-            },
             tributeOptions() {
                 return {
                     values: function (text, cb) {
