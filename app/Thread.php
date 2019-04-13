@@ -161,11 +161,22 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     *
+     * Set the proper slug attribute
+     *
+     * @param $value
+     */
     public function setSlugAttribute($value)
     {
         $slug = str_slug($value);
@@ -177,5 +188,12 @@ class Thread extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->best_reply_id = $reply->id;
+
+        $this->save();
     }
 }
