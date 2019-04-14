@@ -3,10 +3,13 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
+
             <div class="col-md-8">
-                @include('threads.list')
+                @include('threads._list')
+
                 {{ $threads->render() }}
             </div>
+
             @if (count($trending))
                 <div class="col-md-4">
                     <div class="card">

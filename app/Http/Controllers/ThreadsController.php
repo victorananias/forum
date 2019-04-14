@@ -75,6 +75,24 @@ class ThreadsController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param $channelId
+     * @param Thread $thread
+     * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update($channelId, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+
+        return tap($thread)->update(request()->validate([
+            'title' => ['required', new SpamFree],
+            'body' => ['required', new SpamFree],
+        ]));
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param $channelId

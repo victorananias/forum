@@ -2265,6 +2265,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2479,9 +2487,40 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      repliesCount: this.thread.replies_count,
       locked: this.thread.locked,
-      repliesCount: this.thread.replies_count
+      editing: false,
+      title: this.thread.title,
+      body: this.thread.body,
+      form: {}
     };
+  },
+  created: function created() {
+    this.resetForm();
+  },
+  methods: {
+    destroy: function destroy() {
+      axios.delete("/threads/".concat(this.thread.channel.slug, "/").concat(this.thread.slug)).then(function () {
+        return window.open('/threads', '_self');
+      });
+    },
+    update: function update() {
+      var _this = this;
+
+      axios.patch("/threads/".concat(this.thread.channel.slug, "/").concat(this.thread.slug), this.form).then(function () {
+        _this.editing = false;
+        _this.title = _this.form.title;
+        _this.body = _this.form.body;
+        flash('Your thread has been updated.');
+      });
+    },
+    resetForm: function resetForm() {
+      this.form = {
+        title: this.title,
+        body: this.body
+      };
+      this.editing = false;
+    }
   }
 });
 
@@ -68298,20 +68337,20 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _vm.editing
-          ? _c("div", [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.update($event)
-                    }
-                  }
-                },
-                [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.update($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _vm.editing
+              ? _c("div", [
                   _c(
                     "div",
                     { staticClass: "form-group" },
@@ -68334,75 +68373,86 @@ var render = function() {
                       )
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  _c("button", { staticClass: "btn btn-sm btn-primary" }, [
-                    _vm._v("Update")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editing = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  )
-                ]
-              )
-            ])
-          : _c("div", { domProps: { innerHTML: _vm._s(_vm.reply.htmlBody) } })
-      ]),
-      _vm._v(" "),
-      _vm.signedIn
-        ? _c("div", { staticClass: "card-footer level" }, [
-            _vm.authorize("owns", _vm.reply)
-              ? _c("div", [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn text-secondary mr-2 text-success",
-                      on: {
-                        click: function($event) {
-                          _vm.editing = true
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "far fa-edit" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn text-secondary btn-sm mr-2 text-danger",
-                      on: {
-                        click: function($event) {
-                          return _vm.destroy()
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-trash-alt" })]
                   )
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "ml-auto" },
-              [_c("favorite", { attrs: { reply: _vm.reply } })],
-              1
-            )
-          ])
-        : _vm._e()
+              : _c("div", {
+                  domProps: { innerHTML: _vm._s(_vm.reply.htmlBody) }
+                })
+          ]),
+          _vm._v(" "),
+          _vm.signedIn
+            ? _c("div", { staticClass: "card-footer level" }, [
+                _vm.authorize("owns", _vm.reply) && !_vm.editing
+                  ? _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn mr-2",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.editing = true
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-pen" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn mr-2",
+                          attrs: { type: "button" },
+                          on: { click: _vm.destroy }
+                        },
+                        [_c("i", { staticClass: "fas fa-trash-alt" })]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.authorize("owns", _vm.reply) && _vm.editing
+                  ? _c("div", [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.editing = false
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-undo" })]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "ml-auto" },
+                  [_c("favorite", { attrs: { reply: _vm.reply } })],
+                  1
+                )
+              ])
+            : _vm._e()
+        ]
+      )
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn", attrs: { type: "submit" } }, [
+      _c("i", { staticClass: "fas fa-save" })
+    ])
+  }
+]
 render._withStripped = true
 
 

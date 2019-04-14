@@ -19,37 +19,45 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <div v-if="editing">
-                <form @submit.prevent="update">
+        <form @submit.prevent="update">
+            <div class="card-body">
+                <div v-if="editing">
                     <div class="form-group">
                         <vue-tribute :options="tributeOptions">
                             <textarea class="form-control" name="body" rows="5" :id="'body-' + reply.id" v-text="reply.body" required></textarea>
                         </vue-tribute>
                     </div>
-                    <button class="btn btn-sm btn-primary">Update</button>
-                    <button type="button" class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
-                </form>
-            </div>
-            <div v-else v-html='reply.htmlBody'></div>
-        </div>
+                </div>
 
-        <div class="card-footer level" v-if="signedIn">
-            <div v-if="authorize('owns', reply)">
-                <button class="btn text-secondary mr-2 text-success" @click="editing = true">
-                    <i class="far fa-edit"></i>
-                </button>
-
-                <button class="btn text-secondary btn-sm mr-2 text-danger" @click="destroy()">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+                <div v-else v-html='reply.htmlBody'></div>
             </div>
 
-            <div class="ml-auto">
-                <favorite :reply="reply"></favorite>
-            </div>
+            <div class="card-footer level" v-if="signedIn">
+                <div v-if="authorize('owns', reply) && !editing">
+                    <button type="button" class="btn mr-2" @click="editing = true">
+                        <i class="fas fa-pen"></i>
+                    </button>
 
-        </div>
+                    <button type="button" class="btn mr-2" @click="destroy">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                <div v-if="authorize('owns', reply) && editing">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button type="button" class="btn" @click="editing = false">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <favorite :reply="reply"></favorite>
+                </div>
+
+            </div>
+        </form>
     </div>
 </template>
 
