@@ -44,6 +44,6 @@ class Filter
      */
     protected function getFilters()
     {
-        return array_filter($this->request->only($this->filters));
+        return $this->request->only($this->filters);
     }
 }
