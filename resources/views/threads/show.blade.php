@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<thread-view inline-template :initial-replies-count="{{ $thread->replies_count }}">
+<thread-view inline-template :thread="{{ $thread }}">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -19,10 +19,13 @@
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="btn ">
-                                        <i class="fas fa-trash-alt fa-lg"></i>
+                                        <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </form>
                             @endcan
+
+                            <lock-button></lock-button>
+
                         </div>
                     </div>
                     <div class="card-body">

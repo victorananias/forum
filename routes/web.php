@@ -36,9 +36,12 @@ Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsCon
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')
     ->middleware('auth');
 
-
 Route::post('/locked-threads/{thread}/', 'LockedThreadsController@store')
     ->name('locked-threads.store')
+    ->middleware('admin');
+
+Route::delete('/locked-threads/{thread}/', 'LockedThreadsController@destroy')
+    ->name('locked-threads.destroy')
     ->middleware('admin');
 
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store');

@@ -1974,6 +1974,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LockButton.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LockButton.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    toggle: function toggle() {
+      axios[this.$parent.locked ? 'delete' : 'post']("/locked-threads/".concat(this.$parent.thread.slug));
+      this.$parent.locked = !this.$parent.locked;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewReply.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewReply.vue?vue&type=script&lang=js& ***!
@@ -2112,6 +2139,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NewReply_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewReply.vue */ "./resources/js/components/NewReply.vue");
 /* harmony import */ var _Paginator_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Paginator.vue */ "./resources/js/components/Paginator.vue");
 /* harmony import */ var _mixins_collection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/collection */ "./resources/js/mixins/collection.js");
+//
+//
+//
+//
 //
 //
 //
@@ -2426,9 +2457,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Thread.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Thread.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Thread.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Thread.vue?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -2437,17 +2468,21 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Replies_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Replies.vue */ "./resources/js/components/Replies.vue");
 /* harmony import */ var _components_SubscribeButton_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/SubscribeButton.vue */ "./resources/js/components/SubscribeButton.vue");
+/* harmony import */ var _components_LockButton_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LockButton.vue */ "./resources/js/components/LockButton.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['initialRepliesCount'],
+  props: ['thread'],
   components: {
     Replies: _components_Replies_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SubscribeButton: _components_SubscribeButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    SubscribeButton: _components_SubscribeButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    LockButton: _components_LockButton_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      repliesCount: this.initialRepliesCount
+      locked: this.thread.locked,
+      repliesCount: this.thread.replies_count
     };
   }
 });
@@ -67980,6 +68015,42 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LockButton.vue?vue&type=template&id=017d5268&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LockButton.vue?vue&type=template&id=017d5268& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-sm",
+      attrs: { disabled: !_vm.authorize("isAdmin") },
+      on: { click: _vm.toggle }
+    },
+    [
+      !_vm.$parent.locked
+        ? _c("i", { staticClass: "fas fa-lock-open" })
+        : _c("i", { staticClass: "fas fa-lock" })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NewReply.vue?vue&type=template&id=127aed95&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NewReply.vue?vue&type=template&id=127aed95&scoped=true& ***!
@@ -68123,6 +68194,24 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm.$parent.locked
+        ? _c(
+            "div",
+            { staticClass: "alert alert-info", attrs: { role: "alert" } },
+            [
+              _vm._v(
+                "\n        This Thread has been locked. No more replies are allowed.\n    "
+              )
+            ]
+          )
+        : _c("new-reply", {
+            on: {
+              created: function($event) {
+                return _vm.add($event)
+              }
+            }
+          }),
+      _vm._v(" "),
       _vm._l(_vm.items, function(reply, index) {
         return _c(
           "div",
@@ -68144,14 +68233,6 @@ var render = function() {
       _c("paginator", {
         attrs: { dataSet: _vm.dataSet },
         on: { changed: _vm.fetch }
-      }),
-      _vm._v(" "),
-      _c("new-reply", {
-        on: {
-          created: function($event) {
-            return _vm.add($event)
-          }
-        }
       })
     ],
     2
@@ -80664,7 +80745,7 @@ window.flash = function (message) {
 Vue.component('flash', __webpack_require__(/*! ./components/Flash.vue */ "./resources/js/components/Flash.vue").default);
 Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications.vue */ "./resources/js/components/UserNotifications.vue").default);
 Vue.component('avatar-form', __webpack_require__(/*! ./components/AvatarForm.vue */ "./resources/js/components/AvatarForm.vue").default);
-Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue").default); // const files = require.context('./', true, /\.vue$/i)
+Vue.component('thread-view', __webpack_require__(/*! ./views/Thread.vue */ "./resources/js/views/Thread.vue").default); // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 var app = new Vue({
@@ -80685,6 +80766,9 @@ module.exports = {
   owns: function owns(model) {
     var prop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
     return model[prop] == user.id;
+  },
+  isAdmin: function isAdmin() {
+    return window.App.user.is_admin;
   }
 };
 
@@ -81042,6 +81126,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageUpload_vue_vue_type_template_id_e0921fbe___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageUpload_vue_vue_type_template_id_e0921fbe___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/LockButton.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/LockButton.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LockButton.vue?vue&type=template&id=017d5268& */ "./resources/js/components/LockButton.vue?vue&type=template&id=017d5268&");
+/* harmony import */ var _LockButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LockButton.vue?vue&type=script&lang=js& */ "./resources/js/components/LockButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _LockButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/LockButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/LockButton.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/LockButton.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LockButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./LockButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LockButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LockButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/LockButton.vue?vue&type=template&id=017d5268&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/LockButton.vue?vue&type=template&id=017d5268& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./LockButton.vue?vue&type=template&id=017d5268& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LockButton.vue?vue&type=template&id=017d5268&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LockButton_vue_vue_type_template_id_017d5268___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -81526,16 +81679,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/Thread.vue":
+/***/ "./resources/js/views/Thread.vue":
 /*!***************************************!*\
-  !*** ./resources/js/pages/Thread.vue ***!
+  !*** ./resources/js/views/Thread.vue ***!
   \***************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Thread_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Thread.vue?vue&type=script&lang=js& */ "./resources/js/pages/Thread.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Thread_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Thread.vue?vue&type=script&lang=js& */ "./resources/js/views/Thread.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 var render, staticRenderFns
 
@@ -81557,21 +81710,21 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/Thread.vue"
+component.options.__file = "resources/js/views/Thread.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/Thread.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/views/Thread.vue?vue&type=script&lang=js&":
 /*!****************************************************************!*\
-  !*** ./resources/js/pages/Thread.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/views/Thread.vue?vue&type=script&lang=js& ***!
   \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Thread_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Thread.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Thread.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Thread_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Thread.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Thread.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Thread_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),

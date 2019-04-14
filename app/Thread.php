@@ -11,6 +11,9 @@ class Thread extends Model
     protected $guarded = ['id'];
     protected $with = ['channel', 'creator'];
     protected $appends = ['isSubscribedTo'];
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
 
     use RecordsActivity;
 
@@ -105,14 +108,6 @@ class Thread extends Model
         ThreadHasNewReply::dispatch($this, $reply);
 
         return $reply;
-    }
-
-    /**
-     * Locks the thread
-     */
-    public function lock()
-    {
-        $this->update(['locked' => true]);
     }
 
     /**
