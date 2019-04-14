@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Reply;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class BestRepliesController extends Controller

@@ -44,8 +44,9 @@ Route::delete('/locked-threads/{thread}/', 'LockedThreadsController@destroy')
     ->name('locked-threads.destroy')
     ->middleware('admin');
 
-Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
-Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->middleware('auth');
+Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy')->middleware('auth');
+
 Route::delete('/replies/{reply}', 'RepliesController@destroy');
 Route::patch('/replies/{reply}', 'RepliesController@update')->name('replies.destroy');
 

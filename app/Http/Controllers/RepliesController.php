@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
-use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
 
@@ -29,19 +28,18 @@ class RepliesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
      * @param integer $channelId
      * @param \App\Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $channelId, Thread $thread, CreatePostRequest $createPostRequest)
+    public function store($channelId, Thread $thread, CreatePostRequest $createPostRequest)
     {
         if ($thread->locked) {
             return response('Thread is locked.', 422);
         }
 
         return $thread->addReply([
-            'body' => $request->body,
+            'body' => request('body'),
             'user_id' => auth()->id(),
         ])->load('owner');
     }
@@ -49,16 +47,15 @@ class RepliesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  \App\Reply $reply
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @return \App\Reply
      */
-    public function update(Request $request, Reply $reply)
+    public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        $reply->update(['body' => $request->body]);
+        $reply->update(['body' => request('body')]);
 
         return $reply->fresh();
     }
@@ -77,7 +74,7 @@ class RepliesController extends Controller
         $reply->delete();
 
         if (request()->expectsJson()) {
-            return response(['msg' => 'Deletado.']);
+            return response(['message' => 'Deleted.']);
         }
 
         return back();
