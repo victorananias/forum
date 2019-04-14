@@ -55,5 +55,5 @@
         </div>
     </div>
 </thread-view>
-<flash message="{{ session('aviso') }}"></flash>
+<flash message="{{ session('message') }}"></flash>
 @endsection

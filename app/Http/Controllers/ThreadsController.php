@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\Recaptcha;
 use App\Trending;
 use Illuminate\Http\Request;
 use App\Thread;
@@ -54,30 +55,13 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Recaptcha $recaptcha)
     {
-        $response = (new \GuzzleHttp\Client())->request(
-            'POST',
-            'https://google.com/recaptcha/api/siteverify',
-            [
-                'form_params' => [
-                    'secret' => config('services.recaptcha.server_secret'),
-                    'response' => $request->input('g-recaptcha-response'),
-                    'remoteip' => $_SERVER['REMOTE_ADDR']
-                ]
-            ]
-        );
-
-        $r = json_decode($response->getBody()->getContents());
-
-        if (! $r->success) {
-            throw new \Exception('Recaptcha failed');
-        }
-
         $request->validate([
             'title' => ['required', new SpamFree],
             'body' => ['required', new SpamFree],
-            'channel_id' => 'required|exists:channels,id'
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => [ $recaptcha ]
         ]);
 
         $thread = Thread::create([
@@ -88,7 +72,7 @@ class ThreadsController extends Controller
         ]);
 
         return redirect($thread->path())->with([
-            'aviso' => 'Sua thread foi criada.'
+            'message' => 'Your thread has been published.'
         ]);
     }
 
