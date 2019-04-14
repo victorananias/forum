@@ -24,6 +24,18 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
+$factory->state(App\User::class, 'verified', function () {
+    return [
+        'email_verified_at' => \Carbon\Carbon::now()
+    ];
+});
+
+$factory->state(App\User::class, 'administrator', function () {
+    return [
+        'is_admin' => true
+    ];
+});
+
 $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
     $slug = str_slug($title);
@@ -37,6 +49,7 @@ $factory->define(App\Thread::class, function (Faker $faker) {
         'channel_id' => function () {
             return factory(App\Channel::class)->create()->id;
         },
+        'locked' => false
     ];
 });
 

@@ -83,7 +83,7 @@ class Thread extends Model
     }
 
     /**
-     * Return the uri of the current thread.
+     * Returns the uri of the current thread.
      *
      * @return string
      */
@@ -105,6 +105,14 @@ class Thread extends Model
         ThreadHasNewReply::dispatch($this, $reply);
 
         return $reply;
+    }
+
+    /**
+     * Locks the thread
+     */
+    public function lock()
+    {
+        $this->update(['locked' => true]);
     }
 
     /**
@@ -147,11 +155,23 @@ class Thread extends Model
         ])->delete();
     }
 
+
+    /**
+     *
+     * Return if the current user is subscribed to the thread
+     *
+     * @return mixed
+     */
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()->where('user_id', auth()->id())->exists();
     }
 
+    /**
+     * @param $user
+     * @return bool
+     * @throws \Exception
+     */
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?? auth()->user();
@@ -190,6 +210,12 @@ class Thread extends Model
         $this->attributes['slug'] = $slug;
     }
 
+    /**
+     *
+     * A thread can have a best reply.
+     *
+     * @param Reply $reply
+     */
     public function markBestReply(Reply $reply)
     {
         $this->best_reply_id = $reply->id;
