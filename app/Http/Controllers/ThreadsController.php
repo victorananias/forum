@@ -56,6 +56,24 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
+        $response = (new \GuzzleHttp\Client())->request(
+            'POST',
+            'https://google.com/recaptcha/api/siteverify',
+            [
+                'form_params' => [
+                    'secret' => config('services.recaptcha.server_secret'),
+                    'response' => $request->input('g-recaptcha-response'),
+                    'remoteip' => $_SERVER['REMOTE_ADDR']
+                ]
+            ]
+        );
+
+        $r = json_decode($response->getBody()->getContents());
+
+        if (! $r->success) {
+            throw new \Exception('Recaptcha failed');
+        }
+
         $request->validate([
             'title' => ['required', new SpamFree],
             'body' => ['required', new SpamFree],

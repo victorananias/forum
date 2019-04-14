@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             'username' => 'administrator',
             'email' => 'administrator@teste.com',
             'password' => bcrypt('123'),
-            'is_admin' => true
+            'is_admin' => true,
+            'email_verified_at' => \Carbon\Carbon::now()
         ]);
 
         User::create([
