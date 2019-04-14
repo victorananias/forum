@@ -2155,8 +2155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2294,14 +2292,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.patch("/replies/".concat(this.reply.id), {
-        body: $("#body".concat(this.reply.id)).val()
+        body: $("#body-".concat(this.reply.id)).val()
       }).catch(function (error) {
         console.log('Error');
         console.log(error.response);
         flash(error.response.data, 'danger');
       }).then(function (response) {
         _this2.reply.body = response.data.body;
-        _this2.reply.htmlBody = response.data.reply.htmlBody;
+        _this2.reply.htmlBody = response.data.htmlBody;
         _this2.editing = false;
       });
     },
@@ -68094,7 +68092,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-dark float-right",
+                  staticClass: "btn btn-primary",
                   attrs: { type: "button" },
                   on: { click: _vm.addReply }
                 },
@@ -68194,24 +68192,6 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.$parent.locked
-        ? _c(
-            "div",
-            { staticClass: "alert alert-info", attrs: { role: "alert" } },
-            [
-              _vm._v(
-                "\n        This Thread has been locked. No more replies are allowed.\n    "
-              )
-            ]
-          )
-        : _c("new-reply", {
-            on: {
-              created: function($event) {
-                return _vm.add($event)
-              }
-            }
-          }),
-      _vm._v(" "),
       _vm._l(_vm.items, function(reply, index) {
         return _c(
           "div",
@@ -68233,7 +68213,25 @@ var render = function() {
       _c("paginator", {
         attrs: { dataSet: _vm.dataSet },
         on: { changed: _vm.fetch }
-      })
+      }),
+      _vm._v(" "),
+      _vm.$parent.locked
+        ? _c(
+            "div",
+            { staticClass: "alert alert-info", attrs: { role: "alert" } },
+            [
+              _vm._v(
+                "\n        This Thread has been locked. No more replies are allowed.\n    "
+              )
+            ]
+          )
+        : _c("new-reply", {
+            on: {
+              created: function($event) {
+                return _vm.add($event)
+              }
+            }
+          })
     ],
     2
   )
@@ -68327,7 +68325,7 @@ var render = function() {
                             attrs: {
                               name: "body",
                               rows: "5",
-                              id: "reply.body" + _vm.reply.id,
+                              id: "body-" + _vm.reply.id,
                               required: ""
                             },
                             domProps: { textContent: _vm._s(_vm.reply.body) }

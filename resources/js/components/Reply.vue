@@ -24,7 +24,7 @@
                 <form @submit.prevent="update">
                     <div class="form-group">
                         <vue-tribute :options="tributeOptions">
-                            <textarea class="form-control" name="body" rows="5" :id="'reply.body' + reply.id" v-text="reply.body" required></textarea>
+                            <textarea class="form-control" name="body" rows="5" :id="'body-' + reply.id" v-text="reply.body" required></textarea>
                         </vue-tribute>
                     </div>
                     <button class="btn btn-sm btn-primary">Update</button>
@@ -75,7 +75,7 @@
         methods: {
             update() {
                 axios.patch(`/replies/${this.reply.id}`, {
-                    body: $(`#body${this.reply.id}`).val()
+                    body: $(`#body-${this.reply.id}`).val()
                 })
                 .catch(error => {
                     console.log('Error');
@@ -85,7 +85,7 @@
                 })
                 .then(response => {
                     this.reply.body = response.data.body;
-                    this.reply.htmlBody = response.data.reply.htmlBody;
+                    this.reply.htmlBody = response.data.htmlBody;
                     this.editing = false;
                 });
             },
