@@ -29,7 +29,7 @@
         </div>
 
         <div class="card-footer">
-            {{ $thread->visits }} {{ str_plural('view', $thread->visits) }}
+            {{ $thread->visits }} {{ str_plural('visit', $thread->visits) }}
         </div>
     </div>
 @empty
