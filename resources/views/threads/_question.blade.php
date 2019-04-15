@@ -6,7 +6,7 @@
     </div>
 
     <div class="card-body">
-        <textarea class="form-control" rows="10" v-model="form.body"></textarea>
+        <wysiwyg v-model="form.body" :value="form.body"></wysiwyg>
     </div>
 
     <div class="card-footer level">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="card-body" v-text="body"></div>
+    <div class="card-body" v-html="body"></div>
 
     <div class="card-footer level">
         <button class="btn" @click="editing = true">

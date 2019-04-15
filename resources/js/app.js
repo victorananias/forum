@@ -41,8 +41,10 @@ window.flash = function(message, type = 'success') {
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
+Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
 Vue.component('thread-view', require('./views/Thread.vue').default);
-Vue.component('search-view', require('./views/Search.vue').default);
+
+Vue.config.ignoredElements = ['trix-editor'];
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
