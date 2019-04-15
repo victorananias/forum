@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Events\ThreadHasNewReply;
-use Illuminate\Support\Facades\Redis;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
+    use RecordsActivity, Searchable;
+
     protected $guarded = ['id'];
     protected $with = ['channel', 'creator'];
     protected $appends = ['isSubscribedTo'];
     protected $casts = [
         'locked' => 'boolean'
     ];
-
-    use RecordsActivity;
 
     public static function boot()
     {
@@ -30,6 +30,10 @@ class Thread extends Model
                 'slug' => $thread->title
             ]);
         });
+    }
+    public function searchableAs()
+    {
+        return 'threads_index';
     }
 
     /**

@@ -39,6 +39,6 @@ class DatabaseSeeder extends Seeder
 //         ]);
 
         $this->call(ChannelsTableSeeder::class);
-//        $this->call(ThreadsTableSeeder::class);
+        $this->call(ThreadsTableSeeder::class);
     }
 }
