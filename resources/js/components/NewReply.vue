@@ -3,10 +3,11 @@
         <div class="col-md-12 mb-5">
             <form v-if="signedIn">
                 <div class="form-group">
-                    <vue-tribute :options="tributeOptions">
-                        <textarea class="form-control" name="body" rows="5" id="body"
-                                  placeholder="Have something to say?" required></textarea>
-                    </vue-tribute>
+<!--                    <vue-tribute :options="tributeOptions">-->
+<!--                        <textarea class="form-control" name="body" rows="5" id="body"-->
+<!--                                  placeholder="Have something to say?" required></textarea>-->
+                        <wysiwyg placeholder="Have something to say?" v-model="body"></wysiwyg>
+<!--                    </vue-tribute>-->
                 </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary" @click="addReply">Reply</button>
@@ -22,15 +23,17 @@
 
 <script>
 
-    import VueTribute from 'vue-tribute';
-
     export default {
-        components: { VueTribute },
+        data () {
+            return {
+                body: ''
+            }
+        },
         methods: {
             addReply() {
-                axios.post(`${location.pathname}/replies` , { body: $('#body').val() })
+                axios.post(`${location.pathname}/replies` , { body: this.body })
                     .then(response => {
-                        $('#body').val('');
+                        this.body = '';
                         flash('Your reply has been saved.');
                         this.$emit('created', response.data);
                     })
@@ -40,22 +43,17 @@
             }
         },
         computed: {
-            tributeOptions() {
-                return {
-                    values: function (text, cb) {
-                        axios.get('/api/users', { username: text })
-                            .then(({data}) => {
-                            cb(data);
-                        });
-                    },
-                    fillAttr: 'username',
-                    lookup: 'username',
-                }
-            }
+            // tributeOptions() {
+            //     return {
+            //         values(text, cb) {
+            //             axios.get('/api/users', { username: text })
+            //                 .then(({data}) => cb(data));
+            //         },
+            //         fillAttr: 'username',
+            //         lookup: 'username',
+            //     }
+            // }
         }
     }
 </script>
-<style scoped>
-    @import '~tributejs/dist/tribute.css';
-</style>
 

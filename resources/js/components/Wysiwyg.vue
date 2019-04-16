@@ -1,7 +1,7 @@
 <template>
     <div>
         <input id="trix" type="hidden" :name="name" :value="value">
-        <trix-editor input="trix" ref="trix"></trix-editor>
+        <trix-editor input="trix" ref="trix" :placeholder="placeholder"></trix-editor>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
     import Trix from 'trix';
 
     export default {
-        props: ['name', 'value'],
+        props: ['name', 'value', 'placeholder'],
         mounted () {
             this.$refs.trix.addEventListener('trix-change', e => {
                 this.$emit('input', e.target.innerHTML)
