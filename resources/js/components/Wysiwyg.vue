@@ -9,11 +9,16 @@
     import Trix from 'trix';
 
     export default {
-        props: ['name', 'value', 'placeholder'],
+        props: ['name', 'placeholder', 'value'],
         mounted () {
             this.$refs.trix.addEventListener('trix-change', e => {
                 this.$emit('input', e.target.innerHTML)
             });
+        },
+        watch: {
+            value (value) {
+                document.querySelector("trix-editor").value = value;
+            }
         }
     }
 

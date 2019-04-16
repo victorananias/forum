@@ -2036,15 +2036,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      body: ''
+      body: 'start value'
     };
   },
   methods: {
     addReply: function addReply() {
       var _this = this;
 
-      console.log(this.body);
-      return;
       axios.post("".concat(location.pathname, "/replies"), {
         body: this.body
       }).then(function (response) {
@@ -2481,13 +2479,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'value', 'placeholder'],
+  props: ['name', 'placeholder', 'value'],
   mounted: function mounted() {
     var _this = this;
 
     this.$refs.trix.addEventListener('trix-change', function (e) {
       _this.$emit('input', e.target.innerHTML);
     });
+  },
+  watch: {
+    value: function value(_value) {
+      document.querySelector("trix-editor").value = _value;
+    }
   }
 });
 
