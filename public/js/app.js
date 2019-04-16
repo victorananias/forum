@@ -2043,6 +2043,8 @@ __webpack_require__.r(__webpack_exports__);
     addReply: function addReply() {
       var _this = this;
 
+      console.log(this.body);
+      return;
       axios.post("".concat(location.pathname, "/replies"), {
         body: this.body
       }).then(function (response) {

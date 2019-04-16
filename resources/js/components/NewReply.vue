@@ -31,6 +31,8 @@
         },
         methods: {
             addReply() {
+                console.log(this.body);
+                return;
                 axios.post(`${location.pathname}/replies` , { body: this.body })
                     .then(response => {
                         this.body = '';
