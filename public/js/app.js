@@ -2036,7 +2036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      body: 'start value'
+      body: ''
     };
   },
   methods: {
@@ -2269,6 +2269,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2281,7 +2282,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       editing: false,
-      isBest: this.reply.isBest
+      isBest: this.reply.isBest,
+      body: ''
     };
   },
   created: function created() {
@@ -2295,15 +2297,15 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this2 = this;
 
+      if (!this.body) return;
       axios.patch("/replies/".concat(this.reply.id), {
-        body: $("#body-".concat(this.reply.id)).val()
+        body: this.body
       })["catch"](function (error) {
         console.log('Error');
         console.log(error.response);
         flash(error.response.data, 'danger');
       }).then(function (response) {
-        _this2.reply.body = response.data.body;
-        _this2.reply.htmlBody = response.data.htmlBody;
+        _this2.reply.body = _this2.body;
         _this2.editing = false;
       });
     },
@@ -2314,25 +2316,15 @@ __webpack_require__.r(__webpack_exports__);
     markBestReply: function markBestReply() {
       axios.post("/api/replies/".concat(this.reply.id, "/best"), {});
       window.events.$emit('best-reply-selected', this.reply.id);
+    },
+    resetForm: function resetForm() {
+      this.body = this.reply.body;
+      this.editing = true;
     }
   },
   computed: {
     createdAt: function createdAt() {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.reply.created_at).fromNow();
-    },
-    tributeOptions: function tributeOptions() {
-      return {
-        values: function values(text, cb) {
-          axios.get('/api/users', {
-            username: text
-          }).then(function (_ref) {
-            var data = _ref.data;
-            cb(data);
-          });
-        },
-        fillAttr: 'username',
-        lookup: 'username'
-      };
     }
   }
 });
@@ -2479,16 +2471,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'placeholder', 'value'],
+  props: {
+    name: {
+      "default": ''
+    },
+    placeholder: {
+      "default": ''
+    },
+    value: {
+      "default": ''
+    },
+    required: {
+      "default": false
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
     this.$refs.trix.addEventListener('trix-change', function (e) {
-      _this.$emit('input', e.target.innerHTML);
+      return _this.$emit('input', e.target.innerHTML);
     });
   },
   watch: {
     value: function value(_value) {
+      if (this.$refs.trix.innerHTML === _value) return;
       document.querySelector("trix-editor").value = _value;
     }
   }
@@ -68556,7 +68562,7 @@ var render = function() {
             }),
             _vm._v(" said "),
             _c("span", { domProps: { textContent: _vm._s(_vm.createdAt) } }),
-            _vm._v("...\n            ")
+            _vm._v("...\n                ")
           ]),
           _vm._v(" "),
           !_vm.isBest && _vm.authorize("owns", _vm.reply.thread)
@@ -68601,29 +68607,21 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c(
-                        "vue-tribute",
-                        { attrs: { options: _vm.tributeOptions } },
-                        [
-                          _c("textarea", {
-                            staticClass: "form-control",
-                            attrs: {
-                              name: "body",
-                              rows: "5",
-                              id: "body-" + _vm.reply.id,
-                              required: ""
-                            },
-                            domProps: { textContent: _vm._s(_vm.reply.body) }
-                          })
-                        ]
-                      )
+                      _c("wysiwyg", {
+                        attrs: { required: "" },
+                        model: {
+                          value: _vm.body,
+                          callback: function($$v) {
+                            _vm.body = $$v
+                          },
+                          expression: "body"
+                        }
+                      })
                     ],
                     1
                   )
                 ])
-              : _c("div", {
-                  domProps: { innerHTML: _vm._s(_vm.reply.htmlBody) }
-                })
+              : _c("div", { domProps: { innerHTML: _vm._s(_vm.reply.body) } })
           ]),
           _vm._v(" "),
           _vm.signedIn
@@ -68635,11 +68633,7 @@ var render = function() {
                         {
                           staticClass: "btn mr-2",
                           attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.editing = true
-                            }
-                          }
+                          on: { click: _vm.resetForm }
                         },
                         [_c("i", { staticClass: "fas fa-pen" })]
                       ),

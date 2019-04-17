@@ -26,7 +26,7 @@
     export default {
         data () {
             return {
-                body: 'start value'
+                body: ''
             }
         },
         methods: {
