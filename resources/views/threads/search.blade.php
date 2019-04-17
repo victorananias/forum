@@ -27,8 +27,8 @@
                                         <a :href="'/profiles/'+item.creator.username" v-text="item.creator.name"></a>
                                     </h6>
                                 </div>
-                                <div class="card-body">
-                                    <ais-highlight attribute="body" :hit="item" />
+                                <div class="card-body" v-html="item.body">
+                                    {{-- <ais-highlight attribute="body" :hit="item" /> --}}
                                 </div>
                             </div>
                         </div>
