@@ -17,15 +17,15 @@
                         <div slot-scope="{ items }">
                             <div v-for="item in items" :key="item.id" class="card mb-3">
                                 <div class="card-header flex">
-                                    <h5>
+                                    <strong>
                                         <a class="" :href="item.path">
                                             <ais-highlight attribute="title" :hit="item"/>
                                         </a>
-                                    </h5>
+                                    </strong>
 
-                                    <h6>posted by
+                                    <span>posted by
                                         <a :href="'/profiles/'+item.creator.username" v-text="item.creator.name"></a>
-                                    </h6>
+                                    </span>
                                 </div>
                                 <div class="card-body" v-html="item.body">
                                     {{-- <ais-highlight attribute="body" :hit="item" /> --}}
@@ -50,8 +50,7 @@
                                             <input class="form-control"
                                                     type="search"
                                                     v-model="currentRefinement"
-                                                    @input="refine($event.currentTarget.value)"
-                                            >
+                                                    @input="refine($event.currentTarget.value)">
                                             <span :hidden="!isSearchStalled">Loading...</span>
                                         </div>
                                     </ais-search-box>
