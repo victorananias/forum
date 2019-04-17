@@ -43,6 +43,7 @@ Vue.component('user-notifications', require('./components/UserNotifications.vue'
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
 Vue.component('thread-view', require('./views/Thread.vue').default);
+Vue.component('search-view', require('./views/Search.vue').default);
 
 Vue.config.ignoredElements = ['trix-editor'];
 
