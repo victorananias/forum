@@ -56,7 +56,7 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
-    public function a_thread_notifies_all_registere_subscribers_when_a_reply_is_added()
+    public function a_thread_notifies_all_registered_subscribers_when_a_reply_is_added()
     {
         \Notification::fake();
 
@@ -134,6 +134,5 @@ class ThreadTest extends TestCase
         $this->call('GET', $thread->path());
 
         $this->assertEquals(1, $thread->fresh()->visits);
-
     }
 }

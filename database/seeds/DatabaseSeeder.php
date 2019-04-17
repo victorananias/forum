@@ -14,10 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $admin = User::create([
-            'name' => 'administrator',
+            'name' => 'Administrator',
             'username' => 'administrator',
-            'email' => 'administrator@teste.com',
-            'password' => bcrypt('123')
+            'email' => 'victor@ananias.dev',
+            'password' => bcrypt('123'),
+            'is_admin' => true,
+            'email_verified_at' => \Carbon\Carbon::now()
         ]);
 
         User::create([
@@ -26,10 +28,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'teste@teste.com',
             'password' => bcrypt('123')
         ]);
-
-        $thread = factory(Thread::class)->create();
-
-        $thread->subscribe($admin->id);
 
 //         $thread->addReply([
 //             'body' => $faker->paragraph,

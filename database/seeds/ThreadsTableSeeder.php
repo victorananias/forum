@@ -19,6 +19,7 @@ class ThreadsTableSeeder extends Seeder
                 'type' => 'created_thread',
                 'user_id' => $thread->user_id
             ]);
+
             factory(\App\Reply::class, 10)->create([
                 'thread_id' => $thread->id
             ]);

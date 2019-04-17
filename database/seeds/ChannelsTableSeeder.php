@@ -33,8 +33,8 @@ class ChannelsTableSeeder extends Seeder
         ]);
 
         Channel::create([
-            'name' => 'Teste',
-            'slug' => 'teste'
+            'name' => 'Test',
+            'slug' => 'test'
         ]);
     }
 }

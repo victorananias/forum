@@ -25,13 +25,13 @@
         </div>
 
         <div class="card-body">
-            <div class="body">{{ $thread->body }}</div>
+            <div class="body">{!! $thread->body !!}</div>
         </div>
 
         <div class="card-footer">
-            {{ $thread->visits }} {{ str_plural('view', $thread->visits) }}
+            {{ $thread->visits }} {{ str_plural('visit', $thread->visits) }}
         </div>
     </div>
 @empty
-    <p>There is no threads here</p>
+    <p>There are no threads here</p>
 @endforelse

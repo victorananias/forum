@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\Recaptcha;
 use App\Trending;
-use Illuminate\Http\Request;
 use App\Thread;
 use App\Channel;
 use App\Filters\ThreadFilter;
@@ -51,28 +51,45 @@ class ThreadsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Recaptcha $recaptcha)
     {
-        $request->validate([
+        request()->validate([
             'title' => ['required', new SpamFree],
             'body' => ['required', new SpamFree],
-            'channel_id' => 'required|exists:channels,id'
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => [ $recaptcha ]
         ]);
 
         $thread = Thread::create([
-            'title' => $request->title,
-            'body' => $request->body,
-            'channel_id' => $request->channel_id,
-            'slug' => $request->title,
+            'title' => request('title'),
+            'body' => request('body'),
+            'channel_id' => request('channel_id'),
             'user_id' => auth()->id()
         ]);
 
         return redirect($thread->path())->with([
-            'aviso' => 'Sua thread foi criada.'
+            'message' => 'Your thread has been published.'
         ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param $channelId
+     * @param Thread $thread
+     * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update($channelId, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+
+        return tap($thread)->update(request()->validate([
+            'title' => ['required', new SpamFree],
+            'body' => ['required', new SpamFree],
+        ]));
     }
 
     /**
@@ -102,10 +119,12 @@ class ThreadsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @param $channelId
+     * @param Thread $thread
+     * @return mixed
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy($channel, Thread $thread)
+    public function destroy($channelId, Thread $thread)
     {
         $this->authorize('update', $thread);
 

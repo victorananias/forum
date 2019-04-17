@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,12 +10,11 @@ class UserAvatarController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $request->validate([
+        request()->validate([
             'avatar' => ['required', 'image']
         ]);
 
