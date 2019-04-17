@@ -31,7 +31,7 @@
 <div class="card mb-4" v-else>
     <div class="card-header ">
         <div class="level">
-            <img class="mr-1" width="25" src="{{ $thread->creator->avatar_path }}" alt="{{ $thread->creator->name }}">
+            <img class="mr-1" width="25" src="{asdasd" onerror="this.src = '/avatar.png'">
 
             <span class="flex">
                 <a class="font-weight-bold" href="/profiles/{{ $thread->creator->username }}">

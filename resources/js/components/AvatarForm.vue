@@ -2,7 +2,7 @@
     <div>
         <div class="level">
 
-            <img :src="avatar" width="100">
+            <img :src="avatar" width="100" onerror="this.src = '/avatar.png'">
 
             <h4 class="ml-3">
                 {{ user.username }}
