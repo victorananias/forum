@@ -33,5 +33,5 @@
         </div>
     </div>
 @empty
-    <p>There is no threads here</p>
+    <p>There are no threads here</p>
 @endforelse
