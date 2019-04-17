@@ -1,40 +1,63 @@
 <template>
-    <div class="card mb-4" :id="'reply-' + data.id"> 
+    <div class="card mb-4" :id="'reply-' + reply.id">
         <div class="card-header">
             <div class="level">
+
                 <div class="flex">
-                    <a :href="'/profiles/' + data.owner.username" v-text="data.owner.username">
+                    <a :href="'/profiles/' + reply.owner.username" v-text="reply.owner.username">
                     </a> said <span v-text="createdAt"></span>...
                 </div>
-                <div v-if="signedIn">
-                    <favorite :reply="data"></favorite>
-                </div>
+
+                <button class="btn text-secondary btn-sm ml-auto"
+                        v-if="!isBest && authorize('owns', reply.thread)"
+                        @click="markBestReply">
+                    <i class="fas fa-star fa-lg"></i>
+                </button>
+
+                <i v-if="isBest" class="fas fa-star ml-auto fa-lg m-2 text-warning" @click="isBest = false"></i>
+
             </div>
         </div>
 
-        <div class="card-body">
-            <div v-if="editing">
-                <form @submit.prevent="update">
+        <form @submit.prevent="update">
+            <div class="card-body">
+                <div v-if="editing">
                     <div class="form-group">
                         <vue-tribute :options="tributeOptions">
-                            <textarea class="form-control" name="body" rows="5" :id="'body'+id" v-text="body" required></textarea>
+                            <textarea class="form-control" name="body" rows="5" :id="'body-' + reply.id" v-text="reply.body" required></textarea>
                         </vue-tribute>
                     </div>
-                    <button class="btn btn-sm btn-primary">Update</button>
-                    <button type="button" class="btn btn-sm btn-link" @click="editing = false">Cancel</button>
-                </form>
-            </div>
-            <div v-else v-html='htmlBody'></div>
-        </div>
+                </div>
 
-        <div class="card-footer level" v-if="canUpdate">
-            <button class="btn text-secondary mr-2" @click="editing = true">
-                <i class="far fa-edit fa-lg"></i>
-            </button>
-            <button class="btn text-secondary btn-sm mr-2" @click="destroy()">
-                <i class="fas fa-trash-alt fa-lg"></i>
-            </button>
-        </div>
+                <div v-else v-html='reply.htmlBody'></div>
+            </div>
+
+            <div class="card-footer level" v-if="signedIn">
+                <div v-if="authorize('owns', reply) && !editing">
+                    <button type="button" class="btn mr-2" @click="editing = true">
+                        <i class="fas fa-pen"></i>
+                    </button>
+
+                    <button type="button" class="btn mr-2" @click="destroy">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                <div v-if="authorize('owns', reply) && editing">
+                    <button type="submit" class="btn">
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button type="button" class="btn" @click="editing = false">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+
+                <div class="ml-auto">
+                    <favorite :reply="reply"></favorite>
+                </div>
+
+            </div>
+        </form>
     </div>
 </template>
 
@@ -44,20 +67,23 @@
     import VueTribute from 'vue-tribute';
 
     export default {
-        props: ['data'],
+        props: ['reply'],
         components: { Favorite, VueTribute },
         data() {
             return {
                 editing: false,
-                id: this.data.id,
-                body: this.data.body,
-                htmlBody: this.data.htmlBody
+                isBest : this.reply.isBest
             }
+        },
+        created() {
+            window.events.$on('best-reply-selected', id => {
+                this.isBest = id == this.reply.id;
+            });
         },
         methods: {
             update() {
-                axios.patch(`/replies/${this.data.id}`, {
-                    body: $(`#body${this.id}`).val()
+                axios.patch(`/replies/${this.reply.id}`, {
+                    body: $(`#body-${this.reply.id}`).val()
                 })
                 .catch(error => {
                     console.log('Error');
@@ -66,25 +92,23 @@
                     flash(error.response.data, 'danger');
                 })
                 .then(response => {
-                    this.body = response.data.body;
-                    this.htmlBody = response.data.htmlBody;
+                    this.reply.body = response.data.body;
+                    this.reply.htmlBody = response.data.htmlBody;
                     this.editing = false;
                 });
             },
             destroy() {
-                axios.delete(`/replies/${this.data.id}`);
-                this.$emit('deleted', this.data.id);
+                axios.delete(`/replies/${this.reply.id}`);
+                this.$emit('deleted', this.reply.id);
+            },
+            markBestReply() {
+                axios.post(`/api/replies/${this.reply.id}/best`, {});
+                window.events.$emit('best-reply-selected', this.reply.id);
             }
         },
         computed: {
-            signedIn() {
-                return window.App.signedIn;
-            },
-            canUpdate() {
-                return this.authorize(user =>  this.data.user_id == user.id);
-            },
             createdAt() {
-                return moment(this.data.created_at).fromNow();
+                return moment(this.reply.created_at).fromNow();
             },
             tributeOptions() {
                 return {

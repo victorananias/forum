@@ -10,13 +10,19 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-window.Vue.prototype.authorize = function(handler) {
-    let user = window.App.user;
+let authorizations = require('./authorization');
 
-    if (!user) return false;
+window.Vue.prototype.authorize = function(...params) {
+    if (!window.App.user) return false;
 
-    return handler(user);
+    if (typeof params[0] == 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 window.events = new Vue;
 
@@ -35,7 +41,11 @@ window.flash = function(message, type = 'success') {
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);
-Vue.component('thread-view', require('./pages/Thread.vue').default);
+Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
+Vue.component('thread-view', require('./views/Thread.vue').default);
+
+Vue.config.ignoredElements = ['trix-editor'];
+
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 

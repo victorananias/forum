@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
+@section('head')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header bg-dark text-light">Publish new Thread</div>
+                    <div class="card-header ">Publish new Thread</div>
                     <div class="card-body">
-                        <form method="POST" action="/threads">
+                        <form method="POST" action="/threads" id="new-thread-form">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="channel_id">Channel:</label>
@@ -26,14 +30,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="body">Content:</label>
-                                <textarea class="form-control" id="body" name="body" rows="8" required>{{ old('body') }}</textarea>
+                                <wysiwyg name="body"></wysiwyg>
                             </div>
-                            <button type="submit" class="btn btn-dark">Publish</button>
-                            @foreach($errors->all() as $error)
-                                <div class="alert alert-danger mt-3">
-                                    {{ $error }}
-                                </div>
-                            @endforeach
+
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.client_secret') }}"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                        @foreach($errors->all() as $error)
+                            <div class="alert alert-danger mt-3">
+                                {{ $error }}
+                            </div>
+                        @endforeach
                         </form>
                     </div>
                 </div>

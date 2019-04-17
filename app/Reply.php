@@ -11,7 +11,7 @@ class Reply extends Model
     use Favoritable, RecordsActivity;
 
     protected $with = ['owner', 'favorites'];
-    protected $appends = ['favoritesCount', 'isFavorited', 'htmlBody'];
+    protected $appends = ['htmlBody', 'favoritesCount', 'isFavorited', 'isBest'];
     protected $fillable = ['thread_id', 'user_id', 'body'];
 
     public static function boot()
@@ -84,5 +84,10 @@ class Reply extends Model
         preg_match_all('/@([\w\-\_]+)/', $this->body, $matches);
 
         return $matches[1];
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->thread->best_reply_id == $this->id;
     }
 }

@@ -9,7 +9,7 @@
                     </vue-tribute>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-dark float-right" @click="addReply">Reply</button>
+                    <button type="button" class="btn btn-primary" @click="addReply">Reply</button>
                 </div>
             </form>
 
@@ -40,9 +40,6 @@
             }
         },
         computed: {
-            signedIn() {
-                return window.App.signedIn;
-            },
             tributeOptions() {
                 return {
                     values: function (text, cb) {

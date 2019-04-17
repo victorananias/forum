@@ -15,45 +15,52 @@ Route::get('/', function () {
     return redirect('/threads');
 });
 
-Auth::routes();
-// Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
 Route::get('/home', function () {
     return redirect('threads');
 });
 
-Route::get('/threads/create', 'ThreadsController@create');
+Route::get('/threads/create', 'ThreadsController@create')
+    ->middleware('verified');
 
 Route::get('/threads', 'ThreadsController@index')->name('threads');
-
-Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
-
+Route::get('/threads/search', 'SearchController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
-
 Route::get('/threads/{channel}', 'ThreadsController@index');
-
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
-
 Route::post('/threads', 'ThreadsController@store');
+Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update');
 
 Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
-
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 
-Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')->middleware('auth');
+Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store')
+    ->middleware('auth');
+Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')
+    ->middleware('auth');
 
-Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy')->middleware('auth');
+Route::post('/locked-threads/{thread}/', 'LockedThreadsController@store')
+    ->name('locked-threads.store')
+    ->middleware('admin');
 
-Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
+Route::delete('/locked-threads/{thread}/', 'LockedThreadsController@destroy')
+    ->name('locked-threads.destroy')
+    ->middleware('admin');
 
-Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->middleware('auth');
+Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy')->middleware('auth');
 
 Route::delete('/replies/{reply}', 'RepliesController@destroy');
-
-Route::patch('/replies/{reply}', 'RepliesController@update');
+Route::patch('/replies/{reply}', 'RepliesController@update')->name('replies.destroy');
 
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
-
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
-
 Route::get('/profiles/{user}/notifications/', 'UserNotificationsController@index');
+
+Route::middleware('auth')
+    ->post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')
+    ->name('avatar');
+
+Route::middleware('auth')
+    ->post('/api/replies/{reply}/best', 'Api\BestRepliesController@store')->name('best-replies.store');

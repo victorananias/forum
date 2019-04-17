@@ -2,11 +2,12 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -101,8 +102,20 @@ class User extends Authenticatable
         cache()->forever($this->visitedThreadCacheKey($thread), Carbon::now());
     }
 
+    /**
+     * @param $avatar
+     * @return string
+     */
     public function getAvatarPathAttribute($avatar)
     {
         return asset('/storage/'.($avatar ?? 'avatars/default.png'));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return !!$this->is_admin;
     }
 }

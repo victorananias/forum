@@ -4,14 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Events\ThreadHasNewReply;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    protected $guarded = [];
+    use RecordsActivity, Searchable;
+
+    protected $guarded = ['id'];
     protected $with = ['channel', 'creator'];
     protected $appends = ['isSubscribedTo'];
-
-    use RecordsActivity;
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
 
     public static function boot()
     {
@@ -20,6 +24,16 @@ class Thread extends Model
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
         });
+
+        static::created(function ($thread) {
+            $thread->update([
+                'slug' => $thread->title
+            ]);
+        });
+    }
+    public function searchableAs()
+    {
+        return 'threads_index';
     }
 
     /**
@@ -76,13 +90,13 @@ class Thread extends Model
     }
 
     /**
-     * Return the uri of the current thread.
+     * Returns the uri of the current thread.
      *
      * @return string
      */
     public function path()
     {
-        return "/threads/{$this->channel->slug}/{$this->id}";
+        return "/threads/{$this->channel->slug}/{$this->slug}";
     }
 
     /**
@@ -140,11 +154,23 @@ class Thread extends Model
         ])->delete();
     }
 
+
+    /**
+     *
+     * Return if the current user is subscribed to the thread
+     *
+     * @return mixed
+     */
     public function getIsSubscribedToAttribute()
     {
         return $this->subscriptions()->where('user_id', auth()->id())->exists();
     }
 
+    /**
+     * @param $user
+     * @return bool
+     * @throws \Exception
+     */
     public function hasUpdatesFor($user = null)
     {
         $user = $user ?? auth()->user();
@@ -152,5 +178,57 @@ class Thread extends Model
         $key = $user->visitedThreadCacheKey($this);
 
         return $this->updated_at > cache($key);
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     *
+     * Set the proper slug attribute
+     *
+     * @param $value
+     */
+    public function setSlugAttribute($value)
+    {
+        $slug = str_slug($value);
+        $original = $slug;
+        $count = 2;
+
+        while (static::whereSlug($slug)->exists()) {
+            $slug = "{$original}-".$count++;
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+    /**
+     *
+     * A thread can have a best reply.
+     *
+     * @param Reply $reply
+     */
+    public function markBestReply(Reply $reply)
+    {
+        $this->best_reply_id = $reply->id;
+
+        $this->save();
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return $this->toArray() + [ 'path' => $this->path() ];
     }
 }
