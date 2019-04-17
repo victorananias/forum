@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $admin = User::create([
             'name' => 'Administrator',
             'username' => 'administrator',
-            'email' => 'administrator@teste.com',
+            'email' => 'victor@ananias.dev',
             'password' => bcrypt('123'),
             'is_admin' => true,
             'email_verified_at' => \Carbon\Carbon::now()
@@ -39,6 +39,6 @@ class DatabaseSeeder extends Seeder
 //         ]);
 
         $this->call(ChannelsTableSeeder::class);
-        $this->call(ThreadsTableSeeder::class);
+//        $this->call(ThreadsTableSeeder::class);
     }
 }
