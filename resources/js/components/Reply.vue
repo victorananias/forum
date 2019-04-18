@@ -23,18 +23,19 @@
             <div class="card-body">
                 <div v-if="editing">
                     <div class="form-group">
-                        <vue-tribute :options="tributeOptions">
-                            <textarea class="form-control" name="body" rows="5" :id="'body-' + reply.id" v-text="reply.body" required></textarea>
-                        </vue-tribute>
+<!--                        <vue-tribute :options="tributeOptions">-->
+<!--                            <textarea class="form-control" name="body" rows="5" :id="'body-' + reply.id" v-text="reply.body" required></textarea>-->
+                        <wysiwyg v-model="body" required></wysiwyg>
+<!--                        </vue-tribute>-->
                     </div>
                 </div>
 
-                <div v-else v-html='reply.htmlBody'></div>
+                <div v-else v-html='reply.body'></div>
             </div>
 
             <div class="card-footer level" v-if="signedIn">
                 <div v-if="authorize('owns', reply) && !editing">
-                    <button type="button" class="btn mr-2" @click="editing = true">
+                    <button type="button" class="btn mr-2" @click="resetForm">
                         <i class="fas fa-pen"></i>
                     </button>
 
@@ -72,7 +73,8 @@
         data() {
             return {
                 editing: false,
-                isBest : this.reply.isBest
+                isBest : this.reply.isBest,
+                body: ''
             }
         },
         created() {
@@ -82,8 +84,10 @@
         },
         methods: {
             update() {
+                if (! this.body) return;
+
                 axios.patch(`/replies/${this.reply.id}`, {
-                    body: $(`#body-${this.reply.id}`).val()
+                    body: this.body
                 })
                 .catch(error => {
                     console.log('Error');
@@ -92,8 +96,7 @@
                     flash(error.response.data, 'danger');
                 })
                 .then(response => {
-                    this.reply.body = response.data.body;
-                    this.reply.htmlBody = response.data.htmlBody;
+                    this.reply.body = this.body;
                     this.editing = false;
                 });
             },
@@ -104,24 +107,28 @@
             markBestReply() {
                 axios.post(`/api/replies/${this.reply.id}/best`, {});
                 window.events.$emit('best-reply-selected', this.reply.id);
+            },
+            resetForm() {
+                this.body = this.reply.body;
+                this.editing = true;
             }
         },
         computed: {
             createdAt() {
                 return moment(this.reply.created_at).fromNow();
             },
-            tributeOptions() {
-                return {
-                    values: function (text, cb) {
-                        axios.get('/api/users', { username: text })
-                            .then(({data}) => {
-                                cb(data);
-                            });
-                    },
-                    fillAttr: 'username',
-                    lookup: 'username'
-                }
-            }
+            // tributeOptions() {
+            //     return {
+            //         values: function (text, cb) {
+            //             axios.get('/api/users', { username: text })
+            //                 .then(({data}) => {
+            //                     cb(data);
+            //                 });
+            //         },
+            //         fillAttr: 'username',
+            //         lookup: 'username'
+            //     }
+            // }
         }
     }
 </script>

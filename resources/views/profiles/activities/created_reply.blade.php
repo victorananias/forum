@@ -9,6 +9,6 @@
         </a>
     @endslot
     @slot('body')
-        {!! $activity->subject->htmlBody !!}
+        {!! $activity->subject->body !!}
     @endslot
 @endcomponent

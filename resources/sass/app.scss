@@ -4,5 +4,21 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~tributejs/dist/tribute.css';
 @import '~trix/dist/trix.css';
 
+
+body {
+  padding-bottom: 100px;
+}
+.level {
+  display: flex;
+  align-items: center;
+}
+.flex {
+  flex: 1;
+}
+
+[v-cloak] {
+  display: none
+}

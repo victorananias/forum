@@ -29,11 +29,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123')
         ]);
 
-//         $thread->addReply([
-//             'body' => $faker->paragraph,
-//             'user_id' => factory(User::class)->create()->id
-//         ]);
-
         $this->call(ChannelsTableSeeder::class);
 //        $this->call(ThreadsTableSeeder::class);
     }

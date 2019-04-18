@@ -9,6 +9,6 @@
         </a>
     @endslot
     @slot('body')
-        {!! $activity->subject->favorited->htmlBody !!}
+        {!! $activity->subject->favorited->body !!}
     @endslot
 @endcomponent

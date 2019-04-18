@@ -5,13 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Carbon\Carbon;
+use Stevebauman\Purify\Purify;
 
 class Reply extends Model
 {
     use Favoritable, RecordsActivity;
 
     protected $with = ['owner', 'favorites'];
-    protected $appends = ['htmlBody', 'favoritesCount', 'isFavorited', 'isBest'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
     protected $fillable = ['thread_id', 'user_id', 'body'];
 
     public static function boot()
@@ -45,13 +46,6 @@ class Reply extends Model
     public function thread()
     {
         return $this->belongsTo(Thread::class, 'thread_id');
-    }
-
-    /**
-     * @return string|string[]|null
-     */
-    public function getHtmlBodyAttribute() {
-        return preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $this->body);
     }
 
     /**
@@ -89,5 +83,10 @@ class Reply extends Model
     public function getIsBestAttribute()
     {
         return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getBodyAttribute($body)
+    {
+        return (new Purify)->clean($body);
     }
 }
