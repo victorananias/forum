@@ -29,23 +29,6 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="/favicon.png?v=5">
 
-    <style>
-        body {
-            padding-bottom: 100px;
-        }
-        .level {
-            display: flex;
-            align-items: center;
-        }
-        .flex {
-            flex: 1;
-        }
-
-        [v-cloak] {
-            display: none
-        }
-    </style>
-
     <script charset="utf-8">
         window.App = {!! json_encode([
             'signedIn' => \Auth::check(),
@@ -58,11 +41,13 @@
 </head>
 <body>
     <div id="app">
+
         @include ('layouts.nav')
 
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Carbon\Carbon;
+use Stevebauman\Purify\Purify;
 
 class Reply extends Model
 {
@@ -89,5 +90,10 @@ class Reply extends Model
     public function getIsBestAttribute()
     {
         return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getBodyAttribute($body)
+    {
+        return (new Purify)->clean($body);
     }
 }

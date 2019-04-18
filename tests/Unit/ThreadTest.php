@@ -135,4 +135,14 @@ class ThreadTest extends TestCase
 
         $this->assertEquals(1, $thread->fresh()->visits);
     }
+
+    /** @test */
+    public function a_threads_body_is_sanitized_automatically()
+    {
+        $thread = factory(Thread::class)->create([
+            'body' => '<script>alert(\'bad\')</script>'
+        ]);
+
+        $this->assertEquals($thread->fresh()->body, '');
+    }
 }

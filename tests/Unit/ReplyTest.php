@@ -64,4 +64,14 @@ class ReplyTest extends TestCase
 
         $this->assertTrue($reply->fresh()->isBest);
     }
+
+    /** @test */
+    public function a_replys_body_is_sanitized_automatically()
+    {
+        $thread = factory(Reply::class)->create([
+            'body' => '<script>alert(\'bad\')</script>'
+        ]);
+
+        $this->assertEquals($thread->fresh()->body, '');
+    }
 }

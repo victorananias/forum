@@ -9487,7 +9487,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     classes: function classes() {
-      return ['btn', this.active ? 'text-primary' : 'btn-default'];
+      return ['btn', 'btn-sm', this.active ? 'text-primary' : 'btn-default'];
     },
     endpoint: function endpoint() {
       return "/replies/".concat(this.reply.id, "/favorites");
@@ -99112,7 +99112,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "level" }, [
-      _c("img", { attrs: { src: _vm.avatar, width: "100" } }),
+      _c("img", {
+        attrs: {
+          src: _vm.avatar,
+          width: "100",
+          onerror: "this.src = '/avatar.png'"
+        }
+      }),
       _vm._v(" "),
       _c("h4", { staticClass: "ml-3" }, [
         _vm._v("\n            " + _vm._s(_vm.user.username) + "\n        ")

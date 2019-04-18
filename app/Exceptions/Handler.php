@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ValidationException) {
             if (request()->wantsJson()) {
-                return response('Desculpe, existem dados inválidos.', 422);
+                return response('Sorry, there\'s something invalid.', 422);
             }
         }
 

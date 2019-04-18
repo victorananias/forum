@@ -4,17 +4,15 @@
         <div class="card-header ">
             <div class="level">
                 <div class="flex">
-                    <h5>
-                        <a class="" href="{{ $thread->path() }}">
-                            @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
-                                <strong>{{ $thread->title }}</strong>
-                            @else
-                                {{ $thread->title }}
-                            @endif
-                        </a>
-                    </h5>
+                    <a class="" href="{{ $thread->path() }}">
+                        @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
+                            <strong>{{ $thread->title }}</strong>
+                        @else
+                            {{ $thread->title }}
+                        @endif
+                    </a>
 
-                    <h6>posted by <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->username }}</a></h6>
+                    <span>posted by <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->username }}</a></span>
 
                 </div>
 

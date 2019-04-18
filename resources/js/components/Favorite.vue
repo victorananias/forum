@@ -33,7 +33,7 @@
         },
         computed: {
             classes() {
-                return ['btn', this.active ? 'text-primary' : 'btn-default'];
+                return ['btn', 'btn-sm', this.active ? 'text-primary' : 'btn-default'];
             },
             endpoint() {
                 return `/replies/${this.reply.id}/favorites`;
