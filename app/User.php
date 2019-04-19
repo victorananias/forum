@@ -29,17 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token', 'email'
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-             if (preg_match('/[^A-z0-9_-]/', $model->username)) {
-                throw new \Exception('The username can not contain special characteres.');
-             }
-        });
-    }
-
     /**
      * set the route key
      *
