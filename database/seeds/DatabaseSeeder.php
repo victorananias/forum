@@ -13,23 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::create([
-            'name' => 'Administrator',
-            'username' => 'administrator',
-            'email' => 'victor@ananias.dev',
-            'password' => bcrypt('123'),
-            'is_admin' => true,
-            'email_verified_at' => \Carbon\Carbon::now()
-        ]);
-
-        User::create([
-            'name' => 'teste',
-            'username' => 'teste',
-            'email' => 'teste@teste.com',
-            'password' => bcrypt('123')
-        ]);
-
         $this->call(ChannelsTableSeeder::class);
-//        $this->call(ThreadsTableSeeder::class);
+        $this->call(ThreadsTableSeeder::class);
     }
 }

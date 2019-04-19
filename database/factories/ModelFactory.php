@@ -39,6 +39,7 @@ $factory->state(App\User::class, 'administrator', function () {
 $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
     $slug = str_slug($title);
+    $channels = \App\Channel::all();
     return [
         'title' => $title,
         'slug' => $slug,
@@ -46,9 +47,7 @@ $factory->define(App\Thread::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(App\User::class)->create()->id;
         },
-        'channel_id' => function () {
-            return factory(App\Channel::class)->create()->id;
-        },
+        'channel_id' => $faker->randomElement($channels)->id,
         'locked' => false
     ];
 });
