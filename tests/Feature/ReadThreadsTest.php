@@ -44,15 +44,16 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_according_to_a_channel()
     {
-        $channel = factory(Channel::class)->create();
+        $myChannel = factory(Channel::class)->create();
 
         $threadInChannel = factory(Thread::class)->create([
-            'channel_id' => $channel->id
+            'channel_id' => $myChannel->id
         ]);
 
-        $threadNotInChannel = factory(Thread::class)->create();
+        $otherChannel = factory(Channel::class)->create();
+        $threadNotInChannel = factory(Thread::class)->create(['channel_id' => $otherChannel->id]);
 
-        $this->get("/threads/{$channel->slug}")
+        $this->get("/threads/{$myChannel->slug}")
              ->assertSee($threadInChannel->title)
              ->assertDontSee($threadNotInChannel->title);
     }

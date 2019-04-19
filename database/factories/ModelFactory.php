@@ -1,5 +1,6 @@
 <?php
 
+use App\Channel;
 use Faker\Generator as Faker;
 use App\User;
 
@@ -39,14 +40,20 @@ $factory->state(App\User::class, 'administrator', function () {
 $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
     $slug = str_slug($title);
+    $channels = \App\Channel::all();
+
     return [
         'title' => $title,
         'slug' => $slug,
         'body' => $faker->paragraph,
         'user_id' => function () {
-            return factory(App\User::class)->create()->id;
+            return factory(App\User::class)->states('verified')->create()->id;
         },
-        'channel_id' => function () {
+        'channel_id' => function () use ($channels, $faker) {
+            if ($channels->count()) {
+                return $faker->randomElement($channels)->id;
+            }
+
             return factory(App\Channel::class)->create()->id;
         },
         'locked' => false

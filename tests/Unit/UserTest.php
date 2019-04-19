@@ -24,7 +24,6 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_may_have_a_valid_username()
     {
-
         User::create([
             'username' => 'johndoe',
             'name' => 'John Doe',
