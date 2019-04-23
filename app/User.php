@@ -34,11 +34,12 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::creating(function ($model) {
-             if (preg_match('/[^A-z0-9_-]/', $model->username)) {
+            if (preg_match('/[^A-z0-9^_^-]/', $model->username)) {
                 throw new \Exception('The username can not contain special characteres.');
-             }
+            }
         });
     }
+
 
     /**
      * set the route key

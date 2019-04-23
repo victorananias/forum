@@ -12,29 +12,13 @@ class ChannelsTableSeeder extends Seeder
      */
     public function run()
     {
-        Channel::create([
-            'name' => 'PHP',
-            'slug' => 'php'
-        ]);
+        $channels = ["Algolia", "Bootstrap", "JavaScript", "Laravel", "PHP", "Pusher", "Redis", "Testing", "Vue"];
 
-        Channel::create([
-            'name' => 'JavaScript',
-            'slug' => 'javascript'
-        ]);
-
-        Channel::create([
-            'name' => 'React',
-            'slug' => 'react'
-        ]);
-
-        Channel::create([
-            'name' => 'Vue',
-            'slug' => 'vue'
-        ]);
-
-        Channel::create([
-            'name' => 'Test',
-            'slug' => 'test'
-        ]);
+        foreach ($channels as $channel) {
+            Channel::create([
+                'name' => $channel,
+                'slug' => str_slug($channel)
+            ]);
+        }
     }
 }

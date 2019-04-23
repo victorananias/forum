@@ -25,9 +25,7 @@ class ValidUsername implements Rule
      */
     public function passes($attribute, $value)
     {
-        $this->attribute = $attribute;
-
-        return preg_match('/[^A-z0-9_-]/', $value);
+        return !preg_match('/[^A-z0-9^_^-]/', $value);
     }
 
     /**
@@ -37,6 +35,6 @@ class ValidUsername implements Rule
      */
     public function message()
     {
-        return "The field {$this->attribute} is not a valid username.";
+        return "Invalid username.";
     }
 }

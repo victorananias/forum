@@ -18,7 +18,7 @@ class SearchTest extends TestCase
         $search = 'foobar';
 
         factory(Thread::class, 2)->create();
-        factory(Thread::class, 2)->create([ 'body' => "A thread with the {$search} term."]);
+        factory(Thread::class, 2)->create([ 'title' => "A thread with the {$search} term."]);
 
         do {
             sleep(3);

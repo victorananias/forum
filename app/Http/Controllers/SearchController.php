@@ -10,7 +10,6 @@ class SearchController extends Controller
 
     public function index(Trending $trending)
     {
-
         if (request()->expectsJson()) {
             $search = request('q');
 

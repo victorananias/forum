@@ -14,16 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \Illuminate\Support\Facades\Schema::defaultStringLength(191);
-
-        // Traduzindo o Carbon
-//        \Carbon\Carbon::setLocale('pt_BR');
-
         \View::composer('*', function ($view) {
-//            $channels = \Cache::rememberForever('channels', function () {
-//                return Channel::all();
-//            });
-            $channels = Channel::all();
+            $channels = \Cache::rememberForever('channels', function () {
+                return Channel::all();
+            });
 
             $view->with('channels', $channels);
         });
