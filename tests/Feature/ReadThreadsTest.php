@@ -21,7 +21,7 @@ class ReadThreadsTest extends TestCase
 
     private $thread;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->thread = factory(Thread::class)->create();
@@ -94,7 +94,7 @@ class ReadThreadsTest extends TestCase
     public function a_user_can_filter_threads_by_those_that_are_unanswered()
     {
         $thread = factory(Thread::class)->create();
-        
+
         factory(Reply::class)->create(['thread_id' => $thread->id]);
 
         $response = $this->getJson('threads?unanswered=1')->json();

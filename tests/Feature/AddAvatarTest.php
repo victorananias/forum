@@ -13,7 +13,6 @@ class AddAvatarTest extends TestCase
 {
     use RefreshDatabase;
 
-
     /** @test */
     public function only_members_can_add_avatar()
     {

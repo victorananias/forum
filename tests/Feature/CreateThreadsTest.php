@@ -15,7 +15,7 @@ class CreateThreadsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -118,7 +118,7 @@ class CreateThreadsTest extends TestCase
 
         $thread = factory(Thread::class)->create(['user_id' => $user->id]);
         $reply = factory(Reply::class)->create(['thread_id' => $thread->id]);
-        
+
         $response = $this->json('DELETE', $thread->path());
 
         $response->assertStatus(204);
