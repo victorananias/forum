@@ -17,7 +17,7 @@
         "laravel-echo": "^1.5.3",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.5",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "popper.js": "^1.12",
         "pusher-js": "^4.4.0",
         "resolve-url-loader": "^2.3.1",
